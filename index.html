@@ -297,6 +297,32 @@ textarea{resize:vertical;min-height:60px}
 </head>
 <body>
 
+<!-- ════════════ KUNCI APLIKASI (PASSWORD LOKAL) ════════════ -->
+<div id="app-lock-overlay" style="position:fixed;inset:0;background:linear-gradient(160deg,var(--hijau),var(--hijau-mid));z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;color:#fff;font-family:'Segoe UI',Arial,sans-serif;text-align:center;padding:20px">
+  <svg viewBox="0 0 24 24" fill="currentColor" width="34" height="34" style="opacity:.9"><path d="M12 2C9.8 2 8 3.8 8 6v1H6c-1.1 0-2 .9-2 2v11h16V9c0-1.1-.9-2-2-2h-2V6c0-2.2-1.8-4-4-4zm0 2c1.1 0 2 .9 2 2H10c0-1.1.9-2 2-2zm-4 6h8v9H8v-9zm4 1c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+  <div style="font-size:15px;font-weight:700;letter-spacing:.3px">Sistem Manajemen Masjid Baiturrahman Panjunan</div>
+  <div style="font-size:12px;opacity:.85">Aplikasi ini terkunci. Masukkan password untuk melanjutkan.</div>
+  <div style="display:flex;gap:8px;margin-top:6px;flex-wrap:wrap;justify-content:center">
+    <input type="password" id="app-lock-input" placeholder="Password" style="font-size:14px;padding:9px 12px;border-radius:6px;border:none;width:200px" onkeydown="if(event.key==='Enter')lockTrySubmit()">
+    <button class="btn btn-gold" style="font-size:13px" onclick="lockTrySubmit()">Buka</button>
+  </div>
+  <div id="app-lock-err" style="font-size:12px;color:#ffb4b4;display:none">Password salah, coba lagi.</div>
+  <div style="font-size:10px;opacity:.6;margin-top:14px;max-width:320px;line-height:1.6">Lupa password? Buka DevTools (F12) → tab Console → ketik:<br><code style="background:rgba(255,255,255,.15);padding:2px 5px;border-radius:4px">localStorage.removeItem('lkm_app_lock_hash')</code><br>lalu tekan Enter dan muat ulang halaman.</div>
+</div>
+<script>
+// Cek SEGERA (sebelum halaman lain ditampilkan) supaya tidak sempat kelihatan sekilas
+(function(){
+  try{
+    var enabled=!!localStorage.getItem('lkm_app_lock_hash');
+    var unlocked=sessionStorage.getItem('lkm_app_unlocked')==='1';
+    if(!enabled||unlocked){
+      var el=document.getElementById('app-lock-overlay');
+      if(el) el.style.display='none';
+    }
+  }catch(e){}
+})();
+</script>
+
 <div class="layout">
 
 <!-- ════════════ SIDEBAR ════════════ -->
@@ -516,7 +542,7 @@ textarea{resize:vertical;min-height:60px}
     </div>
   </div>
   <div class="filter-bar">
-    <input class="search" type="text" id="inv-search" placeholder="<svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg> Cari nama barang..." oninput="renderInventaris()">
+    <input class="search" type="text" id="inv-search" placeholder="Cari nama barang..." oninput="renderInventaris()">
     <select class="flt" id="fl-inv-kat" onchange="renderInventaris()"><option value="">Semua kategori</option></select>
     <select class="flt" id="fl-inv-kondisi" onchange="renderInventaris()">
       <option value="">Semua kondisi</option>
@@ -558,7 +584,7 @@ textarea{resize:vertical;min-height:60px}
     </select>
     <select class="flt" id="fl-trx-bulan" onchange="renderTrxBarang()"><option value="">Semua bulan</option></select>
     <select class="flt" id="fl-trx-thn" onchange="renderTrxBarang()"></select>
-    <input class="search" type="text" id="trx-search" placeholder="<svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg> Cari barang..." oninput="renderTrxBarang()" style="width:160px">
+    <input class="search" type="text" id="trx-search" placeholder="Cari barang..." oninput="renderTrxBarang()" style="width:160px">
   </div>
   <div class="cards cards-3" style="margin-bottom:12px">
     <div class="card"><div class="card-label"><svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 12l-4-4h3V7h2v4h3l-4 4z"/></svg> Total Masuk</div><div class="card-val c-green" id="trx-total-masuk">0 item</div></div>
@@ -703,6 +729,34 @@ textarea{resize:vertical;min-height:60px}
       mengingat/menyimpan <b>Token</b>-nya, karena nama repo otomatis terdeteksi dari alamat website ini.
       <b>Token GitHub hanya tersimpan di browser Anda sendiri (localStorage)</b>, tidak pernah dikirim ke server lain
       selain ke GitHub langsung dari browser.
+    </div>
+
+    <!-- Kunci Aplikasi -->
+    <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px">
+      <div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Kunci Aplikasi dengan Password (Lokal)</div>
+      <div style="font-size:12px;color:var(--text2);line-height:1.7;margin-bottom:12px">
+        Kalau diaktifkan, setiap kali aplikasi ini dibuka (tab/browser baru) akan diminta password dulu sebelum bisa
+        melihat data apapun. Ini kunci sederhana untuk mencegah orang iseng buka laptop, <b>bukan pengaman tingkat
+        tinggi</b> — perlindungan yang sesungguhnya tetap dari repo GitHub yang Private.
+      </div>
+      <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text2);cursor:pointer;margin-bottom:12px">
+        <input type="checkbox" id="lock-enabled" style="width:15px;height:15px;cursor:pointer" onchange="lockToggleUI()">
+        Aktifkan kunci password
+      </label>
+      <div id="lock-fields" style="display:none;flex-direction:column;gap:10px;max-width:320px">
+        <div class="fg">
+          <label>Password Baru</label>
+          <input type="password" id="lock-pw1" style="font-size:13px">
+        </div>
+        <div class="fg">
+          <label>Ulangi Password</label>
+          <input type="password" id="lock-pw2" style="font-size:13px">
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-top:12px">
+        <button class="btn btn-primary" style="font-size:13px" onclick="lockSaveSettings()">Simpan Pengaturan Kunci</button>
+        <span id="lock-saved-msg" style="font-size:12px;color:var(--hijau);display:none;font-weight:600">Tersimpan ✓</span>
+      </div>
     </div>
 
     <!-- Pengaturan GitHub -->
@@ -2977,6 +3031,7 @@ function ghPageInit(){
   }
   ghRenderStatus();
   ghRenderSnapshotInfo();
+  lockPageInit();
 }
 function ghSaveSettings(){
   localStorage.setItem(GH_SK.token,document.getElementById('gh-token').value.trim());
@@ -3225,6 +3280,68 @@ async function ghCheckForRemoteUpdate(){
     const el=document.getElementById('gh-update-banner');
     if(el) el.style.display='flex';
   }catch(e){ /* diam saja kalau gagal cek, jangan ganggu pemakaian normal */ }
+}
+
+/* ══════════════════════════════════════════
+   KUNCI APLIKASI (PASSWORD LOKAL)
+   Catatan: ini kunci ringan sisi-klien (bisa dilewati lewat DevTools oleh
+   orang yang paham teknis) — bukan pengganti keamanan repo GitHub Private.
+══════════════════════════════════════════ */
+const LOCK_SK='lkm_app_lock_hash';
+async function sha256Hex(text){
+  const buf=new TextEncoder().encode(text);
+  const digest=await crypto.subtle.digest('SHA-256',buf);
+  return Array.from(new Uint8Array(digest)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+function lockPageInit(){
+  const enabled=!!localStorage.getItem(LOCK_SK);
+  const cb=document.getElementById('lock-enabled');
+  if(cb) cb.checked=enabled;
+  lockToggleUI();
+}
+function lockToggleUI(){
+  const enabled=document.getElementById('lock-enabled').checked;
+  const fields=document.getElementById('lock-fields');
+  if(fields) fields.style.display=enabled?'flex':'none';
+}
+async function lockSaveSettings(){
+  const enabled=document.getElementById('lock-enabled').checked;
+  const msg=document.getElementById('lock-saved-msg');
+  if(!enabled){
+    localStorage.removeItem(LOCK_SK);
+    if(msg){msg.style.display='inline';setTimeout(()=>msg.style.display='none',3000);}
+    showToast('Kunci password dinonaktifkan ✓');
+    return;
+  }
+  const pw1=document.getElementById('lock-pw1').value;
+  const pw2=document.getElementById('lock-pw2').value;
+  const alreadySet=!!localStorage.getItem(LOCK_SK);
+  if(!pw1){ if(alreadySet){ if(msg){msg.style.display='inline';setTimeout(()=>msg.style.display='none',3000);} showToast('Kunci tetap aktif dengan password lama ✓'); return;} showToast('Isi password dulu'); return; }
+  if(pw1.length<4){showToast('Password minimal 4 karakter');return;}
+  if(pw1!==pw2){showToast('Password dan ulangi password tidak sama');return;}
+  const hash=await sha256Hex(pw1);
+  localStorage.setItem(LOCK_SK,hash);
+  document.getElementById('lock-pw1').value='';
+  document.getElementById('lock-pw2').value='';
+  if(msg){msg.style.display='inline';setTimeout(()=>msg.style.display='none',3000);}
+  showToast('Kunci password diaktifkan ✓');
+}
+async function lockTrySubmit(){
+  const input=document.getElementById('app-lock-input');
+  const err=document.getElementById('app-lock-err');
+  const pw=input.value;
+  const storedHash=localStorage.getItem(LOCK_SK);
+  if(!storedHash){ document.getElementById('app-lock-overlay').style.display='none'; return; }
+  const hash=await sha256Hex(pw);
+  if(hash===storedHash){
+    sessionStorage.setItem('lkm_app_unlocked','1');
+    document.getElementById('app-lock-overlay').style.display='none';
+    if(err) err.style.display='none';
+  } else {
+    if(err) err.style.display='block';
+    input.value='';
+    input.focus();
+  }
 }
 
 loadAll();
