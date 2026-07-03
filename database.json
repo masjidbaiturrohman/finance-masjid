@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-07-03T05:55:05.547Z",
+    "savedAt": "2026-07-03T05:56:10.309Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -145,6 +145,17 @@
       "ket": "Kotak Amal BOSPOM",
       "kat": "Kas Pembangunan",
       "masuk": 5596000,
+      "keluar": 0
+    },
+    {
+      "id": 1783058137851,
+      "tanggal": "2026-07-03",
+      "minggu": 5,
+      "bulan": "Juni",
+      "tahun": 2026,
+      "ket": "Kotak Amal Jumat",
+      "kat": "Kas Umum",
+      "masuk": 870000,
       "keluar": 0
     }
   ],
