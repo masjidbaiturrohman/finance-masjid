@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-07-03T13:54:02.667Z",
+    "savedAt": "2026-07-03T13:59:40.699Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -168,6 +168,17 @@
       "kat": "Kas Pembangunan",
       "masuk": 0,
       "keluar": 200000
+    },
+    {
+      "id": 1783087175311,
+      "tanggal": "2026-07-02",
+      "minggu": 5,
+      "bulan": "Juni",
+      "tahun": 2026,
+      "ket": "Pembelian Lampu 2 Slot 10 Watt",
+      "kat": "Kas Pembangunan",
+      "masuk": 0,
+      "keluar": 530000
     },
     {
       "id": 1783038988597,
