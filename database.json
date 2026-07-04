@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-07-04T07:02:54.972Z",
+    "savedAt": "2026-07-04T07:04:24.713Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -181,6 +181,17 @@
       "keluar": 200000
     },
     {
+      "id": 1783148615458,
+      "tanggal": "2026-06-30",
+      "minggu": 5,
+      "bulan": "Juni",
+      "tahun": 2026,
+      "ket": "Konsumsi Rapat",
+      "kat": "Kas Umum",
+      "masuk": 0,
+      "keluar": 170000
+    },
+    {
       "id": 1783087175311,
       "tanggal": "2026-07-02",
       "minggu": 5,
@@ -190,6 +201,17 @@
       "kat": "Kas Pembangunan",
       "masuk": 0,
       "keluar": 530000
+    },
+    {
+      "id": 1783148659271,
+      "tanggal": "2026-07-02",
+      "minggu": 5,
+      "bulan": "Juni",
+      "tahun": 2026,
+      "ket": "5 Kardus Air Mineral Club",
+      "kat": "Kas Umum",
+      "masuk": 0,
+      "keluar": 200000
     },
     {
       "id": 1783038988597,
