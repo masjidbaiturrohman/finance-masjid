@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-07-04T07:05:45.017Z",
+    "savedAt": "2026-07-04T09:30:29.436Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -245,6 +245,17 @@
       "kat": "Kas Umum",
       "masuk": 0,
       "keluar": 4500000
+    },
+    {
+      "id": 1783157423972,
+      "tanggal": "2026-07-04",
+      "minggu": 5,
+      "bulan": "Juni",
+      "tahun": 2026,
+      "ket": "Gaji Tukang 4 Hari",
+      "kat": "Kas Pembangunan",
+      "masuk": 0,
+      "keluar": 520000
     }
   ],
   "inv": [],
