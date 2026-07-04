@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-07-04T00:00:13.233Z",
+    "savedAt": "2026-07-04T01:48:27.109Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -250,5 +250,15 @@
     ],
     "keu": false,
     "inv": false
-  }
+  },
+  "catatan": [
+    {
+      "id": 1783129702601,
+      "tahun": 2026,
+      "bulan": "Juni",
+      "minggu": 5,
+      "isi": "Sisa Uang yang masih di pak soleh 5.915.500 \ndari total pemberian uang dari om dhifan 15.000.000",
+      "createdAt": "2026-07-04T01:48:22.601Z"
+    }
+  ]
 }
