@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-07-04T07:04:24.713Z",
+    "savedAt": "2026-07-04T07:05:45.017Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -234,6 +234,17 @@
       "kat": "Kas Umum",
       "masuk": 870000,
       "keluar": 0
+    },
+    {
+      "id": 1783148695113,
+      "tanggal": "2026-07-03",
+      "minggu": 5,
+      "bulan": "Juni",
+      "tahun": 2026,
+      "ket": "Gaji Marbot 6 Bulan (Jul-Des)",
+      "kat": "Kas Umum",
+      "masuk": 0,
+      "keluar": 4500000
     }
   ],
   "inv": [],
