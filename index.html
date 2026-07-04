@@ -187,8 +187,19 @@ textarea{resize:vertical;min-height:60px}
    WEEK GROUP (keuangan)
 ══════════════════════════════════════ */
 .week-block{margin-bottom:14px}
-.week-head{background:var(--hijau-mid);color:#FAF7F0;padding:8px 14px;border-radius:6px 6px 0 0;font-size:13px;font-weight:600;display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px}
+.week-head{background:var(--hijau-mid);color:#FAF7F0;padding:8px 14px;border-radius:6px 6px 0 0;font-size:13px;font-weight:600;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px}
 .week-head span{opacity:0.8;font-size:12px;font-weight:400}
+.week-head-left{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.note-btn{display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:#FAF7F0;border-radius:20px;padding:2px 9px 2px 7px;font-size:11px;cursor:pointer;font-family:inherit;transition:all 0.12s}
+.note-btn:hover{background:rgba(255,255,255,0.28)}
+.note-btn.has-note{background:var(--emas);border-color:var(--emas);color:#fff;font-weight:700}
+.note-btn.has-note:hover{opacity:0.9}
+.note-count{background:rgba(255,255,255,0.85);color:var(--emas);border-radius:10px;padding:0 5px;font-size:10px;font-weight:700}
+.note-list-item{border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:8px;background:var(--krem)}
+.note-list-item .note-meta{font-size:10px;color:var(--text3);margin-bottom:4px;display:flex;justify-content:space-between;align-items:center;gap:6px}
+.note-list-item .note-isi{font-size:12.5px;color:var(--text);white-space:pre-wrap;line-height:1.5}
+.note-list-item .note-actions{display:flex;gap:5px;margin-top:8px}
+.note-empty{text-align:center;padding:24px 12px;color:var(--text3);font-size:12.5px}
 .month-block{margin-bottom:20px}
 .month-head{font-size:14px;font-weight:700;color:var(--hijau);padding:10px 0 8px;border-bottom:2px solid var(--emas);margin-bottom:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 
@@ -447,6 +458,7 @@ textarea{resize:vertical;min-height:60px}
       <div class="section-title">Laporan Mingguan</div>
       <div class="section-actions">
         <button class="btn btn-primary" onclick="openModalKeu()"><svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg> Tambah</button>
+        <button class="btn" onclick="openModalCatatan()"><svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg> Catatan</button>
         <button class="btn btn-wa" onclick="openWA('minggu')"><svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg> WA</button>
         <button class="btn btn-gold" onclick="exportPDF('minggu')"><svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> PDF</button>
       </div>
@@ -993,6 +1005,41 @@ textarea{resize:vertical;min-height:60px}
   </div>
 </div>
 
+<!-- Modal Catatan Internal (tambah/edit) -->
+<div class="modal-overlay" id="modal-catatan">
+  <div class="modal">
+    <div class="modal-title" id="modal-catatan-title"><svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg> Tambah Catatan Internal</div>
+    <div class="form-grid">
+      <div class="fg"><label>Minggu ke- *</label>
+        <select class="fi" id="c-mgg"><option value="1">Minggu 1</option><option value="2">Minggu 2</option><option value="3">Minggu 3</option><option value="4">Minggu 4</option><option value="5">Minggu 5</option></select>
+      </div>
+      <div class="fg"><label>Bulan *</label>
+        <select class="fi" id="c-bln">
+          <option>Januari</option><option>Februari</option><option>Maret</option><option>April</option><option>Mei</option><option>Juni</option><option>Juli</option><option>Agustus</option><option>September</option><option>Oktober</option><option>November</option><option>Desember</option>
+        </select>
+      </div>
+      <div class="fg"><label>Tahun *</label><input type="number" id="c-thn" min="2020" max="2099"></div>
+      <div class="fg form-full"><label>Isi Catatan *</label><textarea id="c-isi" rows="4" placeholder="Tulis catatan internal untuk minggu ini..."></textarea></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeModalCatatan()">Batal</button>
+      <button class="btn btn-primary" onclick="saveCatatan()" id="btn-save-catatan">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Popup: daftar catatan untuk 1 minggu tertentu (dipicu dari simbol di Laporan Mingguan) -->
+<div class="modal-overlay" id="modal-catatan-list">
+  <div class="modal">
+    <div class="modal-title"><svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg> <span id="modal-catatan-list-title">Catatan Minggu</span></div>
+    <div id="catatan-list-body"></div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeModalCatatanList()">Tutup</button>
+      <button class="btn btn-primary" onclick="openModalCatatanFromList()">+ Tambah Catatan</button>
+    </div>
+  </div>
+</div>
+
 <!-- Modal Inventaris -->
 <div class="modal-overlay" id="modal-inv">
   <div class="modal modal-lg">
@@ -1096,7 +1143,7 @@ let MASJID = 'Takmir Masjid Baiturrahman Panjunan';
 let ALAMAT = 'Dsn. Panjuanan, Ds. Tasikmadu, Kec. Paang, Kab. Tuban';
 let LOGO_B64 = null; // base64 string logo, null if not set
 const BULAN_LIST = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-const SK = {keu:'lkm_keu_v3', inv:'lkm_inv_v1', trxBrg:'lkm_trx_brg_v1', katKeu:'lkm_kat_keu_v1', katBrg:'lkm_kat_brg_v1', ttd:'lkm_ttd_v2', identitas:'lkm_identitas_v1', logo:'lkm_logo_v1'};
+const SK = {keu:'lkm_keu_v3', inv:'lkm_inv_v1', trxBrg:'lkm_trx_brg_v1', katKeu:'lkm_kat_keu_v1', katBrg:'lkm_kat_brg_v1', ttd:'lkm_ttd_v2', identitas:'lkm_identitas_v1', logo:'lkm_logo_v1', catatan:'lkm_catatan_v1'};
 const DEF_KAT_KEU = ['Infak','Zakat','Shodaqoh','Pembangunan','Operasional','Lain-lain'];
 const DEF_KAT_BRG = ['Perlengkapan Ibadah','Elektronik','Furnitur','Kebersihan','Keamanan','Administrasi','Lain-lain'];
 const DEF_TTD = {
@@ -1109,8 +1156,9 @@ const DEF_TTD = {
   keu:true, inv:false
 };
 
-let keuData=[], invData=[], trxBrgData=[], katKeuData=[];
-let editKeuId=null, editInvId=null, editTrxId=null;
+let keuData=[], invData=[], trxBrgData=[], katKeuData=[], catatanData=[];
+let editKeuId=null, editInvId=null, editTrxId=null, editCatatanId=null;
+let catatanListCtx={tahun:null,bulan:null,minggu:null};
 let confirmCb=null;
 let invView='table';
 
@@ -1123,6 +1171,7 @@ function loadAll(){
   trxBrgData=load(SK.trxBrg);
   katKeuData=load(SK.katKeu, DEF_KAT_KEU.slice());
   katBrgData=load(SK.katBrg, DEF_KAT_BRG.slice());
+  catatanData=load(SK.catatan, []);
   // load Identitas
   try {
     const idRaw=localStorage.getItem(SK.identitas);
@@ -1145,6 +1194,7 @@ function saveKeuData(){save(SK.keu,keuData)}
 function saveInvData(){save(SK.inv,invData)}
 function saveTrxData(){save(SK.trxBrg,trxBrgData)}
 function saveKatData(){save(SK.katKeu,katKeuData)}
+function saveCatatanData(){save(SK.catatan,catatanData)}
 
 /* ══════════════════════════════════════════
    FORMATTERS
@@ -1384,7 +1434,7 @@ function renderMinggu(){
 
   // Group by week
   const wg={};
-  rows.forEach(r=>{const k=r.tahun+'_'+r.bulan+'_'+r.minggu;if(!wg[k])wg[k]={label:`Minggu ${r.minggu} — ${r.bulan} ${r.tahun}`,rows:[],masuk:0,keluar:0};wg[k].rows.push(r);wg[k].masuk+=r.masuk||0;wg[k].keluar+=r.keluar||0;});
+  rows.forEach(r=>{const k=r.tahun+'_'+r.bulan+'_'+r.minggu;if(!wg[k])wg[k]={label:`Minggu ${r.minggu} — ${r.bulan} ${r.tahun}`,tahun:r.tahun,bulan:r.bulan,minggu:r.minggu,rows:[],masuk:0,keluar:0};wg[k].rows.push(r);wg[k].masuk+=r.masuk||0;wg[k].keluar+=r.keluar||0;});
 
   let html='';
   Object.values(wg).forEach(w=>{
@@ -1393,8 +1443,10 @@ function renderMinggu(){
     const firstRow=w.rows[0];
     const saldoAwal=firstRow.saldo-(firstRow.masuk||0)+(firstRow.keluar||0);
     const saldoAkhir=w.rows[w.rows.length-1].saldo;
+    const wNotes=getCatatanForMinggu(w.tahun,w.bulan,w.minggu);
+    const noteBtn=`<button class="note-btn${wNotes.length?' has-note':''}" onclick="openCatatanList('${w.tahun}','${w.bulan}',${w.minggu})" title="${wNotes.length?'Lihat catatan minggu ini':'Belum ada catatan — klik untuk tambah'}"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>${wNotes.length?` Catatan <span class="note-count">${wNotes.length}</span>`:' Catatan'}</button>`;
     html+=`<div class="week-block">
-      <div class="week-head">${w.label}<span>Masuk: ${fmtRp(w.masuk)} &nbsp;|&nbsp; Keluar: ${fmtRp(w.keluar)} &nbsp;|&nbsp; Saldo Akhir: ${fmtRp(saldoAkhir)}</span></div>
+      <div class="week-head"><span class="week-head-left">${w.label} ${noteBtn}</span><span>Masuk: ${fmtRp(w.masuk)} &nbsp;|&nbsp; Keluar: ${fmtRp(w.keluar)} &nbsp;|&nbsp; Saldo Akhir: ${fmtRp(saldoAkhir)}</span></div>
       <div class="tbl-wrap" style="border-radius:0 0 8px 8px;border-top:none">
         <table>
           <thead><tr style="background:var(--hijau-light)"><th>No</th><th>Tanggal</th><th>Keterangan</th><th>Kategori</th><th style="text-align:right">Masuk (Rp)</th><th style="text-align:right">Keluar (Rp)</th><th style="text-align:right">Saldo (Rp)</th><th></th></tr></thead>
@@ -1579,6 +1631,87 @@ function saveKeu(){
   keuData.sort((a,b)=>a.tanggal.localeCompare(b.tanggal));
   saveKeuData();populateKeuFilters();renderMinggu();closeModalKeu();
   showToast(editKeuId?'Transaksi diperbarui ✓':'Transaksi disimpan ✓');
+}
+
+/* ── Catatan Internal (terhubung ke Laporan Mingguan) ── */
+function getCatatanForMinggu(tahun,bulan,minggu){
+  return catatanData.filter(n=>String(n.tahun)===String(tahun)&&n.bulan===bulan&&String(n.minggu)===String(minggu));
+}
+function openModalCatatan(prefill){
+  editCatatanId=null;
+  document.getElementById('modal-catatan-title').innerHTML='<svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg> Tambah Catatan Internal';
+  document.getElementById('btn-save-catatan').textContent='Simpan';
+  const now=new Date();
+  if(prefill){
+    document.getElementById('c-mgg').value=prefill.minggu;
+    document.getElementById('c-bln').value=prefill.bulan;
+    document.getElementById('c-thn').value=prefill.tahun;
+  } else {
+    // default: pakai filter yang sedang aktif di Laporan Mingguan bila ada, atau minggu berjalan
+    const flThn=document.getElementById('fl-thn-m')?.value;
+    const flBln=document.getElementById('fl-bln-m')?.value;
+    document.getElementById('c-mgg').value=Math.min(5,Math.ceil(now.getDate()/7));
+    document.getElementById('c-bln').value=flBln||BULAN_LIST[now.getMonth()];
+    document.getElementById('c-thn').value=flThn||now.getFullYear();
+  }
+  document.getElementById('c-isi').value='';
+  document.getElementById('modal-catatan').classList.add('open');
+}
+function openEditCatatan(id){
+  const n=catatanData.find(x=>x.id===id);if(!n)return;
+  editCatatanId=id;
+  document.getElementById('modal-catatan-title').innerHTML='<svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg> Edit Catatan Internal';
+  document.getElementById('btn-save-catatan').textContent='Perbarui';
+  document.getElementById('c-mgg').value=n.minggu;
+  document.getElementById('c-bln').value=n.bulan;
+  document.getElementById('c-thn').value=n.tahun;
+  document.getElementById('c-isi').value=n.isi;
+  closeModalCatatanList();
+  document.getElementById('modal-catatan').classList.add('open');
+}
+function closeModalCatatan(){document.getElementById('modal-catatan').classList.remove('open');}
+function saveCatatan(){
+  const mgg=parseInt(document.getElementById('c-mgg').value);
+  const bln=document.getElementById('c-bln').value;
+  const thn=parseInt(document.getElementById('c-thn').value);
+  const isi=document.getElementById('c-isi').value.trim();
+  if(!thn){showToast('Tahun wajib diisi!');return;}
+  if(!isi){showToast('Isi catatan wajib diisi!');return;}
+  const row={id:editCatatanId||Date.now(),tahun:thn,bulan:bln,minggu:mgg,isi,createdAt:new Date().toISOString()};
+  if(editCatatanId){const i=catatanData.findIndex(r=>r.id===editCatatanId);if(i>=0)catatanData[i]=row;}else catatanData.push(row);
+  saveCatatanData();closeModalCatatan();renderMinggu();
+  showToast(editCatatanId?'Catatan diperbarui ✓':'Catatan disimpan ✓');
+}
+// Popup daftar catatan untuk 1 minggu tertentu, dipicu dari simbol di Laporan Mingguan
+function openCatatanList(tahun,bulan,minggu){
+  catatanListCtx={tahun,bulan,minggu};
+  document.getElementById('modal-catatan-list-title').textContent=`Catatan — Minggu ${minggu} ${bulan} ${tahun}`;
+  renderCatatanListBody();
+  document.getElementById('modal-catatan-list').classList.add('open');
+}
+function renderCatatanListBody(){
+  const {tahun,bulan,minggu}=catatanListCtx;
+  const notes=getCatatanForMinggu(tahun,bulan,minggu).sort((a,b)=>(a.createdAt||'').localeCompare(b.createdAt||''));
+  const body=document.getElementById('catatan-list-body');
+  if(!notes.length){body.innerHTML='<div class="note-empty">Belum ada catatan untuk minggu ini.</div>';return;}
+  body.innerHTML=notes.map(n=>`
+    <div class="note-list-item">
+      <div class="note-meta"><span>${n.createdAt?new Date(n.createdAt).toLocaleString('id-ID'):''}</span></div>
+      <div class="note-isi"></div>
+      <div class="note-actions">
+        <button class="btn btn-sm" onclick="openEditCatatan(${n.id})"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg> Edit</button>
+        <button class="btn btn-sm btn-danger" onclick="askDelete('catatan',${n.id},'catatan ini')"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg> Hapus</button>
+      </div>
+    </div>`).join('');
+  // isi catatan dimasukkan lewat textContent supaya aman dari HTML/XSS dan tetap menjaga baris baru via CSS white-space:pre-wrap
+  const items=body.querySelectorAll('.note-isi');
+  notes.forEach((n,i)=>{if(items[i])items[i].textContent=n.isi;});
+}
+function closeModalCatatanList(){document.getElementById('modal-catatan-list').classList.remove('open');}
+function openModalCatatanFromList(){
+  const {tahun,bulan,minggu}=catatanListCtx;
+  closeModalCatatanList();
+  openModalCatatan({tahun,bulan,minggu});
 }
 
 /* ── Kategori Kas ── */
@@ -1885,6 +2018,11 @@ function doDelete(type,id){
     const r=trxBrgData.find(x=>x.id===id);
     if(r){const inv=invData.find(x=>x.id===r.invId);if(inv){inv.stok=Math.max(0,inv.stok-(r.jenis==='masuk'?r.jumlah:-r.jumlah));saveInvData();}}
     trxBrgData=trxBrgData.filter(r=>r.id!==id);saveTrxData();renderTrxBarang();renderInventaris();
+  }
+  else if(type==='catatan'){
+    catatanData=catatanData.filter(r=>r.id!==id);saveCatatanData();
+    if(document.getElementById('modal-catatan-list').classList.contains('open')) renderCatatanListBody();
+    renderMinggu();
   }
   closeConfirm();showToast('Data dihapus.');
 }
@@ -3118,7 +3256,7 @@ function gatherAllData(){
   return {
     _meta:{savedAt:new Date().toISOString(), app:'masjid-app'},
     keu:keuData, inv:invData, trxBrg:trxBrgData, katKeu:katKeuData, katBrg:katBrgData,
-    identitas:{nama:MASJID, alamat:ALAMAT}, logo:LOGO_B64, ttd:ttdCfg
+    identitas:{nama:MASJID, alamat:ALAMAT}, logo:LOGO_B64, ttd:ttdCfg, catatan:catatanData
   };
 }
 // Terapkan object hasil download ke semua state + localStorage yang sudah ada (tanpa mengubah struktur data lama)
@@ -3129,12 +3267,14 @@ function applyAllData(d){
   trxBrgData=Array.isArray(d.trxBrg)?d.trxBrg:[];
   katKeuData=Array.isArray(d.katKeu)&&d.katKeu.length?d.katKeu:DEF_KAT_KEU.slice();
   katBrgData=Array.isArray(d.katBrg)&&d.katBrg.length?d.katBrg:DEF_KAT_BRG.slice();
+  catatanData=Array.isArray(d.catatan)?d.catatan:[];
   if(d.identitas){MASJID=d.identitas.nama||MASJID;ALAMAT=d.identitas.alamat||ALAMAT;}
   LOGO_B64=d.logo||null;
   if(d.ttd && typeof d.ttd==='object' && Array.isArray(d.ttd.cols)) ttdCfg=d.ttd;
   // simpan ke localStorage lewat mekanisme yang sudah ada
   save(SK.keu,keuData); save(SK.inv,invData); save(SK.trxBrg,trxBrgData);
   save(SK.katKeu,katKeuData); save(SK.katBrg,katBrgData);
+  save(SK.catatan,catatanData);
   save(SK.identitas,{nama:MASJID,alamat:ALAMAT});
   if(LOGO_B64) localStorage.setItem(SK.logo,LOGO_B64); else localStorage.removeItem(SK.logo);
   save(SK.ttd,ttdCfg);
