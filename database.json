@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-07-10T15:27:57.043Z",
+    "savedAt": "2026-07-11T03:54:05.319Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -352,6 +352,17 @@
       "bulan": "Juli",
       "tahun": 2026,
       "ket": "Pembuatan Stempel Masjid",
+      "kat": "Kas Pembangunan",
+      "masuk": 0,
+      "keluar": 40000
+    },
+    {
+      "id": 1783742040478,
+      "tanggal": "2026-07-11",
+      "minggu": 1,
+      "bulan": "Juli",
+      "tahun": 2026,
+      "ket": "Pembelian Bendrat 2kg",
       "kat": "Kas Pembangunan",
       "masuk": 0,
       "keluar": 40000
