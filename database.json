@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-07-11T12:31:25.619Z",
+    "savedAt": "2026-07-11T13:41:39.562Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -384,7 +384,7 @@
       "minggu": 1,
       "bulan": "Juli",
       "tahun": 2026,
-      "ket": "Pembelian Kapi",
+      "ket": "Kopi Tukang",
       "kat": "Kas Pembangunan",
       "masuk": 0,
       "keluar": 60000
