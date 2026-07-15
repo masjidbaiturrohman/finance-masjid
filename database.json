@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-07-15T21:58:13.533Z",
+    "savedAt": "2026-07-15T22:03:01.995Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -428,7 +428,7 @@
       "minggu": 2,
       "bulan": "Juli",
       "tahun": 2026,
-      "ket": "Naterial Bangunan",
+      "ket": "Material Bangunan",
       "kat": "Kas Pembangunan",
       "masuk": 0,
       "keluar": 525000
