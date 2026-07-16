@@ -376,6 +376,19 @@ textarea{resize:vertical;min-height:60px}
 })();
 </script>
 
+<!-- ════════════ PAKET WARISAN AKSES: buka otomatis di perangkat baru pakai 1 password ════════════ -->
+<div id="handover-unlock-overlay" style="display:none;position:fixed;inset:0;background:linear-gradient(160deg,var(--hijau),var(--hijau-mid));z-index:9998;align-items:center;justify-content:center;flex-direction:column;gap:14px;color:#fff;font-family:'Segoe UI',Arial,sans-serif;text-align:center;padding:20px">
+  <svg viewBox="0 0 24 24" fill="currentColor" width="34" height="34" style="opacity:.9"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+  <div style="font-size:15px;font-weight:700;letter-spacing:.3px">Paket Warisan Akses Ditemukan</div>
+  <div style="font-size:12px;opacity:.85;max-width:340px;line-height:1.7">Pengurus sebelumnya sudah menyiapkan akses otomatis untuk perangkat ini. Masukkan password yang diberikan ke Anda — Token, Repository, dan seluruh data akan otomatis terisi, tidak perlu isi apa pun secara manual.</div>
+  <div style="display:flex;gap:8px;margin-top:6px;flex-wrap:wrap;justify-content:center">
+    <input type="password" id="ho-unlock-input" placeholder="Password warisan" style="font-size:14px;padding:9px 12px;border-radius:6px;border:none;width:200px" onkeydown="if(event.key==='Enter')hoTryUnlock()">
+    <button class="btn btn-gold" id="ho-unlock-btn" onclick="hoTryUnlock()">Buka Akses</button>
+  </div>
+  <div id="ho-unlock-err" style="font-size:12px;color:#ffb4b4;display:none">Password salah atau paket rusak, coba lagi.</div>
+  <button class="btn btn-sm" style="margin-top:10px;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3)" onclick="hoDismissUnlock()">Lewati, atur manual saja</button>
+</div>
+
 <div class="layout">
 
 <!-- ════════════ SIDEBAR ════════════ -->
@@ -881,9 +894,14 @@ textarea{resize:vertical;min-height:60px}
             <input type="text" id="gh-path" placeholder="database.json" value="database.json" style="font-size:13px">
           </div>
         </div>
+        <div class="fg">
+          <label>Path file data.js (untuk halaman Laporan Jamaah)</label>
+          <input type="text" id="gh-path-datajs" placeholder="data.js" value="data.js" style="font-size:13px">
+          <div style="font-size:11px;color:var(--text3);margin-top:4px">Kalau file <b>laporan-jamaah.html</b> ada di dalam subfolder, tulis lengkap path-nya, cth: <code style="background:var(--krem);padding:1px 4px;border-radius:3px">laporan/data.js</code></div>
+        </div>
         <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text2);cursor:pointer;margin-top:2px">
           <input type="checkbox" id="gh-autosync" style="width:15px;height:15px;cursor:pointer">
-          Sinkron otomatis ke GitHub setiap ada perubahan data (beberapa detik setelah Anda berhenti mengetik/menyimpan)
+          Sinkron otomatis ke GitHub setiap ada perubahan data (±1 detik setelah Anda selesai mengetik/menyimpan; kalau tab ditutup mendadak, sistem tetap mencoba mengirim perubahan terakhir di background)
         </label>
       </div>
       <div style="display:flex;align-items:center;gap:10px;margin-top:14px">
@@ -913,6 +931,44 @@ textarea{resize:vertical;min-height:60px}
         <button class="btn btn-primary btn-sm" onclick="ghApplySetupCode()">Terapkan Kode</button>
       </div>
       <div id="gh-setup-code-status" style="font-size:11px;color:var(--text3);margin-top:8px"></div>
+    </div>
+
+    <!-- Paket Warisan Akses: serah terima ke pengurus baru cukup pakai 1 password -->
+    <div style="background:#fff;border:2px solid var(--emas);border-radius:10px;padding:18px">
+      <div style="font-size:12px;font-weight:700;color:var(--emas);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13" style="vertical-align:-2px;margin-right:3px"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+        Paket Warisan Akses (untuk Pengurus Selanjutnya)
+      </div>
+      <div style="font-size:12px;color:var(--text2);line-height:1.7;margin-bottom:14px">
+        Kalau nanti sudah tidak menjabat, pengurus baru <b>tidak perlu diajari Token/Repo/Branch sama sekali</b>.
+        Buat "paket warisan" di sini: Token, Repo, Branch, dan Path akan dienkripsi pakai password yang Anda tentukan,
+        lalu disimpan sebagai file terpisah di GitHub (bukan menimpa database.json). Selanjutnya, cukup beri
+        <b>alamat website</b> aplikasi ini + <b>password</b> tadi ke pengurus baru. Begitu mereka buka websitenya di
+        laptop/HP baru, aplikasi otomatis mendeteksi ada paket warisan dan menawarkan buka akses — tinggal
+        ketik password, semua (termasuk data) langsung terisi otomatis, tanpa perlu tahu apa itu Token/Repo/PAT.<br>
+        <span style="color:var(--red)">⚠️ Isinya terenkripsi, tapi tetap pilih password yang kuat & unik (bukan tanggal lahir/nama) — dan sampaikan password ke pengurus baru lewat jalur yang wajar (WA/telepon langsung), bukan ditulis di tempat umum.</span>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <div class="fg" style="flex:1;min-width:160px">
+          <label>Buat Password Warisan</label>
+          <input type="password" id="ho-pw1" placeholder="Minimal 8 karakter" style="font-size:13px">
+        </div>
+        <div class="fg" style="flex:1;min-width:160px">
+          <label>Ulangi Password</label>
+          <input type="password" id="ho-pw2" placeholder="Ketik ulang" style="font-size:13px">
+        </div>
+      </div>
+      <div class="fg" style="margin-top:8px">
+        <label>Nama file paket di GitHub (biarkan default kalau tidak yakin)</label>
+        <input type="text" id="ho-path" placeholder="handover.json" value="handover.json" style="font-size:13px">
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-top:12px">
+        <button class="btn btn-primary" id="btn-ho-create" style="font-size:13px;padding:9px 22px" onclick="hoCreateAndUpload()">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+          Buat &amp; Simpan Paket Warisan
+        </button>
+      </div>
+      <div id="ho-status" style="display:none;font-size:12px;margin-top:12px;padding:10px 12px;border-radius:6px;line-height:1.6"></div>
     </div>
 
     <!-- Aksi Sinkron -->
@@ -1011,10 +1067,13 @@ textarea{resize:vertical;min-height:60px}
       <div>
         <div style="font-size:13px;font-weight:700;color:var(--emas);margin-bottom:4px">Cara pakai</div>
         <div style="font-size:12px;color:#7B5800;line-height:1.7">
-          1. Pilih periode laporan di bawah, lalu klik <b>Generate data.js</b><br>
-          2. Download file <b>data.js</b> yang dihasilkan<br>
-          3. Upload ke folder GitHub bersama file <b>laporan-jamaah.html</b> (hanya perlu sekali)<br>
-          4. Update berikutnya: generate &amp; upload <b>data.js</b> saja — halaman otomatis terupdate!
+          <b>Cara otomatis (disarankan):</b> pilih periode laporan di bawah, lalu klik <b>Generate &amp; Kirim ke GitHub</b> —
+          data.js langsung terkirim ke repo tanpa perlu download/upload manual. Pastikan Token &amp; Repository GitHub
+          sudah diatur di menu <b>Sinkronisasi &amp; Backup</b> (dipakai bersama untuk database.json dan data.js).<br><br>
+          <b>Cara manual (kalau belum atur GitHub API):</b><br>
+          1. Pilih periode laporan di bawah, lalu klik <b>Download data.js</b><br>
+          2. Upload file <b>data.js</b> ke folder GitHub bersama file <b>laporan-jamaah.html</b> (hanya perlu sekali di awal)<br>
+          3. Update berikutnya: generate &amp; upload <b>data.js</b> lagi — halaman otomatis terupdate!
         </div>
       </div>
     </div>
@@ -1043,8 +1102,10 @@ textarea{resize:vertical;min-height:60px}
           <select class="fi" id="jm-thn"></select>
         </div>
         <button class="btn btn-primary" onclick="jmPreview()" style="padding:8px 16px"><svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg> Preview</button>
-        <button class="btn btn-gold" onclick="jmGenerate()" style="padding:8px 16px"><svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Generate data.js</button>
+        <button class="btn btn-primary" id="btn-jm-upload" onclick="jmGenerateAndUpload()" style="padding:8px 16px"><svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5z"/></svg> Generate &amp; Kirim ke GitHub</button>
+        <button class="btn btn-gold" onclick="jmGenerate()" style="padding:8px 16px"><svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Download data.js</button>
       </div>
+      <div id="jm-upload-status" style="display:none;font-size:12px;margin-top:12px;padding:10px 12px;border-radius:6px"></div>
     </div>
     <div id="jm-preview-area"></div>
   </div>
@@ -3680,6 +3741,9 @@ function jmInit(){
   // Set bulan ke bulan sekarang
   const blnSel=document.getElementById('jm-bln');
   if(blnSel) blnSel.value=BULAN_LIST[new Date().getMonth()];
+  // Tampilkan info sinkron data.js terakhir (kalau ada & belum ada status lain yang tampil)
+  const lastJs=localStorage.getItem(GH_SK.lastSyncDataJs);
+  if(lastJs) jmRenderUploadStatus('Terakhir dikirim ke GitHub: '+new Date(lastJs).toLocaleString('id-ID'));
 }
 
 function jmGetFiltered(){
@@ -3817,6 +3881,60 @@ const LAPORAN_DATA = ${JSON.stringify(d, null, 2)};
   showToast('data.js berhasil di-download ✓');
 }
 
+// Bangun isi data.js sebagai teks (dipakai bareng oleh jmGenerate & jmGenerateAndUpload)
+function jmBuildDataJsText(){
+  const rows=jmGetFiltered();
+  if(!rows.length && !(pengumumanData&&pengumumanData.length) && !(jadwalJumatData&&jadwalJumatData.length) && !(qurbanData&&qurbanData.length)) return null;
+  const d=jmBuildData(rows);
+  return `// Data laporan keuangan Masjid Baiturrahman Panjunan
+// Dibuat otomatis pada: ${d.diperbarui}
+// Jangan edit file ini secara manual — generate ulang dari aplikasi
+
+const LAPORAN_DATA = ${JSON.stringify(d, null, 2)};
+`;
+}
+
+function jmRenderUploadStatus(msg,isErr){
+  const el=document.getElementById('jm-upload-status');
+  if(!el) return;
+  el.style.display='block';
+  el.textContent=msg;
+  el.style.background=isErr?'#fbdada':'#d9f2e3';
+  el.style.color=isErr?'#b3261e':'#0f7a45';
+}
+
+// Kirim data.js langsung ke GitHub via API — tanpa perlu download & upload manual.
+// Memakai Token/Repo/Branch yang sama dengan sinkron database.json, hanya beda Path (gh-path-datajs).
+let jmUploading=false;
+async function jmGenerateAndUpload(){
+  if(jmUploading) return;
+  const js=jmBuildDataJsText();
+  if(js===null){showToast('Tidak ada data laporan, pengumuman, jadwal, maupun qurban untuk di-generate!');return;}
+  const s=ghGetSettings();
+  if(!s.token||!s.repo){
+    showToast('Isi & simpan Token dan Repository GitHub dulu di menu Sinkronisasi');
+    jmRenderUploadStatus('Token/Repository GitHub belum diisi. Buka menu Sinkronisasi & Backup untuk mengaturnya dulu.',true);
+    return;
+  }
+  jmUploading=true;
+  const btn=document.getElementById('btn-jm-upload');
+  const btnOrigText=btn?btn.innerHTML:'';
+  if(btn){btn.disabled=true;btn.innerHTML='Mengirim ke GitHub…';}
+  jmRenderUploadStatus('Mengirim data.js ke GitHub…');
+  try{
+    await ghPutFile(s.pathDataJs,js,'Update data.js (Laporan Jamaah) via Sistem Manajemen Masjid — '+new Date().toLocaleString('id-ID'),s);
+    localStorage.setItem(GH_SK.lastSyncDataJs,new Date().toISOString());
+    jmRenderUploadStatus('Berhasil dikirim ke GitHub ✓ ('+s.pathDataJs+') · '+new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}));
+    showToast('data.js berhasil dikirim ke GitHub ✓');
+  }catch(err){
+    jmRenderUploadStatus('Gagal mengirim ke GitHub: '+err.message,true);
+    showToast('Gagal mengirim data.js ke GitHub: '+err.message);
+  }finally{
+    jmUploading=false;
+    if(btn){btn.disabled=false;btn.innerHTML=btnOrigText;}
+  }
+}
+
 /* ══════════════════════════════════════════
    MULTI-SELECT MINGGU
 ══════════════════════════════════════════ */
@@ -3872,7 +3990,7 @@ document.addEventListener('click',function(e){
    Modul ini hanya membaca/menulis localStorage yang sudah ada
    lalu mengirim/menarik salinannya sebagai satu file JSON di GitHub.
 ══════════════════════════════════════════ */
-const GH_SK = {token:'lkm_gh_token', repo:'lkm_gh_repo', branch:'lkm_gh_branch', path:'lkm_gh_path', autosync:'lkm_gh_autosync', lastSha:'lkm_gh_last_sha', lastSync:'lkm_gh_last_sync', lastRemoteMeta:'lkm_gh_last_remote_meta'};
+const GH_SK = {token:'lkm_gh_token', repo:'lkm_gh_repo', branch:'lkm_gh_branch', path:'lkm_gh_path', pathDataJs:'lkm_gh_path_datajs', autosync:'lkm_gh_autosync', lastSha:'lkm_gh_last_sha', lastSync:'lkm_gh_last_sync', lastRemoteMeta:'lkm_gh_last_remote_meta', lastSyncDataJs:'lkm_gh_last_sync_datajs'};
 const SNAPSHOT_KEY='lkm_pre_overwrite_snapshot';
 // Simpan salinan data SAAT INI (sebelum ditimpa) supaya bisa dikembalikan 1 langkah kalau salah ambil/pulihkan data
 function saveSafetySnapshot(){
@@ -3904,6 +4022,8 @@ function ghRenderSnapshotInfo(){
 }
 let ghAutoSyncTimer=null;
 let ghSyncing=false;
+let ghPendingRetry=false; // true kalau ada perubahan baru masuk SAAT sinkron sedang berjalan
+let ghRetryAttempt=0; // hitungan percobaan ulang otomatis saat gagal (dengan jeda makin lama)
 
 function ghDetectRepoFromLocation(){
   try{
@@ -3925,6 +4045,7 @@ function ghGetSettings(){
     repo: savedRepo || ghDetectRepoFromLocation() || '',
     branch: (localStorage.getItem(GH_SK.branch)||'main').trim()||'main',
     path: (localStorage.getItem(GH_SK.path)||'database.json').trim()||'database.json',
+    pathDataJs: (localStorage.getItem(GH_SK.pathDataJs)||'data.js').trim()||'data.js',
     autosync: localStorage.getItem(GH_SK.autosync)==='1'
   };
 }
@@ -3934,6 +4055,7 @@ function ghPageInit(){
   document.getElementById('gh-repo').value=s.repo;
   document.getElementById('gh-branch').value=s.branch;
   document.getElementById('gh-path').value=s.path;
+  document.getElementById('gh-path-datajs').value=s.pathDataJs;
   document.getElementById('gh-autosync').checked=s.autosync;
   const hint=document.getElementById('gh-repo-hint');
   if(hint){
@@ -3949,6 +4071,7 @@ function ghSaveSettings(){
   localStorage.setItem(GH_SK.repo,document.getElementById('gh-repo').value.trim());
   localStorage.setItem(GH_SK.branch,document.getElementById('gh-branch').value.trim()||'main');
   localStorage.setItem(GH_SK.path,document.getElementById('gh-path').value.trim()||'database.json');
+  localStorage.setItem(GH_SK.pathDataJs,document.getElementById('gh-path-datajs').value.trim()||'data.js');
   localStorage.setItem(GH_SK.autosync,document.getElementById('gh-autosync').checked?'1':'0');
   const msg=document.getElementById('gh-settings-saved-msg');
   if(msg){msg.style.display='inline';setTimeout(()=>msg.style.display='none',3000);}
@@ -3968,8 +4091,9 @@ function ghCopySetupCode(){
   const repo=document.getElementById('gh-repo').value.trim()||s.repo;
   const branch=document.getElementById('gh-branch').value.trim()||s.branch;
   const path=document.getElementById('gh-path').value.trim()||s.path;
+  const pathDataJs=document.getElementById('gh-path-datajs').value.trim()||s.pathDataJs;
   if(!token||!repo){showToast('Isi Token dan Repository dulu sebelum menyalin kode setup');return;}
-  const payload={t:token,r:repo,b:branch,p:path,v:1};
+  const payload={t:token,r:repo,b:branch,p:path,pj:pathDataJs,v:2};
   const code='MJDSETUP1:'+b64EncodeUnicode(JSON.stringify(payload));
   const doCopy=(text)=>{
     if(navigator.clipboard&&navigator.clipboard.writeText){
@@ -4001,6 +4125,7 @@ function ghApplySetupCode(){
     document.getElementById('gh-repo').value=payload.r;
     document.getElementById('gh-branch').value=payload.b||'main';
     document.getElementById('gh-path').value=payload.p||'database.json';
+    document.getElementById('gh-path-datajs').value=payload.pj||'data.js';
     ghSaveSettings();
     document.getElementById('gh-setup-code-input').value='';
     if(st){st.textContent='Kode diterapkan & disimpan ✓ Sekarang klik "Ambil Data dari GitHub".';st.style.color='var(--hijau)';}
@@ -4064,10 +4189,12 @@ function applyAllData(d){
 function b64EncodeUnicode(str){return btoa(unescape(encodeURIComponent(str)));}
 function b64DecodeUnicode(str){return decodeURIComponent(escape(atob(str)));}
 
-async function ghApiRequest(url,opts){
+async function ghApiRequest(url,opts,keepalive){
   const s=ghGetSettings();
   const headers=Object.assign({'Accept':'application/vnd.github+json','Authorization':'token '+s.token},(opts&&opts.headers)||{});
-  const res=await fetch(url,Object.assign({},opts,{headers}));
+  const fetchOpts=Object.assign({},opts,{headers});
+  if(keepalive) fetchOpts.keepalive=true; // request tetap dikirim browser walau tab sudah ditutup
+  const res=await fetch(url,fetchOpts);
   return res;
 }
 
@@ -4089,42 +4216,82 @@ function syncBadgeSet(state,text){
   el.innerHTML=`<span style="font-size:12px">${st.icon}</span><span>${text}</span>`;
 }
 
-async function ghUploadNow(manualTrigger){
+// Fungsi umum: kirim (create/update) satu file ke GitHub lewat Contents API.
+// path: lokasi file di repo. textContent: isi file dalam bentuk teks biasa (bukan base64).
+// commitMessage: pesan commit. s: hasil ghGetSettings() (opsional, akan diambil ulang kalau kosong).
+// Return: {ok:true} kalau sukses, atau melempar Error kalau gagal.
+async function ghPutFile(path,textContent,commitMessage,s,keepalive){
+  s=s||ghGetSettings();
+  if(!s.token||!s.repo) throw new Error('Token dan Repository GitHub belum diisi.');
+  if(!path) throw new Error('Path file belum diisi.');
+  const apiUrl=`https://api.github.com/repos/${s.repo}/contents/${encodeURIComponent(path).replace(/%2F/g,'/')}`;
+  // Ambil sha file saat ini (kalau sudah ada) supaya update, bukan bikin file baru
+  let sha=null;
+  const getRes=await ghApiRequest(`${apiUrl}?ref=${encodeURIComponent(s.branch)}`,{method:'GET'},keepalive);
+  if(getRes.status===200){ const j=await getRes.json(); sha=j.sha; }
+  else if(getRes.status!==404){ throw new Error('Gagal cek file (HTTP '+getRes.status+')'); }
+
+  const content=b64EncodeUnicode(textContent);
+  const body={message:commitMessage,content,branch:s.branch};
+  if(sha) body.sha=sha;
+  const putRes=await ghApiRequest(apiUrl,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)},keepalive);
+  if(!putRes.ok){
+    const errJ=await putRes.json().catch(()=>({}));
+    throw new Error(errJ.message||('Gagal menyimpan (HTTP '+putRes.status+')'));
+  }
+  return {ok:true};
+}
+
+async function ghUploadNow(manualTrigger,keepalive){
   const s=ghGetSettings();
   if(!s.token||!s.repo){ghRenderStatus('Isi & simpan Token dan Repository dulu.',true);if(manualTrigger)showToast('Lengkapi pengaturan GitHub dulu');return;}
-  if(ghSyncing) return;
+  if(ghSyncing){
+    // Sinkron sebelumnya masih berjalan (misal koneksi lambat / file besar).
+    // JANGAN buang perubahan ini — tandai supaya disinkron ulang begitu yang sedang berjalan selesai.
+    ghPendingRetry=true;
+    if(manualTrigger) showToast('Masih mengirim data sebelumnya, perubahan ini akan menyusul otomatis…');
+    return;
+  }
   ghSyncing=true;
+  ghPendingRetry=false;
   ghRenderStatus('Mengirim data ke GitHub…');
   if(s.autosync) syncBadgeSet('syncing','Menyimpan ke GitHub…');
   try{
-    const apiUrl=`https://api.github.com/repos/${s.repo}/contents/${encodeURIComponent(s.path).replace(/%2F/g,'/')}`;
-    // Ambil sha file saat ini (kalau sudah ada) supaya update, bukan bikin file baru
-    let sha=null;
-    const getRes=await ghApiRequest(`${apiUrl}?ref=${encodeURIComponent(s.branch)}`,{method:'GET'});
-    if(getRes.status===200){ const j=await getRes.json(); sha=j.sha; }
-    else if(getRes.status!==404){ throw new Error('Gagal cek file (HTTP '+getRes.status+')'); }
-
     const dataObj=gatherAllData();
-    const content=b64EncodeUnicode(JSON.stringify(dataObj,null,2));
-    const body={message:'Update data via Sistem Manajemen Masjid — '+new Date().toLocaleString('id-ID'),content,branch:s.branch};
-    if(sha) body.sha=sha;
-    const putRes=await ghApiRequest(apiUrl,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-    if(!putRes.ok){
-      const errJ=await putRes.json().catch(()=>({}));
-      throw new Error(errJ.message||('Gagal menyimpan (HTTP '+putRes.status+')'));
-    }
+    const jsonStr=JSON.stringify(dataObj,null,2);
+    await ghPutFile(s.path,jsonStr,'Update data via Sistem Manajemen Masjid — '+new Date().toLocaleString('id-ID'),s,keepalive);
     localStorage.setItem(GH_SK.lastSync,new Date().toISOString());
     localStorage.setItem(GH_SK.lastRemoteMeta,dataObj._meta.savedAt);
+    ghHasUnsyncedChanges=false;
     ghHideUpdateBanner();
     ghRenderStatus('Berhasil disimpan ke GitHub ✓');
     if(manualTrigger) showToast('Data berhasil disimpan ke GitHub ✓');
     if(s.autosync) syncBadgeSet('success','Tersimpan ke GitHub · '+new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}));
+    ghRetryAttempt=0;
   }catch(err){
     ghRenderStatus('Gagal sinkron: '+err.message,true);
     if(manualTrigger) showToast('Gagal sinkron ke GitHub: '+err.message);
-    if(s.autosync) syncBadgeSet('error','Gagal sinkron, klik untuk cek');
+    if(s.autosync){
+      // Coba lagi otomatis dengan jeda makin lama (5s, 15s, 30s), maks 3x, supaya
+      // gangguan koneksi sesaat tidak bikin data "nyangkut" tanpa penjelasan.
+      if(ghRetryAttempt<3){
+        const delays=[5000,15000,30000];
+        const wait=delays[ghRetryAttempt];
+        ghRetryAttempt++;
+        syncBadgeSet('error','Gagal sinkron, mencoba lagi dalam '+(wait/1000)+'d…');
+        setTimeout(()=>{ghUploadNow(false);},wait);
+      } else {
+        syncBadgeSet('error','Gagal sinkron berulang kali, klik untuk cek');
+        ghRetryAttempt=0;
+      }
+    }
   }finally{
     ghSyncing=false;
+    // Kalau ada perubahan baru yang masuk selagi tadi masih mengirim, susulkan sekarang.
+    if(ghPendingRetry){
+      ghPendingRetry=false;
+      setTimeout(()=>{ghUploadNow(false);},1200);
+    }
   }
 }
 
@@ -4156,13 +4323,30 @@ async function ghDownloadNow(){
 }
 
 // Dipanggil otomatis tiap kali ada perubahan data (lihat hook di fungsi save())
+let ghHasUnsyncedChanges=false;
 function markDirty(){
   const s=ghGetSettings();
   if(!s.autosync||!s.token||!s.repo) return;
+  ghHasUnsyncedChanges=true;
   syncBadgeSet('pending','Ada perubahan, akan disimpan…');
   if(ghAutoSyncTimer) clearTimeout(ghAutoSyncTimer);
-  ghAutoSyncTimer=setTimeout(()=>{ghUploadNow(false);},4000);
+  // Jeda singkat (bukan 0 detik) supaya beberapa perubahan yang beruntun (misal isi form
+  // banyak field) digabung jadi satu kali kirim — tapi tetap terasa hampir instan.
+  ghAutoSyncTimer=setTimeout(()=>{ghUploadNow(false);},1200);
 }
+
+// Jaring pengaman terakhir: kalau tab ditutup/di-minimize/pindah app SAAT masih ada
+// perubahan yang belum sempat terkirim (misal baru ketik lalu langsung tutup laptop),
+// coba paksa kirim sekarang juga dengan koneksi yang tetap dibiarkan jalan di background.
+function ghFlushOnHide(){
+  if(!ghHasUnsyncedChanges) return;
+  const s=ghGetSettings();
+  if(!s.autosync||!s.token||!s.repo) return;
+  if(ghAutoSyncTimer) clearTimeout(ghAutoSyncTimer);
+  ghUploadNow(false,true);
+}
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden') ghFlushOnHide(); });
+window.addEventListener('pagehide',ghFlushOnHide);
 
 // ── Backup lokal (file .json di komputer, terpisah dari GitHub) ──
 function backupDownload(){
@@ -4287,6 +4471,170 @@ async function lockTrySubmit(){
   }
 }
 
+// ══════════════════════════════════════════
+// PAKET WARISAN AKSES — serah terima ke pengurus baru cukup pakai 1 password
+// Token/Repo/Branch/Path dienkripsi (AES-GCM, key dari password via PBKDF2) lalu
+// disimpan sebagai file terpisah di GitHub. Di perangkat baru, file itu bisa dibaca
+// langsung dari alamat GitHub Pages (tanpa token, karena memang file publik statis),
+// tapi ISINYA baru bisa dibuka kalau tahu passwordnya.
+// ══════════════════════════════════════════
+const HO_SK = {path:'lkm_ho_path'};
+
+async function hoDeriveKey(password,saltBytes){
+  const enc=new TextEncoder();
+  const baseKey=await crypto.subtle.importKey('raw',enc.encode(password),'PBKDF2',false,['deriveKey']);
+  return crypto.subtle.deriveKey(
+    {name:'PBKDF2',salt:saltBytes,iterations:150000,hash:'SHA-256'},
+    baseKey,{name:'AES-GCM',length:256},false,['encrypt','decrypt']
+  );
+}
+function hoBufToB64(buf){
+  const bytes=new Uint8Array(buf);
+  let bin='';
+  for(let i=0;i<bytes.length;i++) bin+=String.fromCharCode(bytes[i]);
+  return btoa(bin);
+}
+function hoB64ToBuf(b64){
+  const bin=atob(b64);
+  const arr=new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++) arr[i]=bin.charCodeAt(i);
+  return arr.buffer;
+}
+async function hoEncrypt(obj,password){
+  const salt=crypto.getRandomValues(new Uint8Array(16));
+  const iv=crypto.getRandomValues(new Uint8Array(12));
+  const key=await hoDeriveKey(password,salt);
+  const plain=new TextEncoder().encode(JSON.stringify(obj));
+  const cipherBuf=await crypto.subtle.encrypt({name:'AES-GCM',iv},key,plain);
+  return {v:1,salt:hoBufToB64(salt),iv:hoBufToB64(iv),data:hoBufToB64(cipherBuf)};
+}
+async function hoDecrypt(pkg,password){
+  const salt=new Uint8Array(hoB64ToBuf(pkg.salt));
+  const iv=new Uint8Array(hoB64ToBuf(pkg.iv));
+  const key=await hoDeriveKey(password,salt);
+  const cipherBuf=hoB64ToBuf(pkg.data);
+  const plainBuf=await crypto.subtle.decrypt({name:'AES-GCM',iv},key,cipherBuf); // lempar error kalau password salah
+  return JSON.parse(new TextDecoder().decode(plainBuf));
+}
+function hoRenderStatus(msg,isErr){
+  const el=document.getElementById('ho-status');
+  if(!el) return;
+  el.style.display='block';
+  el.textContent=msg;
+  el.style.background=isErr?'#fbdada':'#d9f2e3';
+  el.style.color=isErr?'#b3261e':'#0f7a45';
+}
+
+// Dipanggil dari halaman Sinkronisasi & Backup: enkripsi Token/Repo/Branch/Path
+// pakai password yang diketik admin, lalu upload sebagai file terpisah ke GitHub.
+async function hoCreateAndUpload(){
+  const pw1=document.getElementById('ho-pw1').value;
+  const pw2=document.getElementById('ho-pw2').value;
+  if(!pw1||pw1.length<8){showToast('Password minimal 8 karakter');hoRenderStatus('Password minimal 8 karakter.',true);return;}
+  if(pw1!==pw2){showToast('Konfirmasi password tidak sama');hoRenderStatus('Konfirmasi password tidak sama dengan password pertama.',true);return;}
+  const s=ghGetSettings();
+  if(!s.token||!s.repo){showToast('Isi & simpan Token+Repository GitHub dulu di atas');hoRenderStatus('Token/Repository GitHub belum diisi & disimpan.',true);return;}
+  const path=(document.getElementById('ho-path').value||'handover.json').trim()||'handover.json';
+  const btn=document.getElementById('btn-ho-create');
+  const orig=btn?btn.innerHTML:'';
+  if(btn){btn.disabled=true;btn.innerHTML='Membuat paket…';}
+  hoRenderStatus('Mengenkripsi & mengirim paket warisan ke GitHub…');
+  try{
+    const payload={t:s.token,r:s.repo,b:s.branch,p:s.path,pj:s.pathDataJs};
+    const pkg=await hoEncrypt(payload,pw1);
+    await ghPutFile(path,JSON.stringify(pkg,null,2),'Buat/update paket warisan akses — '+new Date().toLocaleString('id-ID'),s);
+    localStorage.setItem(HO_SK.path,path);
+    hoRenderStatus('Paket warisan berhasil dibuat & disimpan di GitHub ('+path+') ✓ Sekarang cukup beri ALAMAT WEBSITE ini + PASSWORD tadi ke pengurus baru — mereka tidak perlu tahu apa pun soal Token/Repo/PAT.');
+    showToast('Paket warisan berhasil dibuat ✓');
+    document.getElementById('ho-pw1').value='';
+    document.getElementById('ho-pw2').value='';
+  }catch(err){
+    hoRenderStatus('Gagal membuat paket warisan: '+err.message,true);
+    showToast('Gagal membuat paket warisan: '+err.message);
+  }finally{
+    if(btn){btn.disabled=false;btn.innerHTML=orig;}
+  }
+}
+
+// Dipanggil otomatis saat aplikasi dibuka di perangkat yang BELUM punya Token tersimpan.
+// Coba baca file paket warisan langsung dari alamat website ini (statis, tanpa token).
+let hoFoundPath=null;
+async function hoCheckAvailable(){
+  try{
+    const s=ghGetSettings();
+    if(s.token) return; // perangkat ini sudah punya akses, tidak perlu ditawari
+    const lockEl=document.getElementById('app-lock-overlay');
+    if(lockEl && lockEl.style.display!=='none') return; // tunggu kunci device dibuka dulu kalau ada
+    const savedPath=(localStorage.getItem(HO_SK.path)||'').trim();
+    const candidates=[...new Set([savedPath,'handover.json'].filter(Boolean))];
+    for(const name of candidates){
+      try{
+        const res=await fetch('./'+name.replace(/^\/+/,''),{cache:'no-store'});
+        if(!res.ok) continue;
+        const j=await res.json().catch(()=>null);
+        if(j && j.data && j.iv && j.salt){
+          hoFoundPath=name;
+          const el=document.getElementById('handover-unlock-overlay');
+          if(el) el.style.display='flex';
+          return;
+        }
+      }catch(e){}
+    }
+  }catch(e){}
+}
+function hoDismissUnlock(){
+  const el=document.getElementById('handover-unlock-overlay');
+  if(el) el.style.display='none';
+}
+async function hoTryUnlock(){
+  const pw=document.getElementById('ho-unlock-input').value;
+  const err=document.getElementById('ho-unlock-err');
+  const btn=document.getElementById('ho-unlock-btn');
+  if(!pw||!hoFoundPath) return;
+  if(btn){btn.disabled=true;btn.textContent='Membuka…';}
+  try{
+    const res=await fetch('./'+hoFoundPath.replace(/^\/+/,''),{cache:'no-store'});
+    const pkg=await res.json();
+    const payload=await hoDecrypt(pkg,pw); // lempar error kalau password salah / rusak
+    if(!payload.t||!payload.r) throw new Error('Paket tidak lengkap');
+    localStorage.setItem(GH_SK.token,payload.t);
+    localStorage.setItem(GH_SK.repo,payload.r);
+    localStorage.setItem(GH_SK.branch,payload.b||'main');
+    localStorage.setItem(GH_SK.path,payload.p||'database.json');
+    localStorage.setItem(GH_SK.pathDataJs,payload.pj||'data.js');
+    localStorage.setItem(GH_SK.autosync,'1');
+    localStorage.setItem(HO_SK.path,hoFoundPath);
+    if(err) err.style.display='none';
+    hoDismissUnlock();
+    showToast('Akses terbuka ✓ Mengambil data terbaru dari GitHub…');
+    await hoPullAfterUnlock();
+  }catch(e){
+    if(err) err.style.display='block';
+    document.getElementById('ho-unlock-input').value='';
+    document.getElementById('ho-unlock-input').focus();
+  }finally{
+    if(btn){btn.disabled=false;btn.textContent='Buka Akses';}
+  }
+}
+async function hoPullAfterUnlock(){
+  // Perangkat baru belum punya data lokal yang perlu dilindungi, jadi langsung tarik
+  // data terbaru dari GitHub tanpa perlu konfirmasi seperti tombol "Ambil Data" manual.
+  try{
+    const s=ghGetSettings();
+    const apiUrl=`https://api.github.com/repos/${s.repo}/contents/${encodeURIComponent(s.path).replace(/%2F/g,'/')}`;
+    const getRes=await ghApiRequest(`${apiUrl}?ref=${encodeURIComponent(s.branch)}`,{method:'GET'});
+    if(getRes.ok){
+      const j=await getRes.json();
+      const jsonStr=b64DecodeUnicode(j.content.replace(/\n/g,''));
+      const dataObj=JSON.parse(jsonStr);
+      applyAllData(dataObj);
+      localStorage.setItem(GH_SK.lastSync,new Date().toISOString());
+      if(dataObj._meta&&dataObj._meta.savedAt) localStorage.setItem(GH_SK.lastRemoteMeta,dataObj._meta.savedAt);
+    }
+  }catch(e){}
+  location.reload();
+}
+
 loadAll();
 populateKeuFilters();
 populateInvKatSelect();
@@ -4294,6 +4642,7 @@ populateTrxFilters();
 populateTrxBarangSelect();
 renderDashboard();
 ghCheckForRemoteUpdate();
+hoCheckAvailable();
 (function initSyncBadge(){
   const s=ghGetSettings();
   if(!s.autosync||!s.token||!s.repo){ syncBadgeSet('off'); return; }
