@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Laporan Keuangan Masjid Baiturrahman Panjunan</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --hijau:#1B4332;--hijau-mid:#2D6A4F;--hijau-light:#40916C;--hijau-pale:#D8F3DC;
+  --emas:#C6952A;--emas-pale:#FFF8E1;
+  --krem:#FAF7F0;--border:#E0D8CC;
+  --text:#1a1a1a;--text2:#555;--text3:#999;
+  --red:#9B1C1C;--red-pale:#FFEBEE;
+}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#EAE4D6;color:var(--text);min-height:100vh;width:100%;overflow-x:hidden}
+.app-shell{max-width:480px;margin:0 auto;min-height:100vh;background:var(--krem);position:relative;padding-bottom:80px;box-shadow:0 0 44px rgba(0,0,0,0.10)}
+
+/* CONTAINER */
+.container{max-width:600px;margin:0 auto;padding:0 14px;width:100%}
+
+/* FILTER BAR */
+.filter-section{background:#fff;border-radius:12px;border:1px solid var(--border);padding:16px;margin:-16px 0 16px;position:relative;box-shadow:0 2px 12px rgba(0,0,0,0.08)}
+.filter-title{font-size:12px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:12px}
+.filter-row{display:flex;gap:8px;flex-wrap:wrap}
+select.flt{flex:1;min-width:100px;font-size:13px;padding:9px 10px;border:1.5px solid var(--border);border-radius:8px;background:#FAF7F0;color:var(--text);font-family:inherit;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='%23999' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;padding-right:26px}
+select.flt:focus{outline:2px solid var(--hijau);border-color:var(--hijau)}
+.btn-lihat{width:100%;margin-top:10px;background:var(--hijau);color:#FAF7F0;border:none;border-radius:8px;padding:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;letter-spacing:0.3px;transition:all 0.15s}
+.btn-lihat:hover{background:var(--hijau-mid)}
+.btn-lihat:active{transform:scale(0.98)}
+
+/* WALLET BALANCE CARD */
+.wallet-card{background:var(--hijau);border-radius:0 0 22px 22px;padding:20px 20px 20px;color:#fff;margin:0 -14px 16px -14px;text-align:center}
+.wallet-account{display:flex;align-items:center;gap:10px;text-align:left;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,0.16)}
+.wallet-account-icon{width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.wallet-account-sub{font-size:9.5px;opacity:0.65;font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+.wallet-account-name{font-size:13.5px;font-weight:800;margin-top:1px;line-height:1.3}
+.wallet-label{display:flex;align-items:center;justify-content:center;gap:6px;font-size:11px;opacity:0.75;font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+.wallet-periode{font-size:11px;opacity:0.6;margin-top:5px}
+.wallet-balance{font-size:29px;font-weight:800;margin-top:9px;letter-spacing:.2px}
+.wallet-pills{display:flex;gap:10px;margin-top:16px}
+.wallet-pill{flex:1;background:rgba(255,255,255,0.13);border:1px solid rgba(255,255,255,0.22);border-radius:14px;padding:10px 12px;display:flex;align-items:center;gap:9px;text-align:left}
+.wallet-pill-icon{width:30px;height:30px;border-radius:9px;background:rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.wallet-pill-label{font-size:9.5px;opacity:0.7;font-weight:600}
+.wallet-pill-val{font-size:12.5px;font-weight:800;margin-top:1px}
+
+/* QUICK STATS */
+.quick-stats{display:flex;background:#fff;border:1px solid var(--border);border-radius:16px;padding:14px 4px;margin-bottom:16px;box-shadow:0 1px 8px rgba(0,0,0,0.04)}
+.qs-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;padding:0 2px}
+.qs-icon{width:40px;height:40px;border-radius:50%;background:var(--hijau-pale);color:var(--hijau);display:flex;align-items:center;justify-content:center}
+.qs-label{font-size:9px;color:var(--text3);font-weight:600}
+.qs-val{font-size:10.5px;color:var(--text);font-weight:700;line-height:1.3}
+
+/* SECTION HEADER */
+.sect-head{font-size:13.5px;font-weight:800;color:var(--text);margin:4px 0 12px;display:flex;align-items:center;gap:7px}
+
+/* TRANSACTION LIST */
+.trx-list{display:flex;flex-direction:column;background:#fff;border-radius:16px;border:1px solid var(--border);overflow:hidden;margin-bottom:14px}
+.trx-item{padding:13px 14px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border)}
+.trx-item:last-child{border-bottom:none}
+.trx-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.trx-icon.masuk{background:var(--hijau-pale);color:var(--hijau)}
+.trx-icon.keluar{background:var(--red-pale);color:var(--red)}
+.trx-body{flex:1;min-width:0}
+.trx-ket{font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.trx-tgl{font-size:11px;color:var(--text3);margin-top:2px}
+.trx-right{text-align:right;flex-shrink:0}
+.trx-amt{font-size:13px;font-weight:700}
+.trx-amt.masuk{color:var(--hijau)}
+.trx-amt.keluar{color:var(--red)}
+.trx-saldo{font-size:10px;color:var(--text3);margin-top:2px}
+
+/* EMPTY / ERROR */
+.empty-box{background:#fff;border:1px solid var(--border);border-radius:12px;padding:40px 20px;text-align:center;color:var(--text3);margin-top:16px}
+.empty-icon{font-size:40px;margin-bottom:10px}
+.empty-title{font-size:15px;font-weight:600;margin-bottom:6px;color:var(--text2)}
+.empty-sub{font-size:12px;line-height:1.6}
+
+/* ERROR */
+.err-box{background:var(--red-pale);border:1px solid #F5C6C6;border-radius:12px;padding:20px;margin:14px 0;color:var(--red);font-size:13px;line-height:1.6;text-align:center}
+
+/* FOOTER */
+.footer{text-align:center;padding:20px 14px 10px;font-size:11px;color:var(--text3);line-height:1.8}
+.footer strong{color:var(--hijau)}
+
+/* TAB BAR */
+.tabbar{position:fixed;left:0;right:0;bottom:0;max-width:480px;margin:0 auto;z-index:80;background:#fff;border-top:1px solid var(--border);display:flex;box-shadow:0 -2px 14px rgba(0,0,0,0.08);padding-bottom:env(safe-area-inset-bottom)}
+.tab-btn{flex:1;background:none;border:none;padding:9px 6px 7px;font-family:inherit;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--text3);font-size:10.5px;font-weight:700;border-top:3px solid transparent;transition:all .15s}
+.tab-btn .tab-ic{display:block}
+.tab-btn.active{color:var(--hijau);border-top-color:var(--hijau)}
+.tab-btn:active{opacity:0.7}
+
+/* HOME */
+.home-wrap{padding-top:16px}
+.home-greet-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.home-greet{font-size:17px;font-weight:800;color:var(--text)}
+.home-loc{font-size:12px;color:var(--text3);margin-top:2px;display:flex;align-items:center;gap:4px}
+.home-bell{position:relative;width:40px;height:40px;border-radius:50%;background:#fff;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--hijau);cursor:pointer;flex-shrink:0;box-shadow:0 1px 6px rgba(0,0,0,0.05)}
+.home-bell:active{background:var(--krem)}
+.home-bell-dot{position:absolute;top:6px;right:7px;width:9px;height:9px;border-radius:50%;background:var(--red);border:2px solid #fff}
+
+.home-hero-card{background:linear-gradient(135deg, var(--hijau) 0%, var(--hijau-mid) 100%);border-radius:20px;padding:22px 20px;position:relative;overflow:visible;margin-bottom:28px;min-height:158px}
+.home-hero-title{color:#fff;font-size:19px;font-weight:800;line-height:1.32;max-width:56%;position:relative;z-index:2}
+.home-hero-sub{color:rgba(255,255,255,0.72);font-size:11.5px;margin-top:6px;max-width:56%;position:relative;z-index:2;line-height:1.5}
+.home-hero-mosque{position:absolute;right:-10px;bottom:-16px;width:190px;height:190px;z-index:1;filter:drop-shadow(0 10px 14px rgba(0,0,0,0.28))}
+.home-hero-mosque img{width:100%;height:100%;object-fit:contain}
+
+.home-menu-panel{background:#fff;border-radius:18px;padding:8px;box-shadow:0 2px 14px rgba(0,0,0,0.06);border:1px solid var(--border)}
+.home-menu-item{display:flex;align-items:center;gap:14px;padding:13px 10px;border-radius:12px;cursor:pointer;transition:background .12s}
+.home-menu-item:active{background:var(--krem)}
+.home-menu-item:not(:last-child){border-bottom:1px solid var(--border)}
+.home-menu-icon{width:46px;height:46px;border-radius:12px;background:var(--hijau-pale);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--hijau)}
+.home-menu-title2{font-size:13.5px;font-weight:700;color:var(--text)}
+.home-menu-sub2{font-size:11px;color:var(--text3);margin-top:2px}
+.home-menu-arrow2{color:var(--text3);flex-shrink:0}
+
+/* JADWAL JUM'AT */
+.jj-wrap{display:flex;flex-direction:column;gap:10px;margin:14px 0 20px}
+.jj-card{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,0.05);display:flex;gap:0}
+.jj-card.next{border-color:var(--emas);box-shadow:0 2px 10px rgba(198,149,42,0.18)}
+.jj-date-block{width:64px;flex-shrink:0;background:var(--hijau-pale);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}
+.jj-card.next .jj-date-block{background:var(--emas);color:#fff}
+.jj-date-block .dd{font-size:21px;font-weight:800;color:var(--hijau);line-height:1}
+.jj-card.next .jj-date-block .dd{color:#fff}
+.jj-date-block .mm{font-size:10.5px;font-weight:700;color:var(--hijau);text-transform:uppercase}
+.jj-card.next .jj-date-block .mm{color:#fff}
+.jj-body2{flex:1;min-width:0;padding:12px 14px}
+.jj-badge-next{display:inline-block;background:var(--emas);color:#fff;font-size:9.5px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;border-radius:20px;padding:2px 9px;margin-bottom:6px}
+.jj-khatib{font-size:14px;font-weight:700;color:var(--text)}
+.jj-role{font-size:11.5px;color:var(--text3);margin-top:2px}
+.jj-tema{font-size:12px;color:var(--hijau);font-weight:600;margin-top:6px}
+.jj-catatan{font-size:11.5px;color:var(--text2);margin-top:6px;line-height:1.6;background:var(--krem);border-radius:8px;padding:8px 10px}
+.jj-waktu-chip{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;color:var(--hijau);background:var(--hijau-pale);border-radius:20px;padding:3px 10px;margin-top:8px}
+.jj-card.next .jj-waktu-chip{color:#7B5800;background:rgba(255,255,255,0.55)}
+
+/* QURBAN */
+.qb-hero{background:var(--hijau);border-radius:0 0 22px 22px;padding:20px 20px 20px;color:#fff;margin:0 -14px 16px -14px;text-align:center}
+.qb-hero-label{font-size:11px;opacity:0.75;font-weight:700;text-transform:uppercase;letter-spacing:.4px;display:flex;align-items:center;justify-content:center;gap:6px}
+.qb-hero-counts{display:flex;justify-content:center;gap:22px;margin-top:12px}
+.qb-hero-count-num{font-size:26px;font-weight:800}
+.qb-hero-count-label{font-size:10.5px;opacity:0.7;margin-top:2px}
+.qb-hero-stats{display:flex;gap:8px;margin-top:16px}
+.qb-hero-stat{flex:1;background:rgba(255,255,255,0.13);border:1px solid rgba(255,255,255,0.22);border-radius:12px;padding:8px 6px;text-align:center}
+.qb-hero-stat-num{font-size:15px;font-weight:800}
+.qb-hero-stat-label{font-size:9px;opacity:0.7;margin-top:1px}
+
+.qb-hewan-wrap{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+.qb-hewan-card{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.qb-hewan-head{display:flex;align-items:center;gap:12px;padding:13px 14px;cursor:pointer}
+.qb-hewan-icon{width:40px;height:40px;border-radius:12px;background:var(--hijau-pale);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.qb-hewan-title{font-size:13.5px;font-weight:700;color:var(--text)}
+.qb-hewan-sub{font-size:11px;color:var(--text3);margin-top:2px}
+.qb-hewan-chevron{color:var(--text3);flex-shrink:0;transition:transform .2s}
+.qb-hewan-card.open .qb-hewan-chevron{transform:rotate(180deg)}
+.qb-hewan-peserta{max-height:0;overflow:hidden;transition:max-height .25s ease}
+.qb-hewan-card.open .qb-hewan-peserta{max-height:600px}
+.qb-hewan-peserta-inner{padding:4px 14px 14px 14px;border-top:1px solid var(--border)}
+.qb-peserta-row2{display:flex;gap:8px;padding:8px 0;font-size:12.5px;color:var(--text);border-bottom:1px solid var(--krem)}
+.qb-peserta-row2:last-child{border-bottom:none}
+.qb-peserta-num{color:var(--text3);flex-shrink:0;width:18px}
+.qb-peserta-untuk{color:var(--text3);font-weight:400}
+
+.qb-status-pill{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;border-radius:20px;padding:3px 9px;flex-shrink:0}
+.qb-status-pill.terkumpul{background:var(--emas-pale);color:#7B5800}
+.qb-status-pill.disembelih{background:#FFE8D6;color:#B5540A}
+.qb-status-pill.disalurkan{background:var(--hijau-pale);color:var(--hijau)}
+
+.qb-penyaluran-wrap{display:flex;flex-direction:column;background:#fff;border-radius:16px;border:1px solid var(--border);overflow:hidden;margin-bottom:14px}
+.qb-penyaluran-item{display:flex;align-items:center;gap:12px;padding:13px 14px;border-bottom:1px solid var(--border)}
+.qb-penyaluran-item:last-child{border-bottom:none}
+.qb-penyaluran-icon{width:36px;height:36px;border-radius:50%;background:var(--hijau-pale);color:var(--hijau);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.qb-penyaluran-title{font-size:13px;font-weight:700;color:var(--text)}
+.qb-penyaluran-sub{font-size:11px;color:var(--text3);margin-top:2px}
+
+/* PENGUMUMAN — gaya feed sosial media */
+.peng-wrap{display:flex;flex-direction:column;gap:16px;margin:14px 0 20px}
+.peng-card{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.peng-head{display:flex;align-items:center;gap:10px;padding:11px 12px}
+.peng-avatar{width:34px;height:34px;border-radius:50%;background:var(--hijau);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;font-size:14px}
+.peng-avatar img{width:100%;height:100%;object-fit:cover}
+.peng-titlewrap{flex:1;min-width:0}
+.peng-judul{font-size:12.5px;font-weight:700;color:var(--text);line-height:1.3}
+.peng-tgl{font-size:10.5px;color:var(--text3);margin-top:1px}
+.peng-tipe-icon{color:var(--hijau);flex-shrink:0}
+.peng-body{padding:2px 14px 14px}
+.peng-teks{font-size:13px;color:var(--text);line-height:1.6;white-space:pre-wrap}
+.peng-poster{width:100%;max-height:460px;object-fit:cover;display:block;cursor:pointer;background:var(--krem)}
+.peng-pdf-min-bar{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 14px;background:var(--krem);cursor:pointer;user-select:none}
+.peng-pdf-min-label{display:flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700;color:var(--text2)}
+.peng-pdf-chevron{color:var(--text3);transition:transform .2s;flex-shrink:0}
+.peng-pdf-body{max-height:420px;overflow:hidden;transition:max-height .25s ease}
+.peng-pdf-body.collapsed{max-height:0}
+.peng-pdf-embed{width:100%;height:400px;position:relative}
+.peng-pdf-embed iframe{width:100%;height:100%;border:none;display:block}
+.peng-link-row{display:flex;align-items:center;gap:6px;padding:11px 14px;border-top:1px solid var(--border);color:var(--hijau);font-size:12px;font-weight:700;cursor:pointer}
+.peng-link-row:active{background:var(--krem)}
+.peng-actions{display:flex;align-items:center;gap:4px;padding:8px 8px 2px}
+.peng-action-btn{display:flex;align-items:center;gap:6px;background:none;border:none;padding:6px 8px;font-family:inherit;font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;border-radius:8px}
+.peng-action-btn:active{background:var(--krem)}
+.peng-action-btn.liked{color:var(--red)}
+.peng-caption{font-size:12.5px;color:var(--text2);padding:6px 14px 0;line-height:1.6}
+.peng-caption b{color:var(--text);font-weight:700;margin-right:5px}
+.peng-footer-time{font-size:9.5px;color:var(--text3);text-transform:uppercase;letter-spacing:.4px;padding:8px 14px 12px}
+
+/* LIGHTBOX */
+.lb-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;z-index:999;padding:0}
+.lb-overlay.open{display:flex}
+.lb-close{position:absolute;top:12px;right:14px;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.15);color:#fff;border:none;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2}
+.lb-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+.lb-inner iframe{width:100%;height:100%;border:none;background:#fff}
+.lb-inner img{max-width:96%;max-height:92%;object-fit:contain;border-radius:6px}
+.lb-title{position:absolute;top:14px;left:16px;color:#fff;font-size:13px;font-weight:600;opacity:0.85;max-width:70%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+@media(max-width:400px){
+  .summary-grid{grid-template-columns:1fr}
+  .sum-card.full{grid-column:auto}
+  .filter-row{flex-direction:column}
+  select.flt{min-width:unset}
+  .sum-val{font-size:16px}
+  .sum-val.big{font-size:20px}
+  .header-masjid{font-size:16px}
+}
+</style>
+</head>
+<body>
+
+<div class="app-shell">
+
+<div class="container">
+
+  <div id="global-error"></div>
+
+  <!-- VIEW: HOME -->
+  <div class="view" id="view-home"></div>
+
+  <!-- VIEW: PENGUMUMAN -->
+  <div class="view" id="view-pengumuman" style="display:none">
+    <div id="pengumuman-area"></div>
+  </div>
+
+  <!-- VIEW: LAPORAN -->
+  <div class="view" id="view-laporan" style="display:none">
+    <div id="content-area"></div>
+  </div>
+
+  <!-- VIEW: JADWAL JUM'AT -->
+  <div class="view" id="view-jadwaljumat" style="display:none">
+    <div id="jadwaljumat-area"></div>
+  </div>
+
+  <!-- VIEW: QURBAN (hanya tampil kalau diaktifkan admin) -->
+  <div class="view" id="view-qurban" style="display:none">
+    <div id="qurban-area"></div>
+  </div>
+
+  <div class="footer">
+    Laporan ini dibuat oleh pengurus <strong id="ft-masjid">Masjid Baiturrahman Panjunan</strong><br>
+    untuk keterbukaan informasi kepada jamaah.<br>
+    <span id="ft-update"></span>
+  </div>
+</div>
+
+<!-- TAB BAR (navigasi bawah, ala aplikasi mobile) -->
+<div class="tabbar">
+  <button class="tab-btn" id="tabbtn-home" onclick="showTab('home')">
+    <svg class="tab-ic" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    <span>Home</span>
+  </button>
+  <button class="tab-btn" id="tabbtn-pengumuman" onclick="showTab('pengumuman')">
+    <svg class="tab-ic" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+    <span>Pengumuman</span>
+  </button>
+  <button class="tab-btn" id="tabbtn-laporan" onclick="showTab('laporan')">
+    <svg class="tab-ic" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+    <span>Laporan</span>
+  </button>
+  <button class="tab-btn" id="tabbtn-jadwaljumat" onclick="showTab('jadwaljumat')">
+    <svg class="tab-ic" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42A8.962 8.962 0 0012 4c-4.97 0-9 4.03-9 9s4.02 9 9 9a9 9 0 006.03-15.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>
+    <span>Jum'at</span>
+  </button>
+  <button class="tab-btn" id="tabbtn-qurban" onclick="showTab('qurban')" style="display:none">
+    <svg class="tab-ic" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M12 2C8 2 5 5 5 9c0 2.5 1.2 4.5 3 6v3c0 1.1.9 2 2 2h4c1.1 0 2-.9 2-2v-3c1.8-1.5 3-3.5 3-6 0-4-3-7-7-7zm-3 6c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1-1-.45-1-1zm7 0c0 .55-.45 1-1 1s-1-.45-1-1 .45-1 1-1 1 .45 1 1zm-3 6c-1.1 0-2-.45-2-1h4c0 .55-.9 1-2 1z"/></svg>
+    <span>Qurban</span>
+  </button>
+</div>
+
+</div><!-- end app-shell -->
+
+<!-- LIGHTBOX (preview PDF / gambar pengumuman) -->
+<div class="lb-overlay" id="lb-overlay" onclick="if(event.target===this)closeLightbox()">
+  <div class="lb-title" id="lb-title"></div>
+  <button class="lb-close" onclick="closeLightbox()">✕</button>
+  <div class="lb-inner" id="lb-inner"></div>
+</div>
+
+<script>
+const BULAN_LIST = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+const fmtRp = n => 'Rp ' + Math.round(n||0).toLocaleString('id-ID');
+const fmtNum = n => Math.round(n||0).toLocaleString('id-ID');
+const fmtTgl = s => {
+  if(!s) return '';
+  const d = new Date(s);
+  return d.toLocaleDateString('id-ID', {day:'numeric', month:'short', year:'numeric'});
+};
+
+function init() {
+  // Check data.js loaded
+  if(typeof LAPORAN_DATA === 'undefined') {
+    document.getElementById('global-error').innerHTML = `
+      <div class="err-box" style="margin-top:16px">
+        ⚠️ File <b>data.js</b> belum tersedia atau belum diupload.<br>
+        Halaman ini membutuhkan file <b>data.js</b> di folder yang sama.
+      </div>`;
+    applyTabFromHash();
+    return;
+  }
+
+  const d = LAPORAN_DATA;
+
+  // Footer
+  if(d.masjid) document.getElementById('ft-masjid').textContent = d.masjid;
+  if(d.diperbarui) document.getElementById('ft-update').textContent = 'Terakhir diperbarui: ' + d.diperbarui;
+
+  // Qurban — tab hanya tampil kalau diaktifkan admin
+  QURBAN_AKTIF = !!d.qurbanAktif;
+  const qurbanBtn = document.getElementById('tabbtn-qurban');
+  if(qurbanBtn) qurbanBtn.style.display = QURBAN_AKTIF ? 'flex' : 'none';
+  if(QURBAN_AKTIF) renderQurban(Array.isArray(d.qurban) ? d.qurban : [], Array.isArray(d.penyaluranQurban) ? d.penyaluranQurban : []);
+
+  // Home (menu utama)
+  renderHomeView(d);
+
+  // Pengumuman (papan info) — independen dari periode laporan keuangan
+  renderPengumuman(Array.isArray(d.pengumuman) ? d.pengumuman : [], d.masjid, d.heroFoto || d.logo);
+
+  // Jadwal Sholat Jum'at — independen dari periode laporan keuangan
+  renderJadwalJumat(Array.isArray(d.jadwalJumat) ? d.jadwalJumat : []);
+
+  // Laporan (periode ditentukan otomatis dari data.js, jamaah tidak bisa memilih)
+  tampilkan();
+
+  // Tampilkan tab sesuai URL (#home / #pengumuman / #laporan / #jadwaljumat / #qurban), default Home
+  applyTabFromHash();
+}
+
+/* ══════ TAB NAVIGATION (Home / Pengumuman / Laporan) ══════ */
+const TAB_LIST = ['home','pengumuman','laporan','jadwaljumat','qurban'];
+let QURBAN_AKTIF = false; // di-set dari data.js saat init()
+function renderTabUI(tab){
+  if(!TAB_LIST.includes(tab)) tab='home';
+  if(tab==='qurban' && !QURBAN_AKTIF) tab='home'; // jaga-jaga kalau ada yang buka link #qurban saat fitur nonaktif
+  TAB_LIST.forEach(t=>{
+    const view=document.getElementById('view-'+t);
+    const btn=document.getElementById('tabbtn-'+t);
+    if(view) view.style.display = (t===tab) ? 'block' : 'none';
+    if(btn) btn.classList.toggle('active', t===tab);
+  });
+  window.scrollTo(0,0);
+}
+function applyTabFromHash(){
+  const tab = (location.hash||'').replace('#','') || 'home';
+  renderTabUI(tab);
+}
+function showTab(tab){
+  if(location.hash.replace('#','') === tab){ renderTabUI(tab); return; }
+  location.hash = tab; // memicu event hashchange -> applyTabFromHash()
+}
+window.addEventListener('hashchange', applyTabFromHash);
+
+/* ══════ HOME (menu utama) ══════ */
+const MOSQUE_DUMMY_SVG = `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><g fill="#ffffff" opacity="0.92"><rect x="38" y="122" width="124" height="56" rx="5"/><circle cx="100" cy="96" r="34"/><rect x="84" y="62" width="32" height="34"/><polygon points="100,30 114,62 86,62"/><circle cx="100" cy="24" r="4"/><rect x="27" y="88" width="13" height="92"/><polygon points="33.5,66 41,88 26,88"/><circle cx="33.5" cy="60" r="3.5"/><rect x="160" y="88" width="13" height="92"/><polygon points="166.5,66 174,88 159,88"/><circle cx="166.5" cy="60" r="3.5"/><rect x="55" y="140" width="18" height="38" rx="2" fill="#1B4332" opacity="0.35"/><rect x="127" y="140" width="18" height="38" rx="2" fill="#1B4332" opacity="0.35"/></g></svg>`;
+
+function renderHomeView(d){
+  const el = document.getElementById('view-home');
+  if(!el) return;
+  const pengCount = Array.isArray(d.pengumuman) ? d.pengumuman.length : 0;
+  const rows = d.transaksi || [];
+  const saldoAkhir = (typeof d.saldoAkhir === 'number') ? d.saldoAkhir : (rows.length ? rows[rows.length-1].saldo : 0);
+  const bagianMgg = d.minggu ? 'Minggu ke-'+d.minggu : '';
+  const bagianBln = d.bulan || '';
+  const bagianThn = d.tahun || '';
+  const periodeShort = [bagianMgg, bagianBln, bagianThn].filter(Boolean).join(' ') || 'Belum ada data';
+  const mosqueVisual = d.heroFoto ? `<img src="${d.heroFoto}" alt="Foto Masjid">` : MOSQUE_DUMMY_SVG;
+  const jjList = Array.isArray(d.jadwalJumat) ? d.jadwalJumat : [];
+  const jjNextId = jjList.length ? jjNextUpcomingIdPublic(jjList) : null;
+  const jjNext = jjNextId ? jjList.find(j=>j.id===jjNextId) : null;
+  const jjSub = jjNext ? 'Khatib terdekat: '+jjNext.khatib : (jjList.length ? 'Lihat jadwal' : 'Belum ada jadwal');
+
+  el.innerHTML = `
+    <div class="home-wrap">
+      <div class="home-greet-row">
+        <div>
+          <div class="home-greet">Assalamu'alaikum! 👋</div>
+          <div class="home-loc"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5z"/></svg> ${d.alamat || 'Jamaah Masjid'}</div>
+        </div>
+        <div class="home-bell" onclick="showTab('pengumuman')">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+          ${pengCount ? '<span class="home-bell-dot"></span>' : ''}
+        </div>
+      </div>
+
+      <div class="home-hero-card">
+        <div class="home-hero-title">${d.masjid || 'Masjid'}</div>
+        <div class="home-hero-sub">Selamat datang di portal informasi &amp; laporan keuangan jamaah</div>
+        <div class="home-hero-mosque">${mosqueVisual}</div>
+      </div>
+
+      <div class="home-menu-panel">
+        <div class="home-menu-item" onclick="showTab('pengumuman')">
+          <div class="home-menu-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></div>
+          <div style="flex:1;min-width:0">
+            <div class="home-menu-title2">Pengumuman</div>
+            <div class="home-menu-sub2">${pengCount ? pengCount+' pengumuman tersedia' : 'Belum ada pengumuman'}</div>
+          </div>
+          <svg class="home-menu-arrow2" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M9 6l6 6-6 6"/></svg>
+        </div>
+        <div class="home-menu-item" onclick="showTab('laporan')">
+          <div class="home-menu-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg></div>
+          <div style="flex:1;min-width:0">
+            <div class="home-menu-title2">Laporan Keuangan</div>
+            <div class="home-menu-sub2">${periodeShort}${rows.length ? ' &middot; Saldo: '+fmtRp(saldoAkhir) : ''}</div>
+          </div>
+          <svg class="home-menu-arrow2" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M9 6l6 6-6 6"/></svg>
+        </div>
+        <div class="home-menu-item" onclick="showTab('jadwaljumat')">
+          <div class="home-menu-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42A8.962 8.962 0 0012 4c-4.97 0-9 4.03-9 9s4.02 9 9 9a9 9 0 006.03-15.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg></div>
+          <div style="flex:1;min-width:0">
+            <div class="home-menu-title2">Jadwal Sholat Jum'at</div>
+            <div class="home-menu-sub2">${jjSub}</div>
+          </div>
+          <svg class="home-menu-arrow2" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M9 6l6 6-6 6"/></svg>
+        </div>
+        ${d.qurbanAktif ? `<div class="home-menu-item" onclick="showTab('qurban')">
+          <div class="home-menu-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8 2 5 5 5 9c0 2.5 1.2 4.5 3 6v3c0 1.1.9 2 2 2h4c1.1 0 2-.9 2-2v-3c1.8-1.5 3-3.5 3-6 0-4-3-7-7-7z"/></svg></div>
+          <div style="flex:1;min-width:0">
+            <div class="home-menu-title2">Qurban</div>
+            <div class="home-menu-sub2">${Array.isArray(d.qurban) && d.qurban.length ? d.qurban.length+' hewan qurban' : 'Belum ada data'}</div>
+          </div>
+          <svg class="home-menu-arrow2" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M9 6l6 6-6 6"/></svg>
+        </div>` : ''}
+      </div>
+    </div>`;
+}
+
+/* ══════ PENGUMUMAN (papan info masjid — gaya feed sosial media) ══════ */
+function fmtTglPeng(s){
+  if(!s) return '';
+  const d = new Date(s);
+  if(isNaN(d)) return '';
+  return d.toLocaleDateString('id-ID', {day:'numeric', month:'long', year:'numeric'});
+}
+function fmtWaktuRelatif(s){
+  if(!s) return '';
+  const d = new Date(s);
+  if(isNaN(d)) return '';
+  const now = new Date();
+  const diffMs = now - d;
+  const diffHari = Math.floor(diffMs/(1000*60*60*24));
+  if(diffHari<=0) return 'Hari ini';
+  if(diffHari===1) return 'Kemarin';
+  if(diffHari<7) return diffHari+' hari lalu';
+  if(diffHari<30) return Math.floor(diffHari/7)+' minggu lalu';
+  return fmtTglPeng(s);
+}
+
+let PENGUMUMAN_MAP = {};
+
+function renderPengumuman(list, masjidNama, avatarImg){
+  const el = document.getElementById('pengumuman-area');
+  if(!el) return;
+  if(!list || !list.length){ el.innerHTML=''; return; }
+
+  // Terbaru dulu
+  const sorted = [...list].sort((a,b) => (b.tanggal||'').localeCompare(a.tanggal||'') || (b.id||0)-(a.id||0));
+  const nama = masjidNama || 'Masjid';
+  const avatarHtml = avatarImg ? `<img src="${avatarImg}" alt="">` : nama.charAt(0).toUpperCase();
+  const likedSet = getLikedSet();
+
+  let html = `<div class="sect-head" style="margin-top:14px">📢 Pengumuman</div><div class="peng-wrap">`;
+
+  sorted.forEach((p, idx) => {
+    const tipe = p.tipe || 'teks';
+    const judulSafe = (p.judul||'Pengumuman').replace(/'/g,"\\'").replace(/"/g,'&quot;');
+    const cardId = 'peng-card-'+(p.id||idx);
+    const waktu = fmtWaktuRelatif(p.tanggal);
+    PENGUMUMAN_MAP[p.id] = p;
+    const isLiked = likedSet.has(p.id);
+
+    html += `<div class="peng-card" id="${cardId}">
+      <div class="peng-head">
+        <div class="peng-avatar">${avatarHtml}</div>
+        <div class="peng-titlewrap">
+          <div class="peng-judul">${nama}</div>
+          ${waktu ? `<div class="peng-tgl">${waktu}</div>` : ''}
+        </div>
+      </div>`;
+
+    if(tipe === 'pdf'){
+      // #toolbar=0&navpanes=0&scrollbar=0 menyembunyikan toolbar & panel thumbnail bawaan browser,
+      // supaya yang tampil murni isi PDF-nya (bukan menu zoom/print/download & sidebar halaman)
+      html += `<div class="peng-pdf-min-bar" onclick="togglePdfMin('${cardId}')">
+        <div class="peng-pdf-min-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6 2c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6H6zm7 7V3.5L18.5 9H13z"/></svg> Dokumen PDF</div>
+        <svg class="peng-pdf-chevron" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+      </div>
+      <div class="peng-pdf-body">
+        <div class="peng-pdf-embed"><iframe src="${p.fileBase64}#toolbar=0&navpanes=0&scrollbar=0" loading="lazy" title="${judulSafe}"></iframe></div>
+      </div>
+      <div class="peng-link-row" onclick="openLightboxPDF('${p.fileBase64}','${judulSafe}')"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M15 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-9l-6-6zm4 15H5V5h9v5h5v8z"/></svg> Buka PDF Layar Penuh</div>`;
+    } else if(tipe === 'gambar'){
+      html += `<img class="peng-poster" src="${p.fileBase64}" alt="${judulSafe}" onclick="openLightboxImg('${p.fileBase64}','${judulSafe}')">`;
+    }
+
+    // Aksi: Suka & Bagikan
+    html += `<div class="peng-actions">
+      <button class="peng-action-btn${isLiked?' liked':''}" id="like-btn-${p.id}" onclick="toggleLike(${p.id})">
+        <span class="peng-like-icon">${isLiked ? ICON_HEART_FILLED : ICON_HEART_OUTLINE}</span> Suka
+      </button>
+      <button class="peng-action-btn" onclick="sharePost(${p.id})">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L7.04 9.81C6.5 9.31 5.79 9 5 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/></svg> Bagikan
+      </button>
+    </div>`;
+
+    html += `<div class="peng-caption"><b>${nama}</b>${p.judul||''}</div>`;
+    if(tipe === 'teks' && p.isi){
+      html += `<div class="peng-caption peng-teks" style="padding-top:6px">${p.isi}</div>`;
+    } else if(p.keterangan){
+      html += `<div class="peng-caption" style="padding-top:4px;color:var(--text3)">${p.keterangan}</div>`;
+    }
+    html += `<div class="peng-footer-time">${p.tanggal ? fmtTglPeng(p.tanggal) : ''}</div>`;
+    html += `</div>`;
+  });
+
+  html += `</div>`;
+  el.innerHTML = html;
+}
+
+function togglePdfMin(cardId){
+  const card = document.getElementById(cardId);
+  if(!card) return;
+  const body = card.querySelector('.peng-pdf-body');
+  const chev = card.querySelector('.peng-pdf-chevron');
+  if(!body) return;
+  const collapsed = body.classList.toggle('collapsed');
+  if(chev) chev.style.transform = collapsed ? 'rotate(-90deg)' : 'rotate(0deg)';
+}
+
+/* ── Suka (LOKAL per HP/browser — bukan hitungan bersama semua jamaah, karena web ini statis tanpa server) ── */
+const ICON_HEART_OUTLINE = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6c-1.6-1.6-4.2-1.6-5.8 0L12 7.6l-3-3c-1.6-1.6-4.2-1.6-5.8 0-1.6 1.6-1.6 4.2 0 5.8L12 19l8.8-8.6c1.6-1.6 1.6-4.2 0-5.8z"/></svg>';
+const ICON_HEART_FILLED = '<svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-6.7-4.35-9.8-8.5C.4 9.6 1.4 5.9 4.6 5c2-.55 4 .2 5.4 1.9C11.4 5.2 13.4 4.45 15.4 5c3.2.9 4.2 4.6 2.4 7.5C14.7 16.65 12 21 12 21z"/></svg>';
+function getLikedSet(){
+  try{ return new Set(JSON.parse(localStorage.getItem('peng_liked_v1')||'[]')); }catch(e){ return new Set(); }
+}
+function toggleLike(id){
+  const liked = getLikedSet();
+  if(liked.has(id)) liked.delete(id); else liked.add(id);
+  localStorage.setItem('peng_liked_v1', JSON.stringify([...liked]));
+  const btn = document.getElementById('like-btn-'+id);
+  if(!btn) return;
+  const nowLiked = liked.has(id);
+  btn.classList.toggle('liked', nowLiked);
+  btn.querySelector('.peng-like-icon').innerHTML = nowLiked ? ICON_HEART_FILLED : ICON_HEART_OUTLINE;
+}
+
+/* ── Bagikan (Web Share API — share file asli kalau didukung, fallback share teks) ── */
+function dataURItoFile(dataURI, filename){
+  const parts = dataURI.split(',');
+  const mimeMatch = parts[0].match(/data:(.*?);base64/);
+  const mime = mimeMatch ? mimeMatch[1] : 'application/octet-stream';
+  const bin = atob(parts[1]);
+  const arr = new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++) arr[i] = bin.charCodeAt(i);
+  return new File([arr], filename, {type: mime});
+}
+async function sharePost(id){
+  const p = PENGUMUMAN_MAP[id];
+  if(!p) return;
+  const judul = p.judul || 'Pengumuman';
+  const teks = (p.tipe==='teks' ? (p.isi||'') : (p.keterangan||'')) + (judul ? '\n\n📢 '+judul : '');
+  const hasFile = (p.tipe==='gambar' || p.tipe==='pdf') && !!p.fileBase64;
+  const ext = p.tipe==='gambar' ? 'jpg' : 'pdf';
+  const filename = p.filename || (judul.replace(/[^a-z0-9]+/gi,'_')+'.'+ext);
+
+  // 1) Coba share file ASLI (gambar/PDF) langsung lewat native share sheet HP —
+  //    butuh browser mobile modern + halaman diakses via HTTPS (bukan dibuka lokal dari file di komputer)
+  if(hasFile && navigator.canShare){
+    try{
+      const file = dataURItoFile(p.fileBase64, filename);
+      const shareData = {files:[file], title: judul, text: judul};
+      if(navigator.canShare(shareData)){
+        await navigator.share(shareData);
+        return;
+      }
+    }catch(e){
+      if(e.name==='AbortError') return; // user membatalkan share sheet, tidak perlu fallback
+      // selain itu (gagal karena tidak didukung dsb) lanjut ke fallback di bawah
+    }
+  }
+
+  // 2) Fallback: kalau share file langsung tidak didukung, unduh dulu filenya
+  //    supaya jamaah tetap dapat GAMBAR/PDF aslinya, baru dia upload manual ke status WA
+  if(hasFile){
+    const a = document.createElement('a');
+    a.href = p.fileBase64; a.download = filename; a.click();
+  }
+
+  // 3) Share/salin teks captionnya juga, buat konteks
+  try{
+    if(navigator.share){
+      await navigator.share({title: judul, text: teks});
+      return;
+    }
+  }catch(e){ /* dibatalkan, tidak apa */ }
+  if(navigator.clipboard){
+    try{ await navigator.clipboard.writeText(teks); }catch(e){}
+  }
+  alert(hasFile
+    ? 'File gambar/PDF-nya sudah otomatis terunduh ke perangkatmu. Buka folder Download, lalu pilih file itu dari WhatsApp (Status/Chat) untuk dibagikan. Teks keterangannya juga sudah tersalin.'
+    : 'Teks pengumuman sudah disalin — silakan tempel di WhatsApp atau aplikasi lain.');
+}
+
+/* ══════ JADWAL SHOLAT JUM'AT ══════ */
+const BULAN_SINGKAT = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+function jjNextUpcomingIdPublic(list){
+  const todayStr = new Date().toISOString().slice(0,10);
+  const upcoming = list.filter(j=>j.tanggal>=todayStr).sort((a,b)=>a.tanggal.localeCompare(b.tanggal));
+  return upcoming.length ? upcoming[0].id : null;
+}
+function renderJadwalJumat(list){
+  const el = document.getElementById('jadwaljumat-area');
+  if(!el) return;
+  if(!list || !list.length){
+    el.innerHTML = `<div class="sect-head" style="margin-top:14px">🕌 Jadwal Sholat Jum'at</div>
+      <div class="empty-box"><div class="empty-icon">🕌</div><div class="empty-title">Belum ada jadwal</div><div class="empty-sub">Jadwal Khatib &amp; Imam Sholat Jum'at akan tampil di sini.</div></div>`;
+    return;
+  }
+  const nextId = jjNextUpcomingIdPublic(list);
+  // Urutan: yang akan datang duluan (ascending), lalu yang sudah lewat di bawahnya (terbaru dulu)
+  const todayStr = new Date().toISOString().slice(0,10);
+  const upcoming = list.filter(j=>j.tanggal>=todayStr).sort((a,b)=>a.tanggal.localeCompare(b.tanggal));
+  const past = list.filter(j=>j.tanggal<todayStr).sort((a,b)=>b.tanggal.localeCompare(a.tanggal));
+  const sorted = [...upcoming, ...past];
+
+  let html = `<div class="sect-head" style="margin-top:14px">🕌 Jadwal Sholat Jum'at</div><div class="jj-wrap">`;
+  sorted.forEach(j=>{
+    const [y,m,dd] = j.tanggal.split('-').map(Number);
+    const isNext = j.id===nextId;
+    const roleParts=[];
+    if(j.imam) roleParts.push('Imam: '+j.imam);
+    if(j.muadzin) roleParts.push('Muadzin: '+j.muadzin);
+    html += `<div class="jj-card${isNext?' next':''}">
+      <div class="jj-date-block"><div class="dd">${String(dd).padStart(2,'0')}</div><div class="mm">${BULAN_SINGKAT[m-1]}</div></div>
+      <div class="jj-body2">
+        ${isNext?'<div class="jj-badge-next">Jumat Terdekat</div>':''}
+        <div class="jj-khatib">Khatib: ${j.khatib}</div>
+        ${roleParts.length?`<div class="jj-role">${roleParts.join(' &nbsp;•&nbsp; ')}</div>`:''}
+        ${j.tema?`<div class="jj-tema">📖 ${j.tema}</div>`:''}
+        ${j.waktu?`<div class="jj-waktu-chip">🕐 ${j.waktu}</div>`:''}
+        ${j.catatan?`<div class="jj-catatan">${j.catatan}</div>`:''}
+      </div>
+    </div>`;
+  });
+  html += `</div>`;
+  el.innerHTML = html;
+}
+
+/* ══════ QURBAN ══════ */
+function qbToggleCardPublic(cardId){
+  const el=document.getElementById(cardId);
+  if(el) el.classList.toggle('open');
+}
+function renderQurban(list, penyaluran){
+  const el = document.getElementById('qurban-area');
+  if(!el) return;
+  if(!list || !list.length){
+    el.innerHTML = `
+      <div class="qb-hero">
+        <div class="qb-hero-label"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8 2 5 5 5 9c0 2.5 1.2 4.5 3 6v3c0 1.1.9 2 2 2h4c1.1 0 2-.9 2-2v-3c1.8-1.5 3-3.5 3-6 0-4-3-7-7-7z"/></svg> Qurban</div>
+        <div class="qb-hero-counts"><div><div class="qb-hero-count-num">0</div><div class="qb-hero-count-label">Hewan Qurban</div></div></div>
+      </div>
+      <div class="empty-box"><div class="empty-icon">🐄</div><div class="empty-title">Belum ada data Qurban</div><div class="empty-sub">Data hewan Qurban akan tampil di sini.</div></div>`;
+    return;
+  }
+  const jenisIcon = {Sapi:'🐄', Kambing:'🐐', Domba:'🐑', Unta:'🐫'};
+  const statusLabel = {terkumpul:'Terkumpul', disembelih:'Disembelih', disalurkan:'Disalurkan'};
+  const totalPeserta = list.reduce((s,q)=>s+(q.peserta?q.peserta.length:0),0);
+  const countByJenis = {};
+  list.forEach(q=>{countByJenis[q.jenis]=(countByJenis[q.jenis]||0)+1;});
+  const countByStatus = {terkumpul:0, disembelih:0, disalurkan:0};
+  list.forEach(q=>{if(countByStatus[q.status]!==undefined) countByStatus[q.status]++;});
+
+  let html = `
+  <div class="qb-hero">
+    <div class="qb-hero-label"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8 2 5 5 5 9c0 2.5 1.2 4.5 3 6v3c0 1.1.9 2 2 2h4c1.1 0 2-.9 2-2v-3c1.8-1.5 3-3.5 3-6 0-4-3-7-7-7z"/></svg> Qurban Tahun Ini</div>
+    <div class="qb-hero-counts">
+      ${Object.keys(countByJenis).map(j=>`<div><div class="qb-hero-count-num">${countByJenis[j]}</div><div class="qb-hero-count-label">${jenisIcon[j]||''} ${j}</div></div>`).join('')}
+      <div><div class="qb-hero-count-num">${totalPeserta}</div><div class="qb-hero-count-label">Peserta</div></div>
+    </div>
+    <div class="qb-hero-stats">
+      <div class="qb-hero-stat"><div class="qb-hero-stat-num">${countByStatus.terkumpul}</div><div class="qb-hero-stat-label">Terkumpul</div></div>
+      <div class="qb-hero-stat"><div class="qb-hero-stat-num">${countByStatus.disembelih}</div><div class="qb-hero-stat-label">Disembelih</div></div>
+      <div class="qb-hero-stat"><div class="qb-hero-stat-num">${countByStatus.disalurkan}</div><div class="qb-hero-stat-label">Disalurkan</div></div>
+    </div>
+  </div>`;
+
+  html += `<div class="sect-head"><svg width="14" height="14" viewBox="0 0 24 24" fill="var(--hijau)"><path d="M12 2C8 2 5 5 5 9c0 2.5 1.2 4.5 3 6v3c0 1.1.9 2 2 2h4c1.1 0 2-.9 2-2v-3c1.8-1.5 3-3.5 3-6 0-4-3-7-7-7z"/></svg> Daftar Hewan Qurban</div>`;
+  html += `<div class="qb-hewan-wrap">`;
+  list.forEach((q,idx)=>{
+    const cardId = 'qbc-'+(q.id||idx);
+    const pesertaCount = q.peserta ? q.peserta.length : 0;
+    html += `<div class="qb-hewan-card" id="${cardId}">
+      <div class="qb-hewan-head" onclick="qbToggleCardPublic('${cardId}')">
+        <div class="qb-hewan-icon">${jenisIcon[q.jenis]||'🐾'}</div>
+        <div style="flex:1;min-width:0">
+          <div class="qb-hewan-title">${q.label}</div>
+          <div class="qb-hewan-sub">${pesertaCount} peserta patungan</div>
+        </div>
+        <span class="qb-status-pill ${q.status}">${statusLabel[q.status]||q.status}</span>
+        <svg class="qb-hewan-chevron" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+      </div>
+      <div class="qb-hewan-peserta">
+        <div class="qb-hewan-peserta-inner">
+          ${(q.peserta||[]).map((p,i)=>`<div class="qb-peserta-row2"><span class="qb-peserta-num">${i+1}.</span><span><b>${p.nama}</b>${p.untuk?` <span class="qb-peserta-untuk">— untuk ${p.untuk}</span>`:''}</span></div>`).join('')}
+        </div>
+      </div>
+    </div>`;
+  });
+  html += `</div>`;
+
+  // Penyaluran
+  if(penyaluran && penyaluran.length){
+    html += `<div class="sect-head"><svg width="14" height="14" viewBox="0 0 24 24" fill="var(--hijau)"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zM18 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg> Penyaluran / Distribusi</div>`;
+    html += `<div class="qb-penyaluran-wrap">`;
+    penyaluran.forEach(p=>{
+      html += `<div class="qb-penyaluran-item">
+        <div class="qb-penyaluran-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4z"/></svg></div>
+        <div>
+          <div class="qb-penyaluran-title">${p.tujuan}</div>
+          ${p.keterangan?`<div class="qb-penyaluran-sub">${p.keterangan}</div>`:''}
+        </div>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  el.innerHTML = html;
+}
+
+function openLightboxPDF(dataUri, judul){
+  document.getElementById('lb-title').textContent = judul || '';
+  document.getElementById('lb-inner').innerHTML = `<iframe src="${dataUri}#toolbar=1&navpanes=0" title="${judul||''}"></iframe>`;
+  document.getElementById('lb-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function openLightboxImg(dataUri, judul){
+  document.getElementById('lb-title').textContent = judul || '';
+  document.getElementById('lb-inner').innerHTML = `<img src="${dataUri}" alt="${judul||''}">`;
+  document.getElementById('lb-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox(){
+  document.getElementById('lb-overlay').classList.remove('open');
+  document.getElementById('lb-inner').innerHTML = '';
+  document.body.style.overflow = '';
+}
+
+function tampilkan() {
+  const d = typeof LAPORAN_DATA !== 'undefined' ? LAPORAN_DATA : null;
+  if(!d) return;
+
+  // Periode diambil langsung dari data.js (jamaah tidak bisa memilih)
+  const selBln = d.bulan || '';
+  const selMgg = d.minggu ? d.minggu.toString() : '';
+  const selThn = d.tahun ? d.tahun.toString() : '';
+
+  // data.js sudah di-generate khusus untuk 1 periode laporan oleh webapp,
+  // jadi semua transaksi di dalamnya dipakai apa adanya (TIDAK difilter ulang
+  // berdasarkan bulan kalender tiap tanggal). Ini penting karena satu periode
+  // "minggu" bisa saja melintasi 2 bulan (mis. akhir Juni s/d awal Juli),
+  // dan menyaring ulang per bulan kalender akan salah membuang transaksi.
+  const rows = d.transaksi;
+
+  const el = document.getElementById('content-area');
+
+  if(!rows.length) {
+    el.innerHTML = `
+      <div class="empty-box">
+        <div class="empty-icon">📭</div>
+        <div class="empty-title">Tidak ada data</div>
+        <div class="empty-sub">Belum ada transaksi untuk periode laporan ini.</div>
+      </div>`;
+    return;
+  }
+
+  // Pakai angka yang sudah dihitung oleh webapp sistem manajemen (di data.js),
+  // bukan dihitung ulang di halaman ini, supaya selalu sama persis dengan sumbernya.
+  const firstRow = rows[0];
+  const saldoAwal = (typeof d.saldoAwal === 'number') ? d.saldoAwal : (firstRow.saldo - (firstRow.masuk||0) + (firstRow.keluar||0));
+  const totalMasuk = (typeof d.totalMasuk === 'number') ? d.totalMasuk : rows.reduce((s,r) => s+(r.masuk||0), 0);
+  const totalKeluar = (typeof d.totalKeluar === 'number') ? d.totalKeluar : rows.reduce((s,r) => s+(r.keluar||0), 0);
+  const saldoAkhir = (typeof d.saldoAkhir === 'number') ? d.saldoAkhir : rows[rows.length-1].saldo;
+
+  // Build periode label dengan format: (minggu ke-X bulan Y Tahun Z)
+  const bagianMgg = selMgg ? 'minggu ke-'+selMgg : '';
+  const bagianBln = selBln ? 'bulan '+selBln : '';
+  const bagianThn = selThn ? 'Tahun '+selThn : '';
+  const isiLabel = [bagianMgg, bagianBln, bagianThn].filter(Boolean).join(' ');
+  const periodeLabel = isiLabel || 'Semua Periode';
+
+  // Rentang tanggal: dari transaksi pertama sampai terakhir dalam periode ini
+  const tglMulai = fmtTgl(firstRow.tanggal);
+  const tglSelesai = fmtTgl(rows[rows.length-1].tanggal);
+  const rentangTanggal = tglMulai === tglSelesai
+    ? tglMulai
+    : `${tglMulai} s/d ${tglSelesai}`;
+
+  let html = '';
+
+  // Wallet balance card
+  html += `
+  <div class="wallet-card">
+    <div class="wallet-account">
+      <div class="wallet-account-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M4 10v7h3v-7H4zm6 0v7h3v-7h-3zM2 22h19v-3H2v3zm14-12v7h3v-7h-3zm-4.5-9L2 6v2h19V6l-9.5-5z"/></svg></div>
+      <div>
+        <div class="wallet-account-name">${d.masjid || 'Masjid'}</div>
+      </div>
+    </div>
+    <div class="wallet-label"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg> Saldo Kas Saat Ini</div>
+    <div class="wallet-balance">${fmtRp(saldoAkhir)}</div>
+    <div class="wallet-periode"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-1px"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg> ${periodeLabel} &nbsp;•&nbsp; ${rentangTanggal}</div>
+    <div class="wallet-pills">
+      <div class="wallet-pill">
+        <div class="wallet-pill-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/></svg></div>
+        <div><div class="wallet-pill-label">Total Masuk</div><div class="wallet-pill-val">${fmtRp(totalMasuk)}</div></div>
+      </div>
+      <div class="wallet-pill">
+        <div class="wallet-pill-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg></div>
+        <div><div class="wallet-pill-label">Total Keluar</div><div class="wallet-pill-val">${fmtRp(totalKeluar)}</div></div>
+      </div>
+    </div>
+  </div>`;
+
+  // Quick stats
+  html += `
+  <div class="quick-stats">
+    <div class="qs-item">
+      <div class="qs-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8z"/></svg></div>
+      <div class="qs-label">Saldo Sebelumnya</div>
+      <div class="qs-val">${fmtRp(saldoAwal)}</div>
+    </div>
+    <div class="qs-item">
+      <div class="qs-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg></div>
+      <div class="qs-label">Transaksi</div>
+      <div class="qs-val">${rows.length} kali</div>
+    </div>
+    <div class="qs-item">
+      <div class="qs-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42A8.962 8.962 0 0012 4c-4.97 0-9 4.03-9 9s4.02 9 9 9a9 9 0 006.03-15.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg></div>
+      <div class="qs-label">Update</div>
+      <div class="qs-val">${d.diperbarui ? d.diperbarui.split(' ')[0] : '-'}</div>
+    </div>
+  </div>`;
+
+  // Transaction list
+  html += `
+  <div class="sect-head"><svg width="14" height="14" viewBox="0 0 24 24" fill="var(--hijau)"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg> Rincian Transaksi <span style="font-size:11px;font-weight:400;color:var(--text3);margin-left:4px">${rows.length} transaksi</span></div>
+  <div class="trx-list">`;
+
+  rows.forEach(r => {
+    const isMasuk = (r.masuk||0) > 0;
+    const amt = isMasuk ? r.masuk : r.keluar;
+    const arrowIcon = isMasuk
+      ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/></svg>'
+      : '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg>';
+    html += `
+    <div class="trx-item">
+      <div class="trx-icon ${isMasuk?'masuk':'keluar'}">${arrowIcon}</div>
+      <div class="trx-body">
+        <div class="trx-ket">${r.keterangan}</div>
+        <div class="trx-tgl">${fmtTgl(r.tanggal)}</div>
+      </div>
+      <div class="trx-right">
+        <div class="trx-amt ${isMasuk?'masuk':'keluar'}">${isMasuk?'+':'-'}${fmtNum(amt)}</div>
+        <div class="trx-saldo">Saldo: ${fmtNum(r.saldo)}</div>
+      </div>
+    </div>`;
+  });
+
+  html += `</div>`; // end trx-list
+
+  el.innerHTML = html;
+}
+
+// Run on load
+// Muat data.js secara dinamis dengan cache-busting (?t=timestamp)
+// supaya browser tidak menyimpan versi lama saat data.js diupdate di GitHub.
+function loadDataJs() {
+  const script = document.createElement('script');
+  script.src = 'data.js?t=' + Date.now();
+  script.onload = init;
+  script.onerror = function() {
+    document.getElementById('global-error').innerHTML = `
+      <div class="err-box" style="margin-top:16px">
+        ⚠️ File <b>data.js</b> belum tersedia atau belum diupload.<br>
+        Halaman ini membutuhkan file <b>data.js</b> di folder yang sama.
+      </div>`;
+    applyTabFromHash();
+  };
+  document.body.appendChild(script);
+}
+
+window.addEventListener('DOMContentLoaded', loadDataJs);
+</script>
+</body>
+</html>
