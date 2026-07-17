@@ -1511,6 +1511,7 @@ function loadAll(){
   catatanData=load(SK.catatan, []);
   pengumumanData=load(SK.pengumuman, []);
   jadwalJumatData=load(SK.jadwalJumat, []);
+  jjCleanupPastSchedules();
   qurbanData=load(SK.qurban, []);
   penyaluranQurbanData=load(SK.penyaluranQurban, []);
   qurbanAktif=localStorage.getItem(SK.qurbanAktif)==='1';
@@ -1774,7 +1775,18 @@ function jjNextUpcomingId(){
   const upcoming=jadwalJumatData.filter(j=>j.tanggal>=todayStr).sort((a,b)=>a.tanggal.localeCompare(b.tanggal));
   return upcoming.length?upcoming[0].id:null;
 }
+// Hapus otomatis jadwal Jum'at yang tanggalnya sudah lewat (dijalankan tiap kali app dibuka & tiap buka menunya)
+function jjCleanupPastSchedules(){
+  if(!Array.isArray(jadwalJumatData) || !jadwalJumatData.length) return;
+  const todayStr=new Date().toISOString().slice(0,10);
+  const sisa=jadwalJumatData.filter(j=>j.tanggal>=todayStr);
+  if(sisa.length!==jadwalJumatData.length){
+    jadwalJumatData=sisa;
+    saveJadwalJumatData();
+  }
+}
 function renderJadwalJumatAdminList(){
+  jjCleanupPastSchedules();
   const wrap=document.getElementById('jadwaljumat-admin-list');
   if(!wrap) return;
   if(!jadwalJumatData.length){
