@@ -1126,8 +1126,8 @@ textarea{resize:vertical;min-height:60px}
         <div style="font-size:13px;font-weight:700;color:var(--emas);margin-bottom:4px">Cara pakai</div>
         <div style="font-size:12px;color:#7B5800;line-height:1.7">
           1. Tambah pengumuman di sini — bisa upload <b>PDF</b>, upload <b>gambar/poster</b>, atau <b>tulis manual</b><br>
-          2. Buka menu <b>Laporan untuk Jamaah</b>, klik <b>Generate data.js</b> lagi (pengumuman otomatis ikut disertakan)<br>
-          3. Upload ulang <b>data.js</b> ke GitHub — halaman jamaah otomatis menampilkan pengumuman terbaru
+          2. Kalau Token &amp; Repository GitHub sudah diisi di menu <b>Sinkronisasi</b>, file PDF/gambar <b>otomatis diupload ke GitHub</b> (bukan disimpan di browser) — jadi penyimpanan gak akan cepat penuh<br>
+          3. Buka menu <b>Laporan untuk Jamaah</b>, generate/auto-update <b>data.js</b> seperti biasa — pengumuman otomatis ikut disertakan
         </div>
       </div>
     </div>
@@ -1474,6 +1474,7 @@ textarea{resize:vertical;min-height:60px}
 ══════════════════════════════════════════ */
 let MASJID = 'Takmir Masjid Baiturrahman Panjunan';
 let ALAMAT = 'Dsn. Panjuanan, Ds. Tasikmadu, Kec. Paang, Kab. Tuban';
+let LINK_JAMAAH = 'https://baiturrahman351.github.io/Laporan-Keuangan-Masjid-Baiturrahman/';
 let LOGO_B64 = null; // base64 string logo, null if not set
 let HERO_B64 = null; // base64 foto hero khusus halaman jamaah (terpisah dari logo), null jika belum diset
 const BULAN_LIST = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
@@ -1516,7 +1517,7 @@ function loadAll(){
   // load Identitas
   try {
     const idRaw=localStorage.getItem(SK.identitas);
-    if(idRaw){const id=JSON.parse(idRaw);if(id.nama)MASJID=id.nama;if(id.alamat)ALAMAT=id.alamat;}
+    if(idRaw){const id=JSON.parse(idRaw);if(id.nama)MASJID=id.nama;if(id.alamat)ALAMAT=id.alamat;if(typeof id.linkJamaah==='string')LINK_JAMAAH=id.linkJamaah;}
     LOGO_B64=localStorage.getItem(SK.logo)||null;
     HERO_B64=localStorage.getItem(SK.heroFoto)||null;
   } catch(e){}
@@ -1593,7 +1594,7 @@ function openModalPengumuman(prefillId){
     document.getElementById('pg-tanggal').value=p.tanggal||'';
     document.getElementById('pg-keterangan').value=p.keterangan||'';
     document.getElementById('pg-isi').value=p.isi||'';
-    if(p.fileBase64) document.getElementById('pg-file-info').innerHTML=`📎 File saat ini: <b>${p.filename||'file'}</b> ${p.sizeKB?`(${p.sizeKB} KB)`:''} — biarkan kosong kalau tidak ingin ganti file`;
+    if(p.fileUrl||p.fileBase64) document.getElementById('pg-file-info').innerHTML=`📎 File saat ini: <b>${p.filename||'file'}</b> ${p.sizeKB?`(${p.sizeKB} KB)`:''}${p.fileUrl?' — tersimpan di GitHub':''} — biarkan kosong kalau tidak ingin ganti file`;
   } else {
     document.getElementById('pg-tipe').value='pdf';
     document.getElementById('pg-judul').value='';
@@ -1605,7 +1606,7 @@ function openModalPengumuman(prefillId){
   document.getElementById('modal-pengumuman').classList.add('open');
 }
 function closeModalPengumuman(){document.getElementById('modal-pengumuman').classList.remove('open');}
-function savePengumuman(){
+async function savePengumuman(){
   const tipe=document.getElementById('pg-tipe').value;
   const judul=document.getElementById('pg-judul').value.trim();
   const tanggal=document.getElementById('pg-tanggal').value;
@@ -1615,17 +1616,49 @@ function savePengumuman(){
   if(tipe==='teks' && !isi){showToast('Isi pengumuman wajib diisi!');return;}
 
   const existing = editPengumumanId ? pengumumanData.find(x=>x.id===editPengumumanId) : null;
-  if((tipe==='pdf'||tipe==='gambar') && !pgFileTemp && !(existing && existing.fileBase64)){
+  if((tipe==='pdf'||tipe==='gambar') && !pgFileTemp && !(existing && (existing.fileUrl||existing.fileBase64))){
     showToast(tipe==='pdf' ? 'File PDF wajib diupload!' : 'File gambar wajib diupload!');return;
+  }
+
+  let fileUrl = existing ? (existing.fileUrl||'') : '';
+  let fileBase64 = existing ? (existing.fileBase64||'') : '';
+  let filename = existing ? (existing.filename||'') : '';
+  let sizeKB = existing ? (existing.sizeKB||0) : 0;
+  const btn=document.getElementById('btn-save-pengumuman');
+  const btnOrigText=btn.textContent;
+
+  if((tipe==='pdf'||tipe==='gambar') && pgFileTemp){
+    filename = pgFileTemp.filename;
+    sizeKB = pgFileTemp.sizeKB;
+    const s=ghGetSettings();
+    if(s.token && s.repo){
+      // Upload file ASLI ke repo GitHub (folder pengumuman-files/), bukan disimpan di localStorage —
+      // supaya penyimpanan browser gak cepat penuh, dan cuma metadata ringan yang tersimpan lokal.
+      btn.textContent='Mengunggah file…'; btn.disabled=true;
+      try{
+        const base64Only = pgFileTemp.dataUri.split(',')[1];
+        const safeName = filename.replace(/[^a-zA-Z0-9._-]/g,'_');
+        const path = `pengumuman-files/${Date.now()}-${safeName}`;
+        fileUrl = await ghPutBinaryFile(path, base64Only, 'Upload pengumuman: '+judul, s);
+        fileBase64=''; // sudah ada di GitHub, gak perlu disimpan dobel di browser
+      }catch(err){
+        btn.textContent=btnOrigText; btn.disabled=false;
+        showToast('Gagal upload file ke GitHub: '+err.message);
+        return;
+      }
+      btn.textContent=btnOrigText; btn.disabled=false;
+    } else {
+      // GitHub belum di-setup — fallback simpan base64 lokal seperti sebelumnya (lebih cepat penuh)
+      fileBase64 = pgFileTemp.dataUri;
+      fileUrl = '';
+    }
   }
 
   const row={
     id: editPengumumanId || Date.now(),
     tipe, judul, tanggal, keterangan,
     isi: tipe==='teks' ? isi : '',
-    fileBase64: (tipe==='pdf'||tipe==='gambar') ? (pgFileTemp ? pgFileTemp.dataUri : (existing?existing.fileBase64:'')) : '',
-    filename: (tipe==='pdf'||tipe==='gambar') ? (pgFileTemp ? pgFileTemp.filename : (existing?existing.filename:'')) : '',
-    sizeKB: (tipe==='pdf'||tipe==='gambar') ? (pgFileTemp ? pgFileTemp.sizeKB : (existing?existing.sizeKB:0)) : 0,
+    fileUrl, fileBase64, filename, sizeKB,
     createdAt: existing ? existing.createdAt : new Date().toISOString()
   };
   if(existing){ const i=pengumumanData.findIndex(x=>x.id===editPengumumanId); pengumumanData[i]=row; }
@@ -1641,16 +1674,21 @@ function pengumumanOpenFile(dataUri){
   window.open(dataUri,'_blank');
 }
 function pengumumanTotalSizeKB(){
-  return pengumumanData.reduce((s,p)=>s+(p.sizeKB||0),0);
+  // Cuma hitung yang MASIH tersimpan lokal di browser (fileBase64). File yang sudah di-upload
+  // ke GitHub (fileUrl) gak makan tempat penyimpanan browser sama sekali.
+  return pengumumanData.reduce((s,p)=>s+(p.fileBase64?(p.sizeKB||0):0),0);
 }
 function renderPengumumanAdminList(){
   const wrap=document.getElementById('pengumuman-admin-list');
   const warnEl=document.getElementById('peng-size-warning');
   if(!wrap) return;
   const totalKB=pengumumanTotalSizeKB();
+  const s=ghGetSettings();
   if(totalKB > 700){
     warnEl.style.display='block';
-    warnEl.innerHTML=`⚠️ Total ukuran file pengumuman sekitar <b>${(totalKB/1024).toFixed(1)} MB</b>. Semakin besar, file <b>data.js</b> juga makin besar dan makin berat dimuat jamaah. Sebaiknya kompres PDF/gambar atau hapus pengumuman lama yang sudah tidak relevan.`;
+    warnEl.innerHTML = (s.token && s.repo)
+      ? `⚠️ Ada sekitar <b>${(totalKB/1024).toFixed(1)} MB</b> file pengumuman yang masih tersimpan lokal di browser (bukan di GitHub) — biasanya pengumuman lama dari sebelum fitur upload-ke-GitHub aktif. Edit ulang pengumuman itu (upload ulang filenya) supaya pindah ke GitHub dan gak makan tempat browser.`
+      : `⚠️ Total ukuran file pengumuman sekitar <b>${(totalKB/1024).toFixed(1)} MB</b>, tersimpan di penyimpanan browser (localStorage biasanya cuma muat ±5-10MB total). <b>Isi Token & Repository di menu Sinkronisasi</b> supaya file baru otomatis diupload ke GitHub, bukan disimpan di browser — jadi gak akan penuh lagi.`;
   } else { warnEl.style.display='none'; }
 
   if(!pengumumanData.length){
@@ -1660,13 +1698,14 @@ function renderPengumumanAdminList(){
   const sorted=[...pengumumanData].sort((a,b)=>(b.tanggal||'').localeCompare(a.tanggal||'')||b.id-a.id);
   const iconMap={pdf:'📄',gambar:'🖼️',teks:'📝'};
   wrap.innerHTML=sorted.map(p=>{
+    const fileSrc=p.fileUrl||p.fileBase64||'';
     let bodyExtra='';
     if(p.tipe==='teks'){
       bodyExtra=`<div class="peng-admin-snippet">${(p.isi||'').slice(0,220)}${(p.isi||'').length>220?'…':''}</div>`;
-    } else if(p.tipe==='gambar' && p.fileBase64){
-      bodyExtra=`<img class="peng-admin-thumb" src="${p.fileBase64}" alt="">`;
+    } else if(p.tipe==='gambar' && fileSrc){
+      bodyExtra=`<img class="peng-admin-thumb" src="${fileSrc}" alt="">`;
     } else if(p.tipe==='pdf'){
-      bodyExtra=`<div class="peng-admin-meta">${p.filename||''} ${p.sizeKB?`(${p.sizeKB} KB)`:''}</div>`;
+      bodyExtra=`<div class="peng-admin-meta">${p.filename||''} ${p.sizeKB?`(${p.sizeKB} KB)`:''}${p.fileUrl?' · tersimpan di GitHub':''}</div>`;
     }
     if(p.keterangan) bodyExtra+=`<div class="peng-admin-snippet">${p.keterangan}</div>`;
     return `<div class="peng-admin-item">
@@ -1676,7 +1715,7 @@ function renderPengumumanAdminList(){
         <div class="peng-admin-meta">${p.tanggal?fmtTgl(p.tanggal):'Tanpa tanggal'}</div>
         ${bodyExtra}
         <div class="peng-admin-actions">
-          ${(p.tipe==='pdf'||p.tipe==='gambar')&&p.fileBase64?`<button class="btn btn-sm" onclick="pengumumanOpenFile('${p.fileBase64}')"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg> Lihat</button>`:''}
+          ${(p.tipe==='pdf'||p.tipe==='gambar')&&fileSrc?`<button class="btn btn-sm" onclick="pengumumanOpenFile('${fileSrc}')"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg> Lihat</button>`:''}
           <button class="btn btn-sm" onclick="openModalPengumuman(${p.id})"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg> Edit</button>
           <button class="btn btn-sm btn-danger" onclick="askDelete('pengumuman',${p.id},'${(p.judul||'').replace(/'/g,"\\'")}')"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg> Hapus</button>
         </div>
@@ -2858,8 +2897,8 @@ function garisWA(n){return '─'.repeat(n||36);}
 
 function generateWA(mode){
   const now=new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});
-  const hdr=`<svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M12 2C9.8 2 8 3.8 8 6v1H6c-1.1 0-2 .9-2 2v11h16V9c0-1.1-.9-2-2-2h-2V6c0-2.2-1.8-4-4-4zm0 2c1.1 0 2 .9 2 2H10c0-1.1.9-2 2-2zm-4 6h8v9H8v-9zm4 1c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg> *${MASJID}*\n_${ALAMAT}_\n${'━'.repeat(36)}\n`;
-  const ftr=`\n${'━'.repeat(36)}\n<svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg> Diterbitkan: ${now}\n_Laporan ini diterbitkan oleh Takmir Masjid\nuntuk transparansi jamaah._ 🤲`;
+  const hdr=`🕌 *${MASJID}*\n_${ALAMAT}_\n${'━'.repeat(36)}\n`;
+  const ftr=`\n${'━'.repeat(36)}\n🗓️ Diterbitkan: ${now}\n_Laporan ini diterbitkan oleh Takmir Masjid\nuntuk transparansi jamaah._ 🤲`;
 
   if(mode==='minggu'){
     const yr=document.getElementById('fl-thn-m').value;
@@ -2900,7 +2939,7 @@ Wassalamu'alaikum wr. wb.`;
     const rows=computeKeuSaldo().filter(r=>r.tahun===yr&&(!bln||r.bulan===bln));
     const blnList=bln?[bln]:BULAN_LIST.filter(b=>rows.some(r=>r.bulan===b));
     if(!rows.length)return null;
-    let body=`<svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg> *LAPORAN BULANAN${bln?' — '+bln:''} ${yr}*\n`;
+    let body=`📅 *LAPORAN BULANAN${bln?' — '+bln:''} ${yr}*\n`;
     let gM=0,gK=0;
     blnList.forEach(month=>{
       const mRows=rows.filter(r=>r.bulan===month);if(!mRows.length)return;
@@ -2911,13 +2950,13 @@ Wassalamu'alaikum wr. wb.`;
         const wR=weeks[mgg];let wM=0,wK=0;
         body+=`\n   📌 *Minggu ke-${mgg}*\n   ${garisWA(28)}\n`;
         wR.forEach(r=>{body+=`   ${r.masuk?'🟢':'🔴'} ${fmtTglWA(r.tanggal)} ${r.ket}\n      _${r.kat}_ | *${r.masuk?'+'+fmtNumWA(r.masuk):'-'+fmtNumWA(r.keluar)}*\n`;wM+=r.masuk||0;wK+=r.keluar||0;});
-        body+=`   <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg> Total Minggu ${mgg}: Masuk *${fmtRpWA(wM)}* | Keluar *${fmtRpWA(wK)}*\n`;
+        body+=`   💰 Total Minggu ${mgg}: Masuk *${fmtRpWA(wM)}* | Keluar *${fmtRpWA(wK)}*\n`;
         bM+=wM;bK+=wK;
       });
       gM+=bM;gK+=bK;
-      body+=`\n<svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M3 13h2v7H3v-7zm4-5h2v12H7V8zm4-4h2v16h-2V4zm4 8h2v8h-2v-8z"/></svg> *Rekap ${month}:*\n   <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Masuk  : *${fmtRpWA(bM)}*\n   🔻 Keluar : *${fmtRpWA(bK)}*\n   💵 Saldo  : *${fmtRpWA(bM-bK)}*\n`;
+      body+=`\n📊 *Rekap ${month}:*\n   ✅ Masuk  : *${fmtRpWA(bM)}*\n   🔻 Keluar : *${fmtRpWA(bK)}*\n   💵 Saldo  : *${fmtRpWA(bM-bK)}*\n`;
     });
-    if(blnList.length>1)body+=`\n${'━'.repeat(36)}\n<svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M3 13h2v7H3v-7zm4-5h2v12H7V8zm4-4h2v16h-2V4zm4 8h2v8h-2v-8z"/></svg> *TOTAL ${yr}:* Masuk *${fmtRpWA(gM)}* | Keluar *${fmtRpWA(gK)}* | Saldo *${fmtRpWA(gM-gK)}*\n`;
+    if(blnList.length>1)body+=`\n${'━'.repeat(36)}\n📊 *TOTAL ${yr}:* Masuk *${fmtRpWA(gM)}* | Keluar *${fmtRpWA(gK)}* | Saldo *${fmtRpWA(gM-gK)}*\n`;
     // Ringkasan saldo per kas
     body+=generateKasSummaryWA(rows,'');
     return hdr+body+ftr;
@@ -2929,9 +2968,9 @@ Wassalamu'alaikum wr. wb.`;
     const bMap={};rows.forEach(r=>{if(!bMap[r.bulan])bMap[r.bulan]={masuk:0,keluar:0};bMap[r.bulan].masuk+=r.masuk||0;bMap[r.bulan].keluar+=r.keluar||0;});
     const blnAda=BULAN_LIST.filter(b=>bMap[b]);
     let tM=0,tK=0,kum=0;
-    let body=`<svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M3 13h2v7H3v-7zm4-5h2v12H7V8zm4-4h2v16h-2V4zm4 8h2v8h-2v-8z"/></svg> *LAPORAN TAHUNAN ${yr}*\n\n`;
+    let body=`📊 *LAPORAN TAHUNAN ${yr}*\n\n`;
     blnAda.forEach(b=>{const d=bMap[b];tM+=d.masuk;tK+=d.keluar;const sB=d.masuk-d.keluar;kum+=sB;body+=`${sB>=0?'🟢':'🔴'} *${b}*\n   Masuk: ${fmtRpWA(d.masuk)} | Keluar: ${fmtRpWA(d.keluar)} | Saldo: *${fmtRpWA(sB)}*\n\n`;});
-    body+=`${'━'.repeat(36)}\n📈 *TOTAL TAHUN ${yr}*\n   <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Masuk  : *${fmtRpWA(tM)}*\n   🔻 Keluar : *${fmtRpWA(tK)}*\n   💵 Saldo  : *${fmtRpWA(tM-tK)}*\n`;
+    body+=`${'━'.repeat(36)}\n📈 *TOTAL TAHUN ${yr}*\n   ✅ Masuk  : *${fmtRpWA(tM)}*\n   🔻 Keluar : *${fmtRpWA(tK)}*\n   💵 Saldo  : *${fmtRpWA(tM-tK)}*\n`;
     // Ringkasan saldo per kas
     body+=generateKasSummaryWA(rows,'');
     return hdr+body+ftr;
@@ -2939,7 +2978,7 @@ Wassalamu'alaikum wr. wb.`;
   } else if(mode==='inventaris'){
     if(!invData.length)return null;
     const kats=[...new Set(invData.map(r=>r.kategori))];
-    let body=`<svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M20.54 5.23l-1.39-1.68C18.88 3.21 18.47 3 18 3H6c-.47 0-.88.21-1.16.55L3.46 5.23C3.17 5.57 3 6.02 3 6.5V19c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6.5c0-.48-.17-.93-.46-1.27zM12 17.5L6.5 12H10v-2h4v2h3.5L12 17.5zM5.12 5l.81-1h12l.94 1H5.12z"/></svg> *DAFTAR INVENTARIS MASJID*\n_Per: ${new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}_\n\n`;
+    let body=`📦 *DAFTAR INVENTARIS MASJID*\n_Per: ${new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}_\n\n`;
     body+=`Total: *${invData.length} item* | Baik: *${invData.filter(r=>r.kondisi==='Baik').length}* | Perlu Perhatian: *${invData.filter(r=>r.kondisi!=='Baik').length}*\n\n`;
     kats.forEach(kat=>{
       const items=invData.filter(r=>r.kategori===kat);
@@ -2957,10 +2996,10 @@ Wassalamu'alaikum wr. wb.`;
     const period=bln&&yr?`${bln} ${yr}`:yr?`Tahun ${yr}`:'Semua Periode';
     const tM=rows.filter(r=>r.jenis==='masuk').reduce((s,r)=>s+r.jumlah,0);
     const tK=rows.filter(r=>r.jenis==='keluar').reduce((s,r)=>s+r.jumlah,0);
-    let body=`<svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg> *LAPORAN BARANG MASUK/KELUAR*\n_Periode: ${period}_\n\n`;
+    let body=`🔄 *LAPORAN BARANG MASUK/KELUAR*\n_Periode: ${period}_\n\n`;
     body+=`Total Masuk: *${tM} item* | Total Keluar: *${tK} item*\n\n${garisWA(36)}\n`;
     [...rows].sort((a,b)=>b.tanggal.localeCompare(a.tanggal)).forEach(r=>{
-      body+=`${r.jenis==='masuk'?'<svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 12l-4-4h3V7h2v4h3l-4 4z"/></svg>':'<svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 4l4 4h-3v4h-2v-4H7l4-4z"/></svg>'} *${r.namaBarang}*\n   ${fmtTglWA(r.tanggal)} | ${r.jenis==='masuk'?'+':'-'}${r.jumlah} ${r.satuan||''}\n`;
+      body+=`${r.jenis==='masuk'?'🟢':'🔴'} *${r.namaBarang}*\n   ${fmtTglWA(r.tanggal)} | ${r.jenis==='masuk'?'+':'-'}${r.jumlah} ${r.satuan||''}\n`;
       if(r.sumber)body+=`   ${r.jenis==='masuk'?'Dari':'Ke'}: ${r.sumber}\n`;
       body+='\n';
     });
@@ -3792,7 +3831,7 @@ function jmBuildData(rows){
     // Pengumuman (papan info) selalu disertakan penuh, independen dari periode laporan keuangan yang dipilih
     pengumuman: (typeof pengumumanData!=='undefined' ? pengumumanData : []).map(p=>({
       id: p.id, tipe: p.tipe, judul: p.judul, tanggal: p.tanggal||'', keterangan: p.keterangan||'',
-      isi: p.isi||'', fileBase64: p.fileBase64||'', filename: p.filename||''
+      isi: p.isi||'', fileUrl: p.fileUrl||'', fileBase64: p.fileBase64||'', filename: p.filename||''
     })),
     // Jadwal Sholat Jum'at juga selalu disertakan penuh
     jadwalJumat: (typeof jadwalJumatData!=='undefined' ? jadwalJumatData : []).map(j=>({
@@ -4240,6 +4279,27 @@ async function ghPutFile(path,textContent,commitMessage,s,keepalive){
     throw new Error(errJ.message||('Gagal menyimpan (HTTP '+putRes.status+')'));
   }
   return {ok:true};
+}
+
+// Upload file BINER (gambar/PDF) ke GitHub — beda dari ghPutFile yang untuk teks.
+// base64Content harus SUDAH dalam bentuk base64 murni (tanpa prefix "data:...;base64,").
+// Mengembalikan URL raw.githubusercontent.com yang bisa langsung dipakai sebagai src gambar/iframe.
+async function ghPutBinaryFile(path,base64Content,commitMessage,s){
+  s=s||ghGetSettings();
+  if(!s.token||!s.repo) throw new Error('Token dan Repository GitHub belum diisi di menu Sinkronisasi.');
+  const apiUrl=`https://api.github.com/repos/${s.repo}/contents/${encodeURIComponent(path).replace(/%2F/g,'/')}`;
+  let sha=null;
+  const getRes=await ghApiRequest(`${apiUrl}?ref=${encodeURIComponent(s.branch)}`,{method:'GET'});
+  if(getRes.status===200){ const j=await getRes.json(); sha=j.sha; }
+  else if(getRes.status!==404){ throw new Error('Gagal cek file (HTTP '+getRes.status+')'); }
+  const body={message:commitMessage, content:base64Content, branch:s.branch};
+  if(sha) body.sha=sha;
+  const putRes=await ghApiRequest(apiUrl,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  if(!putRes.ok){
+    const errJ=await putRes.json().catch(()=>({}));
+    throw new Error(errJ.message||('Gagal upload file (HTTP '+putRes.status+')'));
+  }
+  return `https://raw.githubusercontent.com/${s.repo}/${s.branch}/${path}`;
 }
 
 async function ghUploadNow(manualTrigger,keepalive){
