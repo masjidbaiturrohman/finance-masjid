@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-07-19T08:21:13.276Z",
+    "savedAt": "2026-07-19T22:10:34.824Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -465,6 +465,17 @@
       "kat": "Kas Pembangunan",
       "masuk": 2000000,
       "keluar": 0
+    },
+    {
+      "id": 1784499033618,
+      "tanggal": "2026-07-19",
+      "minggu": 3,
+      "bulan": "Juli",
+      "tahun": 2026,
+      "ket": "Pembelian 15 Sak Semen",
+      "kat": "Kas Pembangunan",
+      "masuk": 0,
+      "keluar": 915000
     }
   ],
   "inv": [],
