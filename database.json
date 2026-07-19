@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-07-17T22:35:39.292Z",
+    "savedAt": "2026-07-19T08:21:13.276Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -453,6 +453,17 @@
       "ket": "Kotak Infak Jum'at",
       "kat": "Kas Umum",
       "masuk": 870000,
+      "keluar": 0
+    },
+    {
+      "id": 1784449272066,
+      "tanggal": "2026-07-19",
+      "minggu": 3,
+      "bulan": "Juli",
+      "tahun": 2026,
+      "ket": "Donasi Dari Bpk. M Adib",
+      "kat": "Kas Pembangunan",
+      "masuk": 2000000,
       "keluar": 0
     }
   ],
