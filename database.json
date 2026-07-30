@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-07-30T22:44:28.298Z",
+    "savedAt": "2026-07-30T22:45:56.225Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -597,6 +597,28 @@
       "kat": "Kas Pembangunan",
       "masuk": 2945000,
       "keluar": 0
+    },
+    {
+      "id": 1785451495789,
+      "tanggal": "2026-07-30",
+      "minggu": 4,
+      "bulan": "Juli",
+      "tahun": 2026,
+      "ket": "Gaji Tukang + Jajan",
+      "kat": "Kas Pembangunan",
+      "masuk": 0,
+      "keluar": 1750000
+    },
+    {
+      "id": 1785451555018,
+      "tanggal": "2026-07-30",
+      "minggu": 4,
+      "bulan": "Juli",
+      "tahun": 2026,
+      "ket": "Supir Pengambilan Material Bangunana",
+      "kat": "Kas Pembangunan",
+      "masuk": 0,
+      "keluar": 50000
     }
   ],
   "inv": [
