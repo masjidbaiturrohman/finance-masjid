@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-07-30T22:48:44.990Z",
+    "savedAt": "2026-07-30T22:50:02.993Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -593,7 +593,7 @@
       "minggu": 4,
       "bulan": "Juli",
       "tahun": 2026,
-      "ket": "Kotak Awal malam Jum'at Wage",
+      "ket": "Kotak Amal malam Jum'at Wage",
       "kat": "Kas Pembangunan",
       "masuk": 2945000,
       "keluar": 0
