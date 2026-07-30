@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-07-30T22:47:02.654Z",
+    "savedAt": "2026-07-30T22:48:44.990Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -615,7 +615,7 @@
       "minggu": 4,
       "bulan": "Juli",
       "tahun": 2026,
-      "ket": "Supir Pengambilan Material Bangunana",
+      "ket": "Supir Pengambilan Material Bangunan",
       "kat": "Kas Pembangunan",
       "masuk": 0,
       "keluar": 50000
