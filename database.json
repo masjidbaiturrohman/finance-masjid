@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-07-31T22:10:03.026Z",
+    "savedAt": "2026-07-31T22:11:12.235Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -630,6 +630,17 @@
       "kat": "Kas Umum",
       "masuk": 0,
       "keluar": 55000
+    },
+    {
+      "id": 1785535843649,
+      "tanggal": "2026-07-31",
+      "minggu": 4,
+      "bulan": "Juli",
+      "tahun": 2026,
+      "ket": "Kotak Amal Jum'at",
+      "kat": "Kas Umum",
+      "masuk": 896000,
+      "keluar": 0
     }
   ],
   "inv": [
