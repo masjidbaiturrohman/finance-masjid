@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-07-31T22:11:12.235Z",
+    "savedAt": "2026-07-31T22:12:31.676Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -641,6 +641,17 @@
       "kat": "Kas Umum",
       "masuk": 896000,
       "keluar": 0
+    },
+    {
+      "id": 1785535888761,
+      "tanggal": "2026-07-31",
+      "minggu": 4,
+      "bulan": "Juli",
+      "tahun": 2026,
+      "ket": "Pembayaran Supir toko Jaya",
+      "kat": "Kas Pembangunan",
+      "masuk": 0,
+      "keluar": 50000
     }
   ],
   "inv": [
