@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-08-05T23:57:12.814Z",
+    "savedAt": "2026-08-06T22:41:00.823Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -663,6 +663,17 @@
       "kat": "Kas Umum",
       "masuk": 0,
       "keluar": 200000
+    },
+    {
+      "id": 1786056059619,
+      "tanggal": "2026-08-06",
+      "minggu": 1,
+      "bulan": "Agustus",
+      "tahun": 2026,
+      "ket": "Gaji H. Mahmud",
+      "kat": "Kas Pembangunan",
+      "masuk": 0,
+      "keluar": 900000
     }
   ],
   "inv": [
