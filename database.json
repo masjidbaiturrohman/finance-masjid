@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-08-07T07:52:27.757Z",
+    "savedAt": "2026-08-09T22:46:07.769Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -707,6 +707,17 @@
       "kat": "Kas Umum",
       "masuk": 722000,
       "keluar": 0
+    },
+    {
+      "id": 1786315566563,
+      "tanggal": "2026-08-08",
+      "minggu": 2,
+      "bulan": "Agustus",
+      "tahun": 2026,
+      "ket": "Granit Infinity 60x60",
+      "kat": "Kas Pembangunan",
+      "masuk": 0,
+      "keluar": 158400
     }
   ],
   "inv": [
