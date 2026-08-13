@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-08-13T00:24:54.363Z",
+    "savedAt": "2026-08-13T00:26:02.114Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -762,6 +762,17 @@
       "kat": "Kas Pembangunan",
       "masuk": 0,
       "keluar": 1104000
+    },
+    {
+      "id": 1786580733650,
+      "tanggal": "2026-08-12",
+      "minggu": 2,
+      "bulan": "Agustus",
+      "tahun": 2026,
+      "ket": "2 Sak Lemkrafk",
+      "kat": "Kas Pembangunan",
+      "masuk": 0,
+      "keluar": 338000
     }
   ],
   "inv": [
