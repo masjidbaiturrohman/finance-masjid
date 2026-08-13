@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-08-13T00:23:53.820Z",
+    "savedAt": "2026-08-13T00:24:54.363Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -751,6 +751,17 @@
       "kat": "Kas Pembangunan",
       "masuk": 0,
       "keluar": 184000
+    },
+    {
+      "id": 1786580693157,
+      "tanggal": "2026-08-12",
+      "minggu": 2,
+      "bulan": "Agustus",
+      "tahun": 2026,
+      "ket": "6 Dos Granit Roman 60x60",
+      "kat": "Kas Pembangunan",
+      "masuk": 0,
+      "keluar": 1104000
     }
   ],
   "inv": [
