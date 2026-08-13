@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-08-13T00:22:47.459Z",
+    "savedAt": "2026-08-13T00:23:53.820Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -740,6 +740,17 @@
       "kat": "Kas Pembangunan",
       "masuk": 0,
       "keluar": 73000
+    },
+    {
+      "id": 1786580623832,
+      "tanggal": "2026-08-12",
+      "minggu": 2,
+      "bulan": "Agustus",
+      "tahun": 2026,
+      "ket": "1 Dos Granit Roman",
+      "kat": "Kas Pembangunan",
+      "masuk": 0,
+      "keluar": 184000
     }
   ],
   "inv": [
