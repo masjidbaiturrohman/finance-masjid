@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-08-13T00:22:02.374Z",
+    "savedAt": "2026-08-13T00:22:47.459Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -729,6 +729,17 @@
       "kat": "Kas Pembangunan",
       "masuk": 0,
       "keluar": 100000
+    },
+    {
+      "id": 1786580566253,
+      "tanggal": "2026-08-12",
+      "minggu": 2,
+      "bulan": "Agustus",
+      "tahun": 2026,
+      "ket": "Perekat Keramik Giant",
+      "kat": "Kas Pembangunan",
+      "masuk": 0,
+      "keluar": 73000
     }
   ],
   "inv": [
