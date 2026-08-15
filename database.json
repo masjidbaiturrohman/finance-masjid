@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-08-15T03:23:49.878Z",
+    "savedAt": "2026-08-15T03:24:55.851Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -827,6 +827,28 @@
       "ket": "Dana Dari Kas Umum",
       "kat": "Kas Pembangunan",
       "masuk": 2000000,
+      "keluar": 0
+    },
+    {
+      "id": 1786764248369,
+      "tanggal": "2026-08-14",
+      "minggu": 2,
+      "bulan": "Agustus",
+      "tahun": 2026,
+      "ket": "Token listrik",
+      "kat": "Kas Umum",
+      "masuk": 0,
+      "keluar": 205000
+    },
+    {
+      "id": 1786764280713,
+      "tanggal": "2026-08-14",
+      "minggu": 2,
+      "bulan": "Agustus",
+      "tahun": 2026,
+      "ket": "Kotak Amal Jum'at",
+      "kat": "Kas Umum",
+      "masuk": 642000,
       "keluar": 0
     }
   ],
