@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-08-15T03:22:53.110Z",
+    "savedAt": "2026-08-15T03:23:49.878Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -788,7 +788,7 @@
     {
       "id": 1786763966086,
       "tanggal": "2026-08-13",
-      "minggu": 3,
+      "minggu": 2,
       "bulan": "Agustus",
       "tahun": 2026,
       "ket": "Gaji Tukang + Pembantu",
@@ -799,7 +799,7 @@
     {
       "id": 1786764005691,
       "tanggal": "2026-08-13",
-      "minggu": 3,
+      "minggu": 2,
       "bulan": "Agustus",
       "tahun": 2026,
       "ket": "Konsumsi Tukang",
