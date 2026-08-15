@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-08-15T03:19:27.293Z",
+    "savedAt": "2026-08-15T03:20:36.256Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -795,6 +795,17 @@
       "kat": "Kas Pembangunan",
       "masuk": 0,
       "keluar": 1200000
+    },
+    {
+      "id": 1786764005691,
+      "tanggal": "2026-08-13",
+      "minggu": 3,
+      "bulan": "Agustus",
+      "tahun": 2026,
+      "ket": "Konsumsi Tukang",
+      "kat": "Kas Pembangunan",
+      "masuk": 0,
+      "keluar": 50000
     }
   ],
   "inv": [
