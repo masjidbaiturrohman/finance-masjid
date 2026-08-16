@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-08-16T11:33:00.320Z",
+    "savedAt": "2026-08-16T11:35:34.826Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -861,6 +861,17 @@
       "kat": "Kas Pembangunan",
       "masuk": 0,
       "keluar": 73000
+    },
+    {
+      "id": 1786880133616,
+      "tanggal": "2026-08-16",
+      "minggu": 2,
+      "bulan": "Agustus",
+      "tahun": 2026,
+      "ket": "Material Bangunan - TB MItra Abadi",
+      "kat": "Kas Pembangunan",
+      "masuk": 0,
+      "keluar": 100000
     }
   ],
   "inv": [
