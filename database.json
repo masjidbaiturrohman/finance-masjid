@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-08-17T23:07:03.975Z",
+    "savedAt": "2026-08-17T23:08:08.692Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -882,6 +882,17 @@
       "ket": "Donasi Dari Hamba Allah",
       "kat": "Kas Pembangunan",
       "masuk": 1500000,
+      "keluar": 0
+    },
+    {
+      "id": 1787008087477,
+      "tanggal": "2026-08-16",
+      "minggu": 3,
+      "bulan": "Agustus",
+      "tahun": 2026,
+      "ket": "Donasi Jumat Berkah",
+      "kat": "Kas Umum",
+      "masuk": 200000,
       "keluar": 0
     }
   ],
