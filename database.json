@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-08-18T09:11:52.803Z",
+    "savedAt": "2026-08-18T09:20:39.379Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -901,10 +901,10 @@
       "minggu": 3,
       "bulan": "Agustus",
       "tahun": 2026,
-      "ket": "1x Semen Gresik",
+      "ket": "2x Semen Gresik",
       "kat": "Kas Pembangunan",
       "masuk": 0,
-      "keluar": 61000
+      "keluar": 122000
     }
   ],
   "inv": [
