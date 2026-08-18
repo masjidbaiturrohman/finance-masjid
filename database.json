@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-08-17T23:08:08.692Z",
+    "savedAt": "2026-08-18T09:11:52.803Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -894,6 +894,17 @@
       "kat": "Kas Umum",
       "masuk": 200000,
       "keluar": 0
+    },
+    {
+      "id": 1787044311595,
+      "tanggal": "2026-08-18",
+      "minggu": 3,
+      "bulan": "Agustus",
+      "tahun": 2026,
+      "ket": "1x Semen Gresik",
+      "kat": "Kas Pembangunan",
+      "masuk": 0,
+      "keluar": 61000
     }
   ],
   "inv": [
