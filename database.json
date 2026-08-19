@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-08-19T23:10:47.830Z",
+    "savedAt": "2026-08-19T23:11:42.061Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -916,6 +916,17 @@
       "kat": "Kas Umum",
       "masuk": 0,
       "keluar": 200000
+    },
+    {
+      "id": 1787181100852,
+      "tanggal": "2026-08-19",
+      "minggu": 3,
+      "bulan": "Agustus",
+      "tahun": 2026,
+      "ket": "3x Air Club Galon",
+      "kat": "Kas Umum",
+      "masuk": 0,
+      "keluar": 45000
     }
   ],
   "inv": [
