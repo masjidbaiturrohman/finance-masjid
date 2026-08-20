@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-08-19T23:12:52.028Z",
+    "savedAt": "2026-08-20T22:36:48.933Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -927,6 +927,17 @@
       "kat": "Kas Umum",
       "masuk": 0,
       "keluar": 45000
+    },
+    {
+      "id": 1787265407730,
+      "tanggal": "2026-08-20",
+      "minggu": 3,
+      "bulan": "Agustus",
+      "tahun": 2026,
+      "ket": "Dana Untuk Kas Pembangunan",
+      "kat": "Kas Umum",
+      "masuk": 0,
+      "keluar": 5000000
     }
   ],
   "inv": [
