@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-08-20T22:40:19.011Z",
+    "savedAt": "2026-08-20T22:41:31.352Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -982,6 +982,28 @@
       "kat": "Kas Pembangunan",
       "masuk": 0,
       "keluar": 100000
+    },
+    {
+      "id": 1787265640548,
+      "tanggal": "2026-08-20",
+      "minggu": 3,
+      "bulan": "Agustus",
+      "tahun": 2026,
+      "ket": "Porstek",
+      "kat": "Kas Pembangunan",
+      "masuk": 0,
+      "keluar": 24000
+    },
+    {
+      "id": 1787265661098,
+      "tanggal": "2026-08-20",
+      "minggu": 3,
+      "bulan": "Agustus",
+      "tahun": 2026,
+      "ket": "2x Sikat",
+      "kat": "Kas Pembangunan",
+      "masuk": 0,
+      "keluar": 5000
     }
   ],
   "inv": [
