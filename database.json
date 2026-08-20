@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-08-20T22:39:18.738Z",
+    "savedAt": "2026-08-20T22:40:19.011Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -960,6 +960,28 @@
       "kat": "Kas Pembangunan",
       "masuk": 0,
       "keluar": 1200000
+    },
+    {
+      "id": 1787265583226,
+      "tanggal": "2026-08-20",
+      "minggu": 3,
+      "bulan": "Agustus",
+      "tahun": 2026,
+      "ket": "Konsumsi Tukang",
+      "kat": "Kas Pembangunan",
+      "masuk": 0,
+      "keluar": 40000
+    },
+    {
+      "id": 1787265609606,
+      "tanggal": "2026-08-20",
+      "minggu": 3,
+      "bulan": "Agustus",
+      "tahun": 2026,
+      "ket": "H Mahmud",
+      "kat": "Kas Pembangunan",
+      "masuk": 0,
+      "keluar": 100000
     }
   ],
   "inv": [
