@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-08-23T00:10:07.533Z",
+    "savedAt": "2026-08-23T00:13:37.876Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -897,6 +897,17 @@
     },
     {
       "id": 1787044311595,
+      "tanggal": "2026-08-18",
+      "minggu": 3,
+      "bulan": "Agustus",
+      "tahun": 2026,
+      "ket": "2x Semen Gresik",
+      "kat": "Kas Pembangunan",
+      "masuk": 0,
+      "keluar": 122000
+    },
+    {
+      "id": 1787444016670,
       "tanggal": "2026-08-18",
       "minggu": 3,
       "bulan": "Agustus",
