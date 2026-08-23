@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-08-23T00:08:59.643Z",
+    "savedAt": "2026-08-23T00:10:07.533Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -1015,6 +1015,28 @@
       "kat": "Kas Pembangunan",
       "masuk": 0,
       "keluar": 149950
+    },
+    {
+      "id": 1787443743124,
+      "tanggal": "2026-08-21",
+      "minggu": 3,
+      "bulan": "Agustus",
+      "tahun": 2026,
+      "ket": "Alokasi Dana ke Kas Pembangunan",
+      "kat": "Kas Umum",
+      "masuk": 0,
+      "keluar": 500000
+    },
+    {
+      "id": 1787443773801,
+      "tanggal": "2026-08-21",
+      "minggu": 3,
+      "bulan": "Agustus",
+      "tahun": 2026,
+      "ket": "Dana Dari Kas Umum",
+      "kat": "Kas Pembangunan",
+      "masuk": 500000,
+      "keluar": 0
     }
   ],
   "inv": [
