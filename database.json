@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-08-23T00:07:45.068Z",
+    "savedAt": "2026-08-23T00:08:59.643Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -913,7 +913,7 @@
       "bulan": "Agustus",
       "tahun": 2026,
       "ket": "Jum'at Berkah",
-      "kat": "Kas Umum",
+      "kat": "Kas Pembangunan",
       "masuk": 0,
       "keluar": 200000
     },
