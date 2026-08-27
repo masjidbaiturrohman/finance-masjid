@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-08-23T00:28:03.048Z",
+    "savedAt": "2026-08-27T23:56:15.887Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -1058,6 +1058,17 @@
       "ket": "Kotak Amal Jum'at",
       "kat": "Kas Umum",
       "masuk": 753000,
+      "keluar": 0
+    },
+    {
+      "id": 1787874974677,
+      "tanggal": "2026-08-27",
+      "minggu": 4,
+      "bulan": "Agustus",
+      "tahun": 2026,
+      "ket": "Donasi Dari Hamba Allah untuk Jumat Berkah",
+      "kat": "Kas Umum",
+      "masuk": 300000,
       "keluar": 0
     }
   ],
