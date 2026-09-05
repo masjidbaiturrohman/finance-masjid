@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-08-27T23:56:49.297Z",
+    "savedAt": "2026-09-05T00:30:54.455Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -1081,6 +1081,17 @@
       "kat": "Kas Umum",
       "masuk": 0,
       "keluar": 300000
+    },
+    {
+      "id": 1788568253243,
+      "tanggal": "2026-09-04",
+      "minggu": 1,
+      "bulan": "September",
+      "tahun": 2026,
+      "ket": "Kotak Amal malam Jum'at Wage",
+      "kat": "Kas Pembangunan",
+      "masuk": 1300000,
+      "keluar": 0
     }
   ],
   "inv": [
