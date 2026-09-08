@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-09-08T23:39:52.412Z",
+    "savedAt": "2026-09-08T23:41:13.937Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -1216,6 +1216,14 @@
       "minggu": 4,
       "isi": "Material Bangunan:\n4 Dos Granit 60x60 : 622.600\n14 Dos Granit 60x60 : 5.856.480\n2 Dos Granit 60x60 : 889.632\n3 Sak Lemkrafk : 645.000\nOngkos bongkar : 20.000\n\nTotal 8.044.712 => Diskon 1.214.300=> pembayaran : 6.850.000=>Kembalian 19.588 +> Total Akhir => 6.830.411",
       "createdAt": "2026-07-27T22:19:34.553Z"
+    },
+    {
+      "id": 1788910813563,
+      "tahun": 2026,
+      "bulan": "September",
+      "minggu": 2,
+      "isi": "Tukang (Laskun)",
+      "createdAt": "2026-09-08T23:40:13.563Z"
     }
   ]
 }
