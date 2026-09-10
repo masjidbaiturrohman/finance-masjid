@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-09-10T04:14:43.900Z",
+    "savedAt": "2026-09-10T04:15:39.431Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -1067,7 +1067,7 @@
       "bulan": "Agustus",
       "tahun": 2026,
       "ket": "Donasi Dari Hamba Allah untuk Jumat Berkah",
-      "kat": "Kas Umum",
+      "kat": "Rekening Bank",
       "masuk": 300000,
       "keluar": 0
     },
@@ -1162,7 +1162,7 @@
     "Lain-lain",
     "Kas Umum",
     "Kas Pembangunan",
-    "Kas Bank"
+    "Rekening Bank"
   ],
   "katBrg": [
     "Perlengkapan Ibadah",
