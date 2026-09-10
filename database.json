@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-09-10T04:15:39.431Z",
+    "savedAt": "2026-09-10T04:16:40.227Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -880,7 +880,7 @@
       "bulan": "Agustus",
       "tahun": 2026,
       "ket": "Donasi Dari Hamba Allah",
-      "kat": "Kas Pembangunan",
+      "kat": "Rekening Bank",
       "masuk": 1500000,
       "keluar": 0
     },
@@ -891,7 +891,7 @@
       "bulan": "Agustus",
       "tahun": 2026,
       "ket": "Donasi Dari Hamba Allah untuk Jumat Berkah",
-      "kat": "Kas Pembangunan",
+      "kat": "Rekening Bank",
       "masuk": 200000,
       "keluar": 0
     },
@@ -913,7 +913,7 @@
       "bulan": "Agustus",
       "tahun": 2026,
       "ket": "Jum'at Berkah",
-      "kat": "Kas Pembangunan",
+      "kat": "Rekening Bank",
       "masuk": 0,
       "keluar": 200000
     },
@@ -1078,7 +1078,7 @@
       "bulan": "Agustus",
       "tahun": 2026,
       "ket": "Jum'at Berkah",
-      "kat": "Kas Umum",
+      "kat": "Rekening Bank",
       "masuk": 0,
       "keluar": 300000
     },
