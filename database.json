@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-09-08T23:41:13.937Z",
+    "savedAt": "2026-09-10T04:14:43.900Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -1161,7 +1161,8 @@
     "Operasional",
     "Lain-lain",
     "Kas Umum",
-    "Kas Pembangunan"
+    "Kas Pembangunan",
+    "Kas Bank"
   ],
   "katBrg": [
     "Perlengkapan Ibadah",
