@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-09-18T22:29:33.495Z",
+    "savedAt": "2026-09-18T22:30:34.269Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -1160,6 +1160,17 @@
       "keluar": 0
     },
     {
+      "id": 1789770576866,
+      "tanggal": "2026-09-02",
+      "minggu": 5,
+      "bulan": "Agustus",
+      "tahun": 2026,
+      "ket": "Admin Bank",
+      "kat": "Rekening Bank",
+      "masuk": 0,
+      "keluar": 14000
+    },
+    {
       "id": 1788568253243,
       "tanggal": "2026-09-04",
       "minggu": 1,
@@ -1179,6 +1190,17 @@
       "ket": "Kotak Amal Jum'at",
       "kat": "Kas Umum",
       "masuk": 922000,
+      "keluar": 0
+    },
+    {
+      "id": 1789770633057,
+      "tanggal": "2026-09-04",
+      "minggu": 5,
+      "bulan": "Agustus",
+      "tahun": 2026,
+      "ket": "Infaq",
+      "kat": "Rekening Bank",
+      "masuk": 35000,
       "keluar": 0
     },
     {
