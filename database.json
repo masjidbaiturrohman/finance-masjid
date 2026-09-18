@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-09-18T22:18:15.276Z",
+    "savedAt": "2026-09-18T22:19:27.233Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -731,17 +731,6 @@
       "keluar": 100000
     },
     {
-      "id": 1789769794110,
-      "tanggal": "2026-08-10",
-      "minggu": 2,
-      "bulan": "Agustus",
-      "tahun": 2026,
-      "ket": "Air Galon",
-      "kat": "Kas Pembangunan",
-      "masuk": 0,
-      "keluar": 15000
-    },
-    {
       "id": 1786580566253,
       "tanggal": "2026-08-12",
       "minggu": 2,
@@ -905,17 +894,6 @@
       "kat": "Rekening Bank",
       "masuk": 200000,
       "keluar": 0
-    },
-    {
-      "id": 1789769848286,
-      "tanggal": "2026-08-17",
-      "minggu": 3,
-      "bulan": "Agustus",
-      "tahun": 2026,
-      "ket": "Air Galon",
-      "kat": "Kas Pembangunan",
-      "masuk": 0,
-      "keluar": 15000
     },
     {
       "id": 1787044311595,
@@ -1114,6 +1092,17 @@
       "kat": "Kas Umum",
       "masuk": 749000,
       "keluar": 0
+    },
+    {
+      "id": 1789769943116,
+      "tanggal": "2026-08-28",
+      "minggu": 4,
+      "bulan": "Agustus",
+      "tahun": 2026,
+      "ket": "Air Galon",
+      "kat": "Kas Pembangunan",
+      "masuk": 0,
+      "keluar": 15000
     },
     {
       "id": 1788568253243,
