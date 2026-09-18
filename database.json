@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-09-18T22:15:53.357Z",
+    "savedAt": "2026-09-18T22:17:02.643Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -740,6 +740,17 @@
       "kat": "Kas Pembangunan",
       "masuk": 0,
       "keluar": 100000
+    },
+    {
+      "id": 1789769794110,
+      "tanggal": "2026-08-10",
+      "minggu": 2,
+      "bulan": "Agustus",
+      "tahun": 2026,
+      "ket": "Air Galon",
+      "kat": "Kas Pembangunan",
+      "masuk": 0,
+      "keluar": 15000
     },
     {
       "id": 1786580566253,
