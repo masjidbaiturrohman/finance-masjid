@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-09-18T22:31:44.577Z",
+    "savedAt": "2026-09-18T22:32:58.603Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -1226,6 +1226,17 @@
       "keluar": 2150000
     },
     {
+      "id": 1789770718112,
+      "tanggal": "2026-09-10",
+      "minggu": 1,
+      "bulan": "September",
+      "tahun": 2026,
+      "ket": "Titip Uang Maulid",
+      "kat": "Rekening Bank",
+      "masuk": 5000000,
+      "keluar": 0
+    },
+    {
       "id": 1789768375744,
       "tanggal": "2026-09-11",
       "minggu": 2,
@@ -1346,6 +1357,14 @@
       "minggu": 2,
       "isi": "Tukang (Laskun)",
       "createdAt": "2026-09-08T23:40:13.563Z"
+    },
+    {
+      "id": 1789770743694,
+      "tahun": 2026,
+      "bulan": "September",
+      "minggu": 1,
+      "isi": "Untuk titip uang maulid diluar saldo, hanya titip",
+      "createdAt": "2026-09-18T22:32:23.694Z"
     }
   ]
 }
