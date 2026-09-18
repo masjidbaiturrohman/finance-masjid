@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-09-18T22:34:19.189Z",
+    "savedAt": "2026-09-18T22:35:23.911Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -1246,6 +1246,17 @@
       "kat": "Rekening Bank",
       "masuk": 300000,
       "keluar": 0
+    },
+    {
+      "id": 1789770889012,
+      "tanggal": "2026-09-17",
+      "minggu": 2,
+      "bulan": "September",
+      "tahun": 2026,
+      "ket": "Jumat Berkah",
+      "kat": "Rekening Bank",
+      "masuk": 0,
+      "keluar": 300000
     },
     {
       "id": 1789768457480,
