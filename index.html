@@ -118,6 +118,20 @@ select.flt{font-size:12px;padding:6px 10px;border:1px solid var(--border);border
 input.search{font-size:12px;padding:6px 10px;border:1px solid var(--border);border-radius:6px;width:200px}
 .ml-auto{margin-left:auto}
 
+/* Laporan Jamaah: pilih kategori kas & rentang tanggal */
+.jm-sec-label{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.jm-sec-link{font-size:11px;font-weight:600;color:var(--hijau);cursor:pointer;text-transform:none;letter-spacing:0;background:none;border:none;font-family:inherit;padding:0}
+.jm-sec-link:hover{text-decoration:underline}
+.jm-kat-wrap{display:flex;flex-wrap:wrap;gap:8px}
+.jm-kat-chip{display:inline-flex;align-items:center;gap:7px;padding:7px 12px;border:1.5px solid var(--border);border-radius:20px;background:#fff;font-size:12.5px;color:var(--text2);cursor:pointer;user-select:none;transition:all .12s}
+.jm-kat-chip input{accent-color:var(--hijau);width:14px;height:14px;cursor:pointer;margin:0}
+.jm-kat-chip.on{background:var(--hijau-pale);border-color:var(--hijau);color:var(--hijau);font-weight:600}
+.jm-mode{display:inline-flex;background:var(--krem);border:1px solid var(--border);border-radius:8px;padding:3px;margin-bottom:12px}
+.jm-mode button{border:none;background:none;font-family:inherit;font-size:12px;font-weight:600;color:var(--text2);padding:6px 14px;border-radius:6px;cursor:pointer}
+.jm-mode button.on{background:var(--hijau);color:#FAF7F0}
+.jm-divider{height:1px;background:var(--border);margin:16px 0}
+.jm-kat-badge{display:inline-block;font-size:10px;font-weight:600;padding:1px 7px;border-radius:10px;background:var(--hijau-pale);color:var(--hijau);white-space:nowrap}
+
 /* ══════════════════════════════════════
    CARDS
 ══════════════════════════════════════ */
@@ -1078,8 +1092,25 @@ textarea{resize:vertical;min-height:60px}
       </div>
     </div>
     <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:14px">
-      <div style="font-size:13px;font-weight:700;color:var(--hijau);margin-bottom:14px"><svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg> Pilih Periode Laporan</div>
-      <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end">
+      <div class="jm-sec-label">
+        <span>Kategori Kas yang Dilaporkan</span>
+        <span style="display:flex;gap:12px">
+          <button type="button" class="jm-sec-link" onclick="jmKatSetAll(true)">Pilih semua</button>
+          <button type="button" class="jm-sec-link" onclick="jmKatSetAll(false)">Kosongkan</button>
+        </span>
+      </div>
+      <div class="jm-kat-wrap" id="jm-kat-wrap"></div>
+      <div style="font-size:11px;color:var(--text3);margin-top:8px" id="jm-kat-hint"></div>
+
+      <div class="jm-divider"></div>
+
+      <div style="font-size:13px;font-weight:700;color:var(--hijau);margin-bottom:10px"><svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg> Pilih Periode Laporan</div>
+      <div class="jm-mode">
+        <button type="button" id="jm-mode-periode" class="on" onclick="jmSetMode('periode')">Per Bulan / Minggu</button>
+        <button type="button" id="jm-mode-rentang" onclick="jmSetMode('rentang')">Rentang Tanggal</button>
+      </div>
+
+      <div id="jm-grp-periode" style="display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;margin-bottom:12px">
         <div class="fg" style="min-width:130px">
           <label>Bulan</label>
           <select class="fi" id="jm-bln">
@@ -1101,6 +1132,20 @@ textarea{resize:vertical;min-height:60px}
           <label>Tahun</label>
           <select class="fi" id="jm-thn"></select>
         </div>
+      </div>
+
+      <div id="jm-grp-rentang" style="display:none;flex-wrap:wrap;gap:10px;align-items:flex-end;margin-bottom:12px">
+        <div class="fg" style="min-width:150px;flex:1">
+          <label>Dari tanggal</label>
+          <input type="date" id="jm-dari">
+        </div>
+        <div class="fg" style="min-width:150px;flex:1">
+          <label>Sampai tanggal</label>
+          <input type="date" id="jm-sampai">
+        </div>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
         <button class="btn btn-primary" onclick="jmPreview()" style="padding:8px 16px"><svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg> Preview</button>
         <button class="btn btn-primary" id="btn-jm-upload" onclick="jmGenerateAndUpload()" style="padding:8px 16px"><svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5z"/></svg> Generate &amp; Kirim ke GitHub</button>
         <button class="btn btn-gold" onclick="jmGenerate()" style="padding:8px 16px"><svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Download data.js</button>
@@ -3781,6 +3826,62 @@ document.getElementById('topbar-date').textContent=new Date().toLocaleDateString
 /* ══════════════════════════════════════════
    LAPORAN JAMAAH
 ══════════════════════════════════════════ */
+/* ── State pilihan Laporan Jamaah ── */
+let jmMode='periode';      // 'periode' (bulan/minggu/tahun) | 'rentang' (dari-sampai tanggal)
+let jmKatSel=null;         // null = semua kategori; selain itu array nama kategori terpilih
+
+function jmAllKats(){
+  // Kategori dari daftar kategori kas + kategori yang sudah dipakai di transaksi (jaga-jaga bila ada yang tidak ada di daftar)
+  const set=[];
+  (katKeuData||[]).forEach(k=>{if(k&&!set.includes(k))set.push(k);});
+  keuData.forEach(r=>{if(r.kat&&!set.includes(r.kat))set.push(r.kat);});
+  return set;
+}
+
+function jmRenderKats(){
+  const wrap=document.getElementById('jm-kat-wrap');
+  if(!wrap) return;
+  const all=jmAllKats();
+  if(jmKatSel) jmKatSel=jmKatSel.filter(k=>all.includes(k)); // buang kategori yang sudah tidak ada
+  wrap.innerHTML=all.map((k,i)=>{
+    const on=!jmKatSel||jmKatSel.includes(k);
+    return `<label class="jm-kat-chip${on?' on':''}"><input type="checkbox" value="${k.replace(/"/g,'&quot;')}" ${on?'checked':''} onchange="jmKatChanged()">${k}</label>`;
+  }).join('')||'<span style="font-size:12px;color:var(--text3)">Belum ada kategori kas</span>';
+  jmKatHint();
+}
+function jmKatChanged(){
+  const all=jmAllKats();
+  const checked=[...document.querySelectorAll('#jm-kat-wrap input:checked')].map(c=>c.value);
+  jmKatSel=(checked.length===all.length)?null:checked;
+  document.querySelectorAll('#jm-kat-wrap .jm-kat-chip').forEach(l=>{
+    l.classList.toggle('on',l.querySelector('input').checked);
+  });
+  jmKatHint();
+}
+function jmKatSetAll(on){
+  document.querySelectorAll('#jm-kat-wrap input').forEach(c=>{c.checked=on;});
+  jmKatChanged();
+}
+function jmGetKats(){
+  const all=jmAllKats();
+  return jmKatSel?jmKatSel.slice():all;
+}
+function jmKatHint(){
+  const el=document.getElementById('jm-kat-hint');
+  if(!el) return;
+  const n=jmGetKats().length, total=jmAllKats().length;
+  el.textContent = n===0 ? 'Belum ada kategori yang dipilih.' : (n===total ? 'Semua kategori kas akan dilaporkan.' : n+' dari '+total+' kategori akan dilaporkan.');
+  el.style.color = n===0 ? 'var(--red)' : 'var(--text3)';
+}
+
+function jmSetMode(m){
+  jmMode=m;
+  document.getElementById('jm-mode-periode').classList.toggle('on',m==='periode');
+  document.getElementById('jm-mode-rentang').classList.toggle('on',m==='rentang');
+  document.getElementById('jm-grp-periode').style.display = m==='periode'?'flex':'none';
+  document.getElementById('jm-grp-rentang').style.display = m==='rentang'?'flex':'none';
+}
+
 function jmInit(){
   // Populate tahun dropdown
   const yrs=getKeuYears();
@@ -3792,16 +3893,60 @@ function jmInit(){
   // Set bulan ke bulan sekarang
   const blnSel=document.getElementById('jm-bln');
   if(blnSel) blnSel.value=BULAN_LIST[new Date().getMonth()];
+  // Default rentang tanggal: tanggal 1 bulan ini s/d hari ini (hanya kalau belum diisi)
+  const dari=document.getElementById('jm-dari'), sampai=document.getElementById('jm-sampai');
+  if(dari&&!dari.value){
+    const n=new Date(); const pad=v=>String(v).padStart(2,'0');
+    dari.value=`${n.getFullYear()}-${pad(n.getMonth()+1)}-01`;
+    sampai.value=`${n.getFullYear()}-${pad(n.getMonth()+1)}-${pad(n.getDate())}`;
+  }
+  jmRenderKats();
+  jmSetMode(jmMode);
   // Tampilkan info sinkron data.js terakhir (kalau ada & belum ada status lain yang tampil)
   const lastJs=localStorage.getItem(GH_SK.lastSyncDataJs);
   if(lastJs) jmRenderUploadStatus('Terakhir dikirim ke GitHub: '+new Date(lastJs).toLocaleString('id-ID'));
 }
 
+// Semua transaksi milik kategori terpilih, urut tanggal, dengan:
+//  saldo    = saldo berjalan gabungan kategori terpilih
+//  saldoKat = saldo berjalan tiap kategori
+function jmGetSorted(){
+  const kats=jmGetKats();
+  const semua=kats.length===jmAllKats().length;
+  const s=[...keuData]
+    .filter(r=>semua||kats.includes(r.kat))
+    .sort((a,b)=>a.tanggal.localeCompare(b.tanggal)||a.id-b.id);
+  let c=0; const perKat={};
+  return s.map((r,i)=>{
+    const net=(r.masuk||0)-(r.keluar||0);
+    c+=net;
+    perKat[r.kat]=(perKat[r.kat]||0)+net;
+    return {...r,saldo:c,saldoKat:perKat[r.kat],_i:i};
+  });
+}
+
+// Validasi pilihan sebelum preview / generate. Return true kalau aman.
+function jmValidate(){
+  if(!jmGetKats().length){showToast('Pilih minimal satu kategori kas dulu');return false;}
+  if(jmMode==='rentang'){
+    const dari=document.getElementById('jm-dari').value;
+    const sampai=document.getElementById('jm-sampai').value;
+    if(!dari&&!sampai){showToast('Isi tanggal awal dan/atau tanggal akhir dulu');return false;}
+    if(dari&&sampai&&dari>sampai){showToast('Tanggal awal tidak boleh setelah tanggal akhir');return false;}
+  }
+  return true;
+}
+
 function jmGetFiltered(){
+  const sorted=jmGetSorted();
+  if(jmMode==='rentang'){
+    const dari=document.getElementById('jm-dari').value;
+    const sampai=document.getElementById('jm-sampai').value;
+    return sorted.filter(r=>(!dari||r.tanggal>=dari)&&(!sampai||r.tanggal<=sampai));
+  }
   const bln=document.getElementById('jm-bln').value;
   const mgg=document.getElementById('jm-mgg').value;
   const thn=document.getElementById('jm-thn').value;
-  const sorted=computeKeuSaldo();
   return sorted.filter(r=>
     (!thn||r.tahun==thn)&&
     (!bln||r.bulan===bln)&&
@@ -3809,24 +3954,59 @@ function jmGetFiltered(){
   );
 }
 
+function jmRentangLabel(){
+  const dari=document.getElementById('jm-dari').value;
+  const sampai=document.getElementById('jm-sampai').value;
+  if(dari&&sampai) return dari===sampai ? fmtTglLong(dari) : fmtTglLong(dari)+' s/d '+fmtTglLong(sampai);
+  if(dari) return 'Mulai '+fmtTglLong(dari);
+  return 'Sampai '+fmtTglLong(sampai);
+}
+
 function jmBuildData(rows){
-  const bln=document.getElementById('jm-bln').value;
-  const mgg=document.getElementById('jm-mgg').value;
-  const thn=document.getElementById('jm-thn').value;
+  const rentang=(jmMode==='rentang');
+  const bln=rentang?'':document.getElementById('jm-bln').value;
+  const mgg=rentang?'':document.getElementById('jm-mgg').value;
+  const thn=rentang?'':document.getElementById('jm-thn').value;
   const totalMasuk=rows.reduce((s,r)=>s+(r.masuk||0),0);
   const totalKeluar=rows.reduce((s,r)=>s+(r.keluar||0),0);
   const saldoAwal=rows.length?(rows[0].saldo-(rows[0].masuk||0)+(rows[0].keluar||0)):0;
   const saldoAkhir=rows.length?rows[rows.length-1].saldo:0;
-  const label=`${mgg?'Minggu '+mgg+' ':''}${bln||'Semua Bulan'}${thn?' '+thn:''}`.trim();
+  const label=rentang
+    ? jmRentangLabel()
+    : `${mgg?'Minggu '+mgg+' ':''}${bln||'Semua Bulan'}${thn?' '+thn:''}`.trim();
+
+  // Kategori terpilih + ringkasan tiap kategori (saldo awal, masuk, keluar, saldo akhir)
+  const kats=jmGetKats();
+  const semuaKat=kats.length===jmAllKats().length;
+  let ringkasanKategori=[];
+  if(rows.length){
+    const all=jmGetSorted();
+    const endIdx=rows[rows.length-1]._i;
+    ringkasanKategori=kats.map(k=>{
+      const inRows=rows.filter(r=>r.kat===k);
+      const masuk=inRows.reduce((s,r)=>s+(r.masuk||0),0);
+      const keluar=inRows.reduce((s,r)=>s+(r.keluar||0),0);
+      const sAkhir=all.slice(0,endIdx+1).filter(r=>r.kat===k).reduce((s,r)=>s+(r.masuk||0)-(r.keluar||0),0);
+      return {kategori:k,saldoAwal:sAkhir-masuk+keluar,masuk,keluar,saldoAkhir:sAkhir,jumlahTransaksi:inRows.length};
+    });
+  }
+
   return {
     masjid: MASJID,
     alamat: ALAMAT,
     logo: LOGO_B64 || '',
     heroFoto: HERO_B64 || '',
     periode: label,
+    modeRentang: rentang,
+    tanggalDari: rentang?document.getElementById('jm-dari').value:'',
+    tanggalSampai: rentang?document.getElementById('jm-sampai').value:'',
     bulan: bln||'',
     minggu: mgg||'',
     tahun: thn||'',
+    kategori: kats,
+    kategoriSemua: semuaKat,
+    kategoriLabel: semuaKat?'Semua Kategori':kats.join(', '),
+    ringkasanKategori,
     diperbarui: new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'}),
     saldoAwal,
     totalMasuk,
@@ -3835,6 +4015,7 @@ function jmBuildData(rows){
     transaksi: rows.map(r=>({
       tanggal: r.tanggal,
       minggu: r.minggu,
+      kategori: r.kat||'',
       keterangan: r.ket,
       masuk: r.masuk||0,
       keluar: r.keluar||0,
@@ -3864,10 +4045,11 @@ function jmBuildData(rows){
 }
 
 function jmPreview(){
+  if(!jmValidate()) return;
   const rows=jmGetFiltered();
   const el=document.getElementById('jm-preview-area');
   if(!rows.length){
-    el.innerHTML='<div class="empty-state"><div class="empty-icon"><svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"/></svg></div>Tidak ada data untuk periode ini</div>';
+    el.innerHTML='<div class="empty-state"><div class="empty-icon"><svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"/></svg></div>Tidak ada data untuk pilihan ini</div>';
     return;
   }
   const d=jmBuildData(rows);
@@ -3878,6 +4060,7 @@ function jmPreview(){
       <div style="font-size:11px;opacity:0.7;margin-bottom:2px">PREVIEW LAPORAN JAMAAH</div>
       <div style="font-size:15px;font-weight:700">${d.masjid}</div>
       <div style="font-size:12px;opacity:0.8">Periode: ${d.periode}</div>
+      <div style="font-size:12px;opacity:0.8">Kategori: ${d.kategoriLabel}</div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border-bottom:1px solid var(--border)">
       <div style="padding:14px;border-right:1px solid var(--border)">
@@ -3897,11 +4080,12 @@ function jmPreview(){
       <div style="font-size:12px;font-weight:700;color:var(--hijau);margin-bottom:10px">Rincian Transaksi (${rows.length} transaksi)</div>
       <div class="tbl-wrap">
         <table>
-          <thead><tr style="background:var(--hijau-light)"><th>Tgl</th><th>Keterangan</th><th style="text-align:right">Masuk</th><th style="text-align:right">Keluar</th><th style="text-align:right">Saldo</th></tr></thead>
+          <thead><tr style="background:var(--hijau-light)"><th>Tgl</th><th>Kategori</th><th>Keterangan</th><th style="text-align:right">Masuk</th><th style="text-align:right">Keluar</th><th style="text-align:right">Saldo</th></tr></thead>
           <tbody>`;
   rows.forEach(r=>{
     html+=`<tr>
       <td style="white-space:nowrap;font-size:11px">${fmtTgl(r.tanggal)}</td>
+      <td><span class="jm-kat-badge">${r.kat||'–'}</span></td>
       <td style="font-size:12px">${r.ket}</td>
       <td class="right c-green" style="font-size:11px">${r.masuk?fmtNum(r.masuk):'–'}</td>
       <td class="right c-red" style="font-size:11px">${r.keluar?fmtNum(r.keluar):'–'}</td>
@@ -3915,6 +4099,7 @@ function jmPreview(){
 }
 
 function jmGenerate(){
+  if(!jmValidate()) return;
   const rows=jmGetFiltered();
   if(!rows.length && !(pengumumanData&&pengumumanData.length) && !(jadwalJumatData&&jadwalJumatData.length) && !(qurbanData&&qurbanData.length)){showToast('Tidak ada data laporan, pengumuman, jadwal, maupun qurban untuk di-generate!');return;}
   const d=jmBuildData(rows);
@@ -3934,6 +4119,7 @@ const LAPORAN_DATA = ${JSON.stringify(d, null, 2)};
 
 // Bangun isi data.js sebagai teks (dipakai bareng oleh jmGenerate & jmGenerateAndUpload)
 function jmBuildDataJsText(){
+  if(!jmValidate()) return undefined; // pilihan tidak valid — toast sudah ditampilkan
   const rows=jmGetFiltered();
   if(!rows.length && !(pengumumanData&&pengumumanData.length) && !(jadwalJumatData&&jadwalJumatData.length) && !(qurbanData&&qurbanData.length)) return null;
   const d=jmBuildData(rows);
@@ -3960,6 +4146,7 @@ let jmUploading=false;
 async function jmGenerateAndUpload(){
   if(jmUploading) return;
   const js=jmBuildDataJsText();
+  if(js===undefined) return;
   if(js===null){showToast('Tidak ada data laporan, pengumuman, jadwal, maupun qurban untuk di-generate!');return;}
   const s=ghGetSettings();
   if(!s.token||!s.repo){

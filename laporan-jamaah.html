@@ -44,6 +44,25 @@ select.flt:focus{outline:2px solid var(--hijau);border-color:var(--hijau)}
 .wallet-pill-label{font-size:9.5px;opacity:0.7;font-weight:600}
 .wallet-pill-val{font-size:12.5px;font-weight:800;margin-top:1px}
 
+/* KATEGORI KAS */
+.wallet-kats{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:10px}
+.wallet-kat-chip{font-size:10px;font-weight:700;letter-spacing:.2px;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,0.16);border:1px solid rgba(255,255,255,0.24);color:#fff}
+.trx-meta{display:flex;align-items:center;gap:7px;margin-top:4px;flex-wrap:wrap}
+.trx-kat{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;padding:2px 9px 2px 7px;border-radius:20px;background:var(--hijau-pale);color:var(--hijau);white-space:nowrap}
+.trx-kat::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0}
+.trx-meta .trx-tgl{margin-top:0}
+.kas-dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:0}
+.kas-list{display:flex;flex-direction:column;background:#fff;border-radius:16px;border:1px solid var(--border);overflow:hidden;margin-bottom:16px}
+.kas-item{padding:12px 14px;border-bottom:1px solid var(--border)}
+.kas-item:last-child{border-bottom:none}
+.kas-item-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.kas-item-name{font-size:13px;font-weight:700;color:var(--text)}
+.kas-item-saldo{font-size:13px;font-weight:800;color:var(--hijau)}
+.kas-item-detail{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px;font-size:10.5px;color:var(--text3)}
+.kas-item-detail b{font-weight:700}
+.kas-item-detail .in{color:var(--hijau)}
+.kas-item-detail .out{color:var(--red)}
+
 /* QUICK STATS */
 .quick-stats{display:flex;background:#fff;border:1px solid var(--border);border-radius:16px;padding:14px 4px;margin-bottom:16px;box-shadow:0 1px 8px rgba(0,0,0,0.04)}
 .qs-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;padding:0 2px}
@@ -379,7 +398,9 @@ function renderHomeView(d){
   const bagianMgg = d.minggu ? 'Minggu ke-'+d.minggu : '';
   const bagianBln = d.bulan || '';
   const bagianThn = d.tahun || '';
-  const periodeShort = [bagianMgg, bagianBln, bagianThn].filter(Boolean).join(' ') || 'Belum ada data';
+  const periodeShort = d.modeRentang
+    ? (d.periode || 'Belum ada data')
+    : ([bagianMgg, bagianBln, bagianThn].filter(Boolean).join(' ') || 'Belum ada data');
   const mosqueVisual = d.heroFoto ? `<img src="${d.heroFoto}" alt="Foto Masjid">` : MOSQUE_DUMMY_SVG;
   const jjList = Array.isArray(d.jadwalJumat) ? d.jadwalJumat : [];
   const jjNextId = jjList.length ? jjNextUpcomingIdPublic(jjList) : null;
@@ -794,7 +815,7 @@ function tampilkan() {
       <div class="empty-box">
         <div class="empty-icon">📭</div>
         <div class="empty-title">Tidak ada data</div>
-        <div class="empty-sub">Belum ada transaksi untuk periode laporan ini.</div>
+        <div class="empty-sub">Belum ada transaksi untuk periode dan kategori kas yang dipilih.</div>
       </div>`;
     return;
   }
@@ -812,14 +833,31 @@ function tampilkan() {
   const bagianBln = selBln ? 'bulan '+selBln : '';
   const bagianThn = selThn ? 'Tahun '+selThn : '';
   const isiLabel = [bagianMgg, bagianBln, bagianThn].filter(Boolean).join(' ');
-  const periodeLabel = isiLabel || 'Semua Periode';
+  const periodeLabel = d.modeRentang ? 'Rentang Tanggal' : (isiLabel || 'Semua Periode');
 
-  // Rentang tanggal: dari transaksi pertama sampai terakhir dalam periode ini
+  // Rentang tanggal: kalau admin memilih rentang tanggal, tampilkan rentang yang dipilih.
+  // Kalau tidak, dari transaksi pertama sampai terakhir dalam periode ini.
   const tglMulai = fmtTgl(firstRow.tanggal);
   const tglSelesai = fmtTgl(rows[rows.length-1].tanggal);
-  const rentangTanggal = tglMulai === tglSelesai
-    ? tglMulai
-    : `${tglMulai} s/d ${tglSelesai}`;
+  const rentangTanggal = d.modeRentang
+    ? (d.periode || '')
+    : (tglMulai === tglSelesai ? tglMulai : `${tglMulai} s/d ${tglSelesai}`);
+
+  // Kategori kas yang dilaporkan (data.js lama tanpa field ini tetap jalan seperti biasa)
+  const katList = Array.isArray(d.kategori) ? d.kategori : [];
+  const katSubset = d.kategoriSemua === false && katList.length > 0;
+  const ringkasan = Array.isArray(d.ringkasanKategori) ? d.ringkasanKategori : [];
+
+  // Warna tiap kas supaya mudah dibedakan (bank / kas umum / pembangunan, dll)
+  const KAT_WARNA = [
+    ['#D8F3DC','#1B4332'], ['#E3F2FD','#0D47A1'], ['#FFF3CD','#7B5800'],
+    ['#F3E5F5','#7B1FA2'], ['#FFE8D6','#B5540A'], ['#E0F2F1','#00695C'],
+    ['#FCE4EC','#AD1457'], ['#ECEFF1','#37474F']
+  ];
+  const katUrut = [];
+  (katList.length ? katList : []).forEach(k => { if(!katUrut.includes(k)) katUrut.push(k); });
+  rows.forEach(r => { if(r.kategori && !katUrut.includes(r.kategori)) katUrut.push(r.kategori); });
+  const katWarna = k => KAT_WARNA[Math.max(0, katUrut.indexOf(k)) % KAT_WARNA.length];
 
   let html = '';
 
@@ -832,9 +870,10 @@ function tampilkan() {
         <div class="wallet-account-name">${d.masjid || 'Masjid'}</div>
       </div>
     </div>
-    <div class="wallet-label"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg> Saldo Kas Saat Ini</div>
+    <div class="wallet-label"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg> ${katSubset ? 'Saldo Kas Terpilih' : 'Saldo Kas Saat Ini'}</div>
     <div class="wallet-balance">${fmtRp(saldoAkhir)}</div>
     <div class="wallet-periode"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-1px"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg> ${periodeLabel} &nbsp;•&nbsp; ${rentangTanggal}</div>
+    ${katList.length ? `<div class="wallet-kats">${katList.map(k => `<span class="wallet-kat-chip">${k}</span>`).join('')}</div>` : ''}
     <div class="wallet-pills">
       <div class="wallet-pill">
         <div class="wallet-pill-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/></svg></div>
@@ -867,6 +906,28 @@ function tampilkan() {
     </div>
   </div>`;
 
+  // Ringkasan per kas — hanya muncul kalau yang dilaporkan lebih dari satu kategori
+  if (ringkasan.length > 1) {
+    html += `
+    <div class="sect-head"><svg width="14" height="14" viewBox="0 0 24 24" fill="var(--hijau)"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8z"/></svg> Ringkasan per Kas</div>
+    <div class="kas-list">`;
+    ringkasan.forEach(k => {
+      html += `
+      <div class="kas-item">
+        <div class="kas-item-head">
+          <div class="kas-item-name"><span class="kas-dot" style="background:${katWarna(k.kategori)[1]}"></span>${k.kategori}</div>
+          <div class="kas-item-saldo">${fmtRp(k.saldoAkhir)}</div>
+        </div>
+        <div class="kas-item-detail">
+          <span>Sebelumnya: <b>${fmtNum(k.saldoAwal)}</b></span>
+          <span class="in">Masuk: <b>+${fmtNum(k.masuk)}</b></span>
+          <span class="out">Keluar: <b>-${fmtNum(k.keluar)}</b></span>
+        </div>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
   // Transaction list
   html += `
   <div class="sect-head"><svg width="14" height="14" viewBox="0 0 24 24" fill="var(--hijau)"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg> Rincian Transaksi <span style="font-size:11px;font-weight:400;color:var(--text3);margin-left:4px">${rows.length} transaksi</span></div>
@@ -883,7 +944,10 @@ function tampilkan() {
       <div class="trx-icon ${isMasuk?'masuk':'keluar'}">${arrowIcon}</div>
       <div class="trx-body">
         <div class="trx-ket">${r.keterangan}</div>
-        <div class="trx-tgl">${fmtTgl(r.tanggal)}</div>
+        <div class="trx-meta">
+          ${r.kategori ? `<span class="trx-kat" style="background:${katWarna(r.kategori)[0]};color:${katWarna(r.kategori)[1]}">${r.kategori}</span>` : ''}
+          <span class="trx-tgl">${fmtTgl(r.tanggal)}</span>
+        </div>
       </div>
       <div class="trx-right">
         <div class="trx-amt ${isMasuk?'masuk':'keluar'}">${isMasuk?'+':'-'}${fmtNum(amt)}</div>
