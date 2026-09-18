@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-09-18T22:32:58.603Z",
+    "savedAt": "2026-09-18T22:34:19.189Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -1226,17 +1226,6 @@
       "keluar": 2150000
     },
     {
-      "id": 1789770718112,
-      "tanggal": "2026-09-10",
-      "minggu": 1,
-      "bulan": "September",
-      "tahun": 2026,
-      "ket": "Titip Uang Maulid",
-      "kat": "Rekening Bank",
-      "masuk": 5000000,
-      "keluar": 0
-    },
-    {
       "id": 1789768375744,
       "tanggal": "2026-09-11",
       "minggu": 2,
@@ -1245,6 +1234,17 @@
       "ket": "Kotak Amal Jum'at",
       "kat": "Kas Umum",
       "masuk": 466000,
+      "keluar": 0
+    },
+    {
+      "id": 1789770857977,
+      "tanggal": "2026-09-17",
+      "minggu": 2,
+      "bulan": "September",
+      "tahun": 2026,
+      "ket": "infak jumat berkah",
+      "kat": "Rekening Bank",
+      "masuk": 300000,
       "keluar": 0
     },
     {
