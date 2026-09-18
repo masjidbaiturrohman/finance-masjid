@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-09-18T22:22:52.284Z",
+    "savedAt": "2026-09-18T22:24:51.483Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -366,6 +366,17 @@
       "kat": "Kas Pembangunan",
       "masuk": 0,
       "keluar": 40000
+    },
+    {
+      "id": 1789770290275,
+      "tanggal": "2026-07-10",
+      "minggu": 1,
+      "bulan": "Juli",
+      "tahun": 2026,
+      "ket": "Infaq",
+      "kat": "Rekening Bank",
+      "masuk": 105000,
+      "keluar": 0
     },
     {
       "id": 1783742040478,
