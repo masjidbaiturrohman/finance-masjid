@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-09-18T22:24:51.483Z",
+    "savedAt": "2026-09-18T22:26:16.307Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -304,7 +304,7 @@
     {
       "id": 1789770171074,
       "tanggal": "2026-07-06",
-      "minggu": 2,
+      "minggu": 1,
       "bulan": "Juli",
       "tahun": 2026,
       "ket": "Saldo Awal",
@@ -674,6 +674,17 @@
       "kat": "Kas Pembangunan",
       "masuk": 0,
       "keluar": 305000
+    },
+    {
+      "id": 1789770375092,
+      "tanggal": "2026-08-01",
+      "minggu": 4,
+      "bulan": "Juli",
+      "tahun": 2026,
+      "ket": "Admin Bank",
+      "kat": "Rekening Bank",
+      "masuk": 0,
+      "keluar": 14000
     },
     {
       "id": 1785974231607,
