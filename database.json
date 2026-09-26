@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-09-26T03:01:42.404Z",
+    "savedAt": "2026-09-26T03:02:45.638Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -1279,6 +1279,17 @@
       "kat": "Rekening Bank",
       "masuk": 30000,
       "keluar": 0
+    },
+    {
+      "id": 1790391737189,
+      "tanggal": "2026-09-21",
+      "minggu": 4,
+      "bulan": "September",
+      "tahun": 2026,
+      "ket": "Tagihan Wifi",
+      "kat": "Rekening Bank",
+      "masuk": 0,
+      "keluar": 149950
     },
     {
       "id": 1790391667444,
