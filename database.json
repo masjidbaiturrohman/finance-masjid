@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-10-17T22:26:02.432Z",
+    "savedAt": "2026-10-17T22:27:07.083Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -1345,6 +1345,17 @@
       "kat": "Kas Umum",
       "masuk": 0,
       "keluar": 505000
+    },
+    {
+      "id": 1792275965819,
+      "tanggal": "2026-10-09",
+      "minggu": 1,
+      "bulan": "Oktober",
+      "tahun": 2026,
+      "ket": "Pembelian 3 LED 6W",
+      "kat": "Kas Umum",
+      "masuk": 0,
+      "keluar": 150000
     }
   ],
   "inv": [
