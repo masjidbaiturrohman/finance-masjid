@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-10-17T22:28:30.354Z",
+    "savedAt": "2026-10-17T22:29:51.444Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -1366,6 +1366,17 @@
       "ket": "Kotak Amal Jum'at",
       "kat": "Kas Umum",
       "masuk": 745000,
+      "keluar": 0
+    },
+    {
+      "id": 1792276128939,
+      "tanggal": "2026-10-09",
+      "minggu": 1,
+      "bulan": "Oktober",
+      "tahun": 2026,
+      "ket": "Donasi dari Ibu Suerning",
+      "kat": "Kas Pembangunan",
+      "masuk": 1000000,
       "keluar": 0
     },
     {
