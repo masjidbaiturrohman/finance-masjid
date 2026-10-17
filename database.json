@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-10-17T22:29:51.444Z",
+    "savedAt": "2026-10-17T22:32:10.570Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -1310,7 +1310,7 @@
       "tahun": 2026,
       "ket": "Kotak Amal Jum'at",
       "kat": "Kas Umum",
-      "masuk": 941,
+      "masuk": 941000,
       "keluar": 0
     },
     {
