@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-10-17T22:27:07.083Z",
+    "savedAt": "2026-10-17T22:28:30.354Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -1356,6 +1356,28 @@
       "kat": "Kas Umum",
       "masuk": 0,
       "keluar": 150000
+    },
+    {
+      "id": 1792276056215,
+      "tanggal": "2026-10-09",
+      "minggu": 1,
+      "bulan": "Oktober",
+      "tahun": 2026,
+      "ket": "Kotak Amal Jum'at",
+      "kat": "Kas Umum",
+      "masuk": 745000,
+      "keluar": 0
+    },
+    {
+      "id": 1792276075684,
+      "tanggal": "2026-10-16",
+      "minggu": 2,
+      "bulan": "Oktober",
+      "tahun": 2026,
+      "ket": "Kotak Amal Jum'at",
+      "kat": "Kas Umum",
+      "masuk": 826000,
+      "keluar": 0
     }
   ],
   "inv": [
