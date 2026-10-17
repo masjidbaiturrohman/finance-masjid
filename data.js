@@ -1,5 +1,5 @@
 // Data laporan keuangan Masjid Baiturrahman Panjunan
-// Dibuat otomatis pada: 18 Oktober 2026 pukul 05.30
+// Dibuat otomatis pada: 18 Oktober 2026 pukul 05.33
 // Jangan edit file ini secara manual — generate ulang dari aplikasi
 
 const LAPORAN_DATA = {
@@ -22,11 +22,10 @@ const LAPORAN_DATA = {
     "Operasional",
     "Lain-lain",
     "Kas Umum",
-    "Kas Pembangunan",
-    "Rekening Bank"
+    "Kas Pembangunan"
   ],
-  "kategoriSemua": true,
-  "kategoriLabel": "Semua Kategori",
+  "kategoriSemua": false,
+  "kategoriLabel": "Infak, Zakat, Shodaqoh, Pembangunan, Operasional, Lain-lain, Kas Umum, Kas Pembangunan",
   "ringkasanKategori": [
     {
       "kategori": "Infak",
@@ -79,9 +78,9 @@ const LAPORAN_DATA = {
     {
       "kategori": "Kas Umum",
       "saldoAwal": 6307000,
-      "masuk": 1571941,
+      "masuk": 2512000,
       "keluar": 655000,
-      "saldoAkhir": 7223941,
+      "saldoAkhir": 8164000,
       "jumlahTransaksi": 5
     },
     {
@@ -91,30 +90,22 @@ const LAPORAN_DATA = {
       "keluar": 30000,
       "saldoAkhir": 4781289,
       "jumlahTransaksi": 3
-    },
-    {
-      "kategori": "Rekening Bank",
-      "saldoAwal": 2082050,
-      "masuk": 0,
-      "keluar": 0,
-      "saldoAkhir": 2082050,
-      "jumlahTransaksi": 0
     }
   ],
-  "diperbarui": "18 Oktober 2026 pukul 05.30",
-  "saldoAwal": 9415339,
-  "totalMasuk": 5356941,
+  "diperbarui": "18 Oktober 2026 pukul 05.33",
+  "saldoAwal": 7333289,
+  "totalMasuk": 6297000,
   "totalKeluar": 685000,
-  "saldoAkhir": 14087280,
+  "saldoAkhir": 12945289,
   "transaksi": [
     {
       "tanggal": "2026-10-02",
       "minggu": 5,
       "kategori": "Kas Umum",
       "keterangan": "Kotak Amal Jum'at",
-      "masuk": 941,
+      "masuk": 941000,
       "keluar": 0,
-      "saldo": 9416280
+      "saldo": 8274289
     },
     {
       "tanggal": "2026-10-08",
@@ -123,7 +114,7 @@ const LAPORAN_DATA = {
       "keterangan": "Kotak Amal malam Jum'at Wage",
       "masuk": 2785000,
       "keluar": 0,
-      "saldo": 12201280
+      "saldo": 11059289
     },
     {
       "tanggal": "2026-10-08",
@@ -132,7 +123,7 @@ const LAPORAN_DATA = {
       "keterangan": "Air Galon",
       "masuk": 0,
       "keluar": 30000,
-      "saldo": 12171280
+      "saldo": 11029289
     },
     {
       "tanggal": "2026-10-09",
@@ -141,7 +132,7 @@ const LAPORAN_DATA = {
       "keterangan": "Token listrik",
       "masuk": 0,
       "keluar": 505000,
-      "saldo": 11666280
+      "saldo": 10524289
     },
     {
       "tanggal": "2026-10-09",
@@ -150,7 +141,7 @@ const LAPORAN_DATA = {
       "keterangan": "Pembelian 3 LED 6W",
       "masuk": 0,
       "keluar": 150000,
-      "saldo": 11516280
+      "saldo": 10374289
     },
     {
       "tanggal": "2026-10-09",
@@ -159,7 +150,7 @@ const LAPORAN_DATA = {
       "keterangan": "Kotak Amal Jum'at",
       "masuk": 745000,
       "keluar": 0,
-      "saldo": 12261280
+      "saldo": 11119289
     },
     {
       "tanggal": "2026-10-09",
@@ -168,7 +159,7 @@ const LAPORAN_DATA = {
       "keterangan": "Donasi dari Ibu Suerning",
       "masuk": 1000000,
       "keluar": 0,
-      "saldo": 13261280
+      "saldo": 12119289
     },
     {
       "tanggal": "2026-10-16",
@@ -177,7 +168,7 @@ const LAPORAN_DATA = {
       "keterangan": "Kotak Amal Jum'at",
       "masuk": 826000,
       "keluar": 0,
-      "saldo": 14087280
+      "saldo": 12945289
     }
   ],
   "pengumuman": [
