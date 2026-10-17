@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-10-17T22:25:01.034Z",
+    "savedAt": "2026-10-17T22:26:02.432Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -1334,6 +1334,17 @@
       "kat": "Kas Pembangunan",
       "masuk": 0,
       "keluar": 30000
+    },
+    {
+      "id": 1792275934188,
+      "tanggal": "2026-10-09",
+      "minggu": 1,
+      "bulan": "Oktober",
+      "tahun": 2026,
+      "ket": "Token listrik",
+      "kat": "Kas Umum",
+      "masuk": 0,
+      "keluar": 505000
     }
   ],
   "inv": [
