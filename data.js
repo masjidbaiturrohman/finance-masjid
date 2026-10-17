@@ -1,5 +1,5 @@
 // Data laporan keuangan Masjid Baiturrahman Panjunan
-// Dibuat otomatis pada: 18 Oktober 2026 pukul 05.33
+// Dibuat otomatis pada: 18 Oktober 2026 pukul 05.41
 // Jangan edit file ini secara manual — generate ulang dari aplikasi
 
 const LAPORAN_DATA = {
@@ -15,66 +15,12 @@ const LAPORAN_DATA = {
   "minggu": "",
   "tahun": "",
   "kategori": [
-    "Infak",
-    "Zakat",
-    "Shodaqoh",
-    "Pembangunan",
-    "Operasional",
-    "Lain-lain",
     "Kas Umum",
     "Kas Pembangunan"
   ],
   "kategoriSemua": false,
-  "kategoriLabel": "Infak, Zakat, Shodaqoh, Pembangunan, Operasional, Lain-lain, Kas Umum, Kas Pembangunan",
+  "kategoriLabel": "Kas Umum, Kas Pembangunan",
   "ringkasanKategori": [
-    {
-      "kategori": "Infak",
-      "saldoAwal": 0,
-      "masuk": 0,
-      "keluar": 0,
-      "saldoAkhir": 0,
-      "jumlahTransaksi": 0
-    },
-    {
-      "kategori": "Zakat",
-      "saldoAwal": 0,
-      "masuk": 0,
-      "keluar": 0,
-      "saldoAkhir": 0,
-      "jumlahTransaksi": 0
-    },
-    {
-      "kategori": "Shodaqoh",
-      "saldoAwal": 0,
-      "masuk": 0,
-      "keluar": 0,
-      "saldoAkhir": 0,
-      "jumlahTransaksi": 0
-    },
-    {
-      "kategori": "Pembangunan",
-      "saldoAwal": 0,
-      "masuk": 0,
-      "keluar": 0,
-      "saldoAkhir": 0,
-      "jumlahTransaksi": 0
-    },
-    {
-      "kategori": "Operasional",
-      "saldoAwal": 0,
-      "masuk": 0,
-      "keluar": 0,
-      "saldoAkhir": 0,
-      "jumlahTransaksi": 0
-    },
-    {
-      "kategori": "Lain-lain",
-      "saldoAwal": 0,
-      "masuk": 0,
-      "keluar": 0,
-      "saldoAkhir": 0,
-      "jumlahTransaksi": 0
-    },
     {
       "kategori": "Kas Umum",
       "saldoAwal": 6307000,
@@ -92,7 +38,7 @@ const LAPORAN_DATA = {
       "jumlahTransaksi": 3
     }
   ],
-  "diperbarui": "18 Oktober 2026 pukul 05.33",
+  "diperbarui": "18 Oktober 2026 pukul 05.41",
   "saldoAwal": 7333289,
   "totalMasuk": 6297000,
   "totalKeluar": 685000,
