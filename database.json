@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-10-30T22:20:25.262Z",
+    "savedAt": "2026-10-30T22:21:37.438Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -1400,6 +1400,17 @@
       "kat": "Rekening Bank",
       "masuk": 0,
       "keluar": 149950
+    },
+    {
+      "id": 1793398868381,
+      "tanggal": "2026-10-26",
+      "minggu": 4,
+      "bulan": "Oktober",
+      "tahun": 2026,
+      "ket": "Air Club Galon",
+      "kat": "Pembangunan",
+      "masuk": 0,
+      "keluar": 16500
     }
   ],
   "inv": [
