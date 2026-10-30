@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-10-30T22:21:37.438Z",
+    "savedAt": "2026-10-30T22:22:52.254Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -1411,6 +1411,39 @@
       "kat": "Pembangunan",
       "masuk": 0,
       "keluar": 16500
+    },
+    {
+      "id": 1793398926945,
+      "tanggal": "2026-10-30",
+      "minggu": 4,
+      "bulan": "Oktober",
+      "tahun": 2026,
+      "ket": "Donasi Jumat Bpk. Ulum",
+      "kat": "Kas Pembangunan",
+      "masuk": 500000,
+      "keluar": 0
+    },
+    {
+      "id": 1793398947420,
+      "tanggal": "2026-10-30",
+      "minggu": 4,
+      "bulan": "Oktober",
+      "tahun": 2026,
+      "ket": "Jum'at Berkah",
+      "kat": "Kas Pembangunan",
+      "masuk": 0,
+      "keluar": 500000
+    },
+    {
+      "id": 1793398971047,
+      "tanggal": "2026-10-30",
+      "minggu": 4,
+      "bulan": "Oktober",
+      "tahun": 2026,
+      "ket": "Bisaroh Ngaji Malam Jum'at",
+      "kat": "Kas Pembangunan",
+      "masuk": 0,
+      "keluar": 100000
     }
   ],
   "inv": [
