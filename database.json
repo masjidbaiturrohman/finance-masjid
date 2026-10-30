@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-10-17T22:32:10.570Z",
+    "savedAt": "2026-10-30T22:20:25.262Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -1389,6 +1389,17 @@
       "kat": "Kas Umum",
       "masuk": 826000,
       "keluar": 0
+    },
+    {
+      "id": 1793398824053,
+      "tanggal": "2026-10-20",
+      "minggu": 3,
+      "bulan": "Oktober",
+      "tahun": 2026,
+      "ket": "Tagihan Wifi",
+      "kat": "Rekening Bank",
+      "masuk": 0,
+      "keluar": 149950
     }
   ],
   "inv": [
