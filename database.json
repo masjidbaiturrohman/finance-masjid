@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-10-30T22:22:52.254Z",
+    "savedAt": "2026-10-30T22:23:54.777Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -1402,13 +1402,24 @@
       "keluar": 149950
     },
     {
+      "id": 1793399028558,
+      "tanggal": "2026-10-23",
+      "minggu": 3,
+      "bulan": "Oktober",
+      "tahun": 2026,
+      "ket": "Kotak Amal Jum'at",
+      "kat": "Kas Umum",
+      "masuk": 785000,
+      "keluar": 0
+    },
+    {
       "id": 1793398868381,
       "tanggal": "2026-10-26",
       "minggu": 4,
       "bulan": "Oktober",
       "tahun": 2026,
       "ket": "Air Club Galon",
-      "kat": "Pembangunan",
+      "kat": "Kas Pembangunan",
       "masuk": 0,
       "keluar": 16500
     },
