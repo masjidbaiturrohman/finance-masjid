@@ -1,5 +1,5 @@
 // Data laporan keuangan Masjid Baiturrahman Panjunan
-// Dibuat otomatis pada: 1 November 2026 pukul 08.18
+// Dibuat otomatis pada: 1 November 2026 pukul 08.20
 // Jangan edit file ini secara manual — generate ulang dari aplikasi
 
 const LAPORAN_DATA = {
@@ -33,17 +33,26 @@ const LAPORAN_DATA = {
       "kategori": "Kas Pembangunan",
       "saldoAwal": 4781289,
       "masuk": 1000000,
-      "keluar": 1116500,
-      "saldoAkhir": 4664789,
-      "jumlahTransaksi": 6
+      "keluar": 1266450,
+      "saldoAkhir": 4514839,
+      "jumlahTransaksi": 7
     }
   ],
-  "diperbarui": "1 November 2026 pukul 08.18",
+  "diperbarui": "1 November 2026 pukul 08.20",
   "saldoAwal": 12945289,
   "totalMasuk": 3251000,
-  "totalKeluar": 1116500,
-  "saldoAkhir": 15079789,
+  "totalKeluar": 1266450,
+  "saldoAkhir": 14929839,
   "transaksi": [
+    {
+      "tanggal": "2026-10-20",
+      "minggu": 3,
+      "kategori": "Kas Pembangunan",
+      "keterangan": "Tagihan Wifi",
+      "masuk": 0,
+      "keluar": 149950,
+      "saldo": 12795339
+    },
     {
       "tanggal": "2026-10-23",
       "minggu": 3,
@@ -51,7 +60,7 @@ const LAPORAN_DATA = {
       "keterangan": "Kotak Amal Jum'at",
       "masuk": 785000,
       "keluar": 0,
-      "saldo": 13730289
+      "saldo": 13580339
     },
     {
       "tanggal": "2026-10-26",
@@ -60,7 +69,7 @@ const LAPORAN_DATA = {
       "keterangan": "Air Club Galon",
       "masuk": 0,
       "keluar": 16500,
-      "saldo": 13713789
+      "saldo": 13563839
     },
     {
       "tanggal": "2026-10-30",
@@ -69,7 +78,7 @@ const LAPORAN_DATA = {
       "keterangan": "Donasi Jumat Bpk. Ulum",
       "masuk": 500000,
       "keluar": 0,
-      "saldo": 14213789
+      "saldo": 14063839
     },
     {
       "tanggal": "2026-10-30",
@@ -78,7 +87,7 @@ const LAPORAN_DATA = {
       "keterangan": "Jum'at Berkah",
       "masuk": 0,
       "keluar": 500000,
-      "saldo": 13713789
+      "saldo": 13563839
     },
     {
       "tanggal": "2026-10-30",
@@ -87,7 +96,7 @@ const LAPORAN_DATA = {
       "keterangan": "Bisaroh Ngaji Malam Jum'at",
       "masuk": 0,
       "keluar": 100000,
-      "saldo": 13613789
+      "saldo": 13463839
     },
     {
       "tanggal": "2026-10-30",
@@ -96,7 +105,7 @@ const LAPORAN_DATA = {
       "keterangan": "Kotak Amal Jum'at",
       "masuk": 1466000,
       "keluar": 0,
-      "saldo": 15079789
+      "saldo": 14929839
     },
     {
       "tanggal": "2026-10-30",
@@ -105,7 +114,7 @@ const LAPORAN_DATA = {
       "keterangan": "Donasi Jum'at",
       "masuk": 500000,
       "keluar": 0,
-      "saldo": 15579789
+      "saldo": 15429839
     },
     {
       "tanggal": "2026-10-30",
@@ -114,7 +123,7 @@ const LAPORAN_DATA = {
       "keterangan": "Belanja Jumat berkah",
       "masuk": 0,
       "keluar": 500000,
-      "saldo": 15079789
+      "saldo": 14929839
     }
   ],
   "pengumuman": [
