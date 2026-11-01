@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-10-30T22:26:02.657Z",
+    "savedAt": "2026-11-01T01:20:21.567Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -1397,7 +1397,7 @@
       "bulan": "Oktober",
       "tahun": 2026,
       "ket": "Tagihan Wifi",
-      "kat": "Rekening Bank",
+      "kat": "Kas Pembangunan",
       "masuk": 0,
       "keluar": 149950
     },
