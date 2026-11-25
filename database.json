@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-11-25T08:47:41.222Z",
+    "savedAt": "2026-11-25T08:48:51.041Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -1543,6 +1543,17 @@
       "kat": "Kas Pembangunan",
       "masuk": 3475000,
       "keluar": 0
+    },
+    {
+      "id": 1795596529830,
+      "tanggal": "2026-11-21",
+      "minggu": 3,
+      "bulan": "November",
+      "tahun": 2026,
+      "ket": "Bayar Wifi Masjid",
+      "kat": "Kas Pembangunan",
+      "masuk": 0,
+      "keluar": 149950
     }
   ],
   "inv": [
