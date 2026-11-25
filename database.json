@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-11-25T08:44:16.684Z",
+    "savedAt": "2026-11-25T08:45:17.173Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -1488,6 +1488,17 @@
       "kat": "Kas Pembangunan",
       "masuk": 0,
       "keluar": 500000
+    },
+    {
+      "id": 1795596306731,
+      "tanggal": "2026-11-05",
+      "minggu": 1,
+      "bulan": "November",
+      "tahun": 2026,
+      "ket": "Air Club Galon",
+      "kat": "Kas Pembangunan",
+      "masuk": 0,
+      "keluar": 16500
     },
     {
       "id": 1795596191328,
