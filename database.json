@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-11-25T08:50:04.032Z",
+    "savedAt": "2026-11-25T08:51:05.955Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -1545,6 +1545,28 @@
       "keluar": 0
     },
     {
+      "id": 1795596638418,
+      "tanggal": "2026-11-13",
+      "minggu": 2,
+      "bulan": "November",
+      "tahun": 2026,
+      "ket": "Kotak Amal Jum'at",
+      "kat": "Kas Umum",
+      "masuk": 902000,
+      "keluar": 0
+    },
+    {
+      "id": 1795596664742,
+      "tanggal": "2026-11-20",
+      "minggu": 3,
+      "bulan": "November",
+      "tahun": 2026,
+      "ket": "Kotak Amal Jum'at",
+      "kat": "Kas Umum",
+      "masuk": 745000,
+      "keluar": 0
+    },
+    {
       "id": 1795596529830,
       "tanggal": "2026-11-21",
       "minggu": 3,
@@ -1565,6 +1587,17 @@
       "kat": "Kas Pembangunan",
       "masuk": 0,
       "keluar": 113000
+    },
+    {
+      "id": 1795596609177,
+      "tanggal": "2026-11-24",
+      "minggu": 4,
+      "bulan": "November",
+      "tahun": 2026,
+      "ket": "Air Galon",
+      "kat": "Kas Pembangunan",
+      "masuk": 0,
+      "keluar": 16500
     }
   ],
   "inv": [
