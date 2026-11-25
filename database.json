@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-11-25T08:48:51.041Z",
+    "savedAt": "2026-11-25T08:50:04.032Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -1554,6 +1554,17 @@
       "kat": "Kas Pembangunan",
       "masuk": 0,
       "keluar": 149950
+    },
+    {
+      "id": 1795596574701,
+      "tanggal": "2026-11-22",
+      "minggu": 4,
+      "bulan": "November",
+      "tahun": 2026,
+      "ket": "Pembelian Lampu",
+      "kat": "Kas Pembangunan",
+      "masuk": 0,
+      "keluar": 113000
     }
   ],
   "inv": [
