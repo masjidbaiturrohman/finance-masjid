@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "savedAt": "2026-11-01T01:20:21.567Z",
+    "savedAt": "2026-11-25T08:43:12.533Z",
     "app": "masjid-app"
   },
   "keu": [
@@ -1485,6 +1485,17 @@
       "bulan": "Oktober",
       "tahun": 2026,
       "ket": "Belanja Jumat berkah",
+      "kat": "Kas Pembangunan",
+      "masuk": 0,
+      "keluar": 500000
+    },
+    {
+      "id": 1795596191328,
+      "tanggal": "2026-11-06",
+      "minggu": 1,
+      "bulan": "November",
+      "tahun": 2026,
+      "ket": "Jum'at Berkah",
       "kat": "Kas Pembangunan",
       "masuk": 0,
       "keluar": 500000
